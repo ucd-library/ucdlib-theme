@@ -4,17 +4,26 @@
   "description": "University branding, additional theme support, theme elements",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --config webpack-watch.config.js --watch"
   },
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@ucd-lib/cork-app-build": "^0.2.0",
     "breakpoint-sass": "^2.7.1",
+    "css-loader": "^0.28.11",
+    "fs-extra": "^9.1.0",
+    "mini-css-extract-plugin": "^1.5.1",
     "normalize-scss": "^7.0.1",
     "patternlab-sitefarm-one": "bitbucket:ietwebdev/sitefarm-pattern-lab-one#redesign",
     "sass": "^1.32.11",
     "sass-burger": "^1.3.1",
+    "sass-loader": "^11.0.1",
     "sass-toolkit": "^2.10.2",
-    "webpack": "^5.36.1"
+    "to-string-loader": "^1.1.6",
+    "webpack": "^5.36.1",
+    "webpack-cli": "^4.6.0"
   }
 }

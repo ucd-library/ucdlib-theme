@@ -1,0 +1,59 @@
+//------------------------------------
+//  UC Davis styles
+//------------------------------------
+// Normalize to "reset" browser defaults (from campus build)
+@use "normalize-scss/sass/normalize/import-now";
+
+// Import font-awesome (used by a few campus base elements, e.g. fancy buttons)
+@use "@fortawesome/fontawesome-free/scss/solid" as fs_solid with (
+  $fa-font-path: "../webfonts"
+);
+/*
+@use "@fortawesome/fontawesome-free/scss/regular" as fa_regular with (
+  $fa-font-path: "./webfonts"
+);
+*/
+/*
+@use "@fortawesome/fontawesome-free/scss/brands" as fs_brands with (
+  $fa-font-path: "./webfonts"
+);
+*/
+
+// If we need to override campus variables, we set them before anything is imported.
+// Only variables marked with !default can be overriden
+@use "variables" with (
+    $brand--primary: red
+);
+
+// Base stuff that makes everything work
+@use "1_base_html" as sfone_base_html;
+@use "2_base_class" as sfone_base_class;
+@use "3_objects" as sfone_objects;
+
+// Get components not rendered by a custom element
+@use "4_component/panel" as sfone_c_panel;
+@use "4_component/social-follow" as sfone_c_social_follow;
+@use "4_component/focal-link" as sfone_c_focal_link;
+@use "4_component/vertical-link" as sfone_c_vertical_link;
+@use "4_component/marketing-highlight" as sfone_c_marketing_highlight;
+@use "4_component/site-credits" as sfone_c_site_credits;
+@use "4_component/uc-footer" as sfone_c_uc_footer;
+@use "4_component/focus-box" as sfone_c_focus_box;
+@use "4_component/brand-textbox" as sfone_c_brand_textbox;
+@use "4_component/image-banner" as sfone_c_image_banner;
+@use "4_component/quick-summary" as sfone_c_quick_summary;
+
+// Should be web components:
+// @use "4_component/social-share" as sfone_c_social_share;
+//@use "4_component/search-popup" as sfone_c_search_popup;
+//@use "4_component/collapse" as sfone_c_collapse;
+
+// Layouts
+@use "5_layout" as sfone_layout;
+
+//------------------------------------
+//  Library styles
+//------------------------------------
+
+
+
