@@ -1,13 +1,9 @@
-import { html } from 'lit-element';
-import alertStyles from '@ucd-lib/theme-sass/4_component/_messaging-alert.scss'
-import headings from '@ucd-lib/theme-sass/1_base_html/_headings.scss'
+import { html } from 'lit';
 
 export default function render() { 
 return html`
 
 <style>
-  ${headings}
-  ${alertStyles}
   :host {
     display: block;
   }

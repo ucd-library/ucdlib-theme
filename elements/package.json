@@ -9,6 +9,6 @@
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
   "dependencies": {
-    "@ucd-lib/theme-sass": "^5.0.0"
+    "@ucd-lib/theme-sass": "^5.0.1"
   }
 }

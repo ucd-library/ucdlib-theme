@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import listCss from "@ucd-lib/theme-sass/2_base_class/_lists.scss";
 

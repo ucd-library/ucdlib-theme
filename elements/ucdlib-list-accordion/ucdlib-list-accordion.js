@@ -1,4 +1,4 @@
-import { LitElement } from 'lit-element';
+import { LitElement } from 'lit';
 import render from "./ucdlib-list-accordion.tpl.js";
 
 export default class UcdlibListAccordion extends LitElement {

@@ -1,5 +1,7 @@
-import { LitElement } from 'lit-element';
+import { LitElement } from 'lit';
 import render from "./ucdlib-theme-alert.tpl.js";
+
+import alertStyles from '@ucd-lib/theme-sass/4_component/_messaging-alert.css.js';
 
 export default class UcdlibThemeAlert extends LitElement {
 
@@ -9,6 +11,10 @@ export default class UcdlibThemeAlert extends LitElement {
       styleModifier : {type: String}
     }
   }
+
+  static get styles() {
+    return [alertStyles]
+  } 
 
   constructor() {
     super();
