@@ -1,4 +1,4 @@
-import { html, css, unsafeCSS } from 'lit';
+import { html, css } from 'lit';
 
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import listCss from "@ucd-lib/theme-sass/2_base_class/_lists.css.js";
@@ -17,7 +17,7 @@ export function styles() {
     }
   `;
   return [
-    unsafeCSS(listCss.cssText.replaceAll(":root", ":host")), 
+    listCss, 
     linkCss, 
     customStyles
   ]
@@ -28,7 +28,7 @@ return html`
 <ul class="list--${this.listStyle}">
 ${this.listItems.map((item, index) => html`
   ${this._isTitle(index) ? html`
-    <li @click=${e => this.toggleItemVisiblity(index, false)}>${item}</li>
+    <li item-index="${index}" @click=${this._onItemClick}>${item}</li>
   ` : html`
     <li ?hidden="${!this.itemIsVisible(index, false)}">${unsafeHTML(item)}</li>
   `}

@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
-import {render, styles} from "./ucdlib-list-accordion.tpl.js";
+import {render, styles} from "./ucdlib-theme-list-accordion.tpl.js";
 
-export default class UcdlibListAccordion extends LitElement {
+export default class UcdlibThemeListAccordion extends LitElement {
 
   static get properties() {
     return {
@@ -38,6 +38,26 @@ export default class UcdlibListAccordion extends LitElement {
     this._childListObserver = new MutationObserver(
       (mutationsList, observer) => this._onChildListMutation(mutationsList, observer));
     this._childListObserver.observe(this, {childList: true});
+  }
+
+  _onItemClick(e){
+    let index = parseInt(e.target.getAttribute("item-index"));
+    this.toggleItemVisiblity(index, false);
+    this._dispatchItemToggleEvent(index);
+  }
+
+  _dispatchItemToggleEvent(index) {
+    let e = new CustomEvent('item-toggle', {
+      detail: { 
+        message: 'Visiblity of a list item has changed', 
+        isVisible: this.itemIsVisible(index, false),
+        listItemIndex: index,
+        listItemPairIndex: Math.floor(index / 2)
+       },
+      bubbles: true,
+      composed: true });
+  
+    this.dispatchEvent(e);
   }
 
   disconnectedCallback(){
@@ -80,4 +100,4 @@ export default class UcdlibListAccordion extends LitElement {
 
 }
 
-customElements.define('ucdlib-list-accordion', UcdlibListAccordion);
+customElements.define('ucdlib-theme-list-accordion', UcdlibThemeListAccordion);
