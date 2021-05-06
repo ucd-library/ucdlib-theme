@@ -30,7 +30,7 @@ ${this.listItems.map((item, index) => html`
   ${this._isTitle(index) ? html`
     <li item-index="${index}" @click=${this._onItemClick}>${item}</li>
   ` : html`
-    <li ?hidden="${!this.itemIsVisible(index, false)}">${unsafeHTML(item)}</li>
+    <li ?hidden="${!this.itemIsExpanded(index, false)}">${unsafeHTML(item)}</li>
   `}
   
 `) }

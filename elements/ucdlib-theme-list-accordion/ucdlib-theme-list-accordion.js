@@ -8,7 +8,7 @@ export default class UcdlibThemeListAccordion extends LitElement {
       listStyle: {type: String, attribute: "list-style"},
       listItems: {type: Array, attribute: "list-items"},
       _availableStyles: {type: Array, state: true},
-      _visibleItems: {type: Set, state: true}
+      _expandedItems: {type: Set, state: true}
     }
   }
 
@@ -18,7 +18,7 @@ export default class UcdlibThemeListAccordion extends LitElement {
     this.listItems = [];
     this._availableStyles = ['accordion', 'faq'];
     this.listStyle = this._availableStyles[0];
-    this._visibleItems = new Set();
+    this._expandedItems = new Set();
   }
 
   static get styles() {
@@ -49,8 +49,8 @@ export default class UcdlibThemeListAccordion extends LitElement {
   _dispatchItemToggleEvent(index) {
     let e = new CustomEvent('item-toggle', {
       detail: { 
-        message: 'Visiblity of a list item has changed', 
-        isVisible: this.itemIsVisible(index, false),
+        message: 'A list item has been expanded or collapsed', 
+        isExpanded: this.itemIsExpanded(index, false),
         listItemIndex: index,
         listItemPairIndex: Math.floor(index / 2)
        },
@@ -67,17 +67,17 @@ export default class UcdlibThemeListAccordion extends LitElement {
 
   toggleItemVisiblity(index, isPairIndex=True){
     let pairIndex = isPairIndex ? index : Math.floor(index / 2);
-    if ( this._visibleItems.has(pairIndex) ){
-      this._visibleItems.delete(pairIndex)
+    if ( this._expandedItems.has(pairIndex) ){
+      this._expandedItems.delete(pairIndex)
     } else {
-      this._visibleItems.add(pairIndex);
+      this._expandedItems.add(pairIndex);
     }
     this.requestUpdate();
   }
 
-  itemIsVisible(index, isPairIndex=True) {
+  itemIsExpanded(index, isPairIndex=True) {
     let pairIndex = isPairIndex ? index : Math.floor(index / 2);
-    return this._visibleItems.has(pairIndex);
+    return this._expandedItems.has(pairIndex);
   }
 
   _onChildListMutation() {
