@@ -82,12 +82,25 @@ export default class UcdlibThemeListAccordion extends LitElement {
 
   _onChildListMutation() {
     let listItems = [];
-    for (const child of this.children) {
-      if (child.tagName === "LI") {
-        listItems.push(child.innerHTML)
+    Array.from(this.children).forEach((child, index) => {
+      if (child.tagName !== "LI")  return;
+      // child.setAttribute('slot', 'list-item-'+index);
+      
+      if( !this._isContent(index) ) {
+        let div = document.createElement('div');
+        div.setAttribute('slot', 'list-item-'+index);
+
+        Array.from(child.children).forEach((subchild, index) => {
+          child.remove(subchild);
+          div.appendChild(subchild);
+        });
+
+        child.appendChild(div);
+
       }
-    }
-    if (listItems.length > 0) this.listItems = listItems;
+      listItems.push({child, text: child.innerHTML, slotName:'list-item-'+index});
+    });
+    this.listItems = listItems;
   }
 
   _isTitle(i) {

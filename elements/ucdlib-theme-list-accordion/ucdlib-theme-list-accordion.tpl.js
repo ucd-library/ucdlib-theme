@@ -28,11 +28,14 @@ return html`
 <ul class="list--${this.listStyle}">
 ${this.listItems.map((item, index) => html`
   ${this._isTitle(index) ? html`
-    <li item-index="${index}" @click=${this._onItemClick}>${item}</li>
+    <li item-index="${index}" @click=${this._onItemClick}>
+      ${item.text}"
+    </li>
   ` : html`
-    <li ?hidden="${!this.itemIsExpanded(index, false)}">${unsafeHTML(item)}</li>
+    <li ?hidden="${!this.itemIsExpanded(index, false)}">
+      <slot name="${item.slotName}"></slot>
+    </li>
   `}
-  
 `) }
 </ul>
 `;}
