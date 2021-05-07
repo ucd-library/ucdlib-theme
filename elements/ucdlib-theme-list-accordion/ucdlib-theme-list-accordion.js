@@ -40,10 +40,15 @@ export default class UcdlibThemeListAccordion extends LitElement {
     this._childListObserver.observe(this, {childList: true});
   }
 
-  _onItemClick(e){
+  _onTitleClick(e) {
     let index = parseInt(e.target.getAttribute("item-index"));
-    this.toggleItemVisiblity(index, false);
-    this._dispatchItemToggleEvent(index);
+    this.toggleItemVisiblity(index, false, true);
+  }
+
+  _onTitleKeyUp(e) {
+    if( e.which !== 13 ) return;
+    let index = parseInt(e.target.getAttribute("item-index"));
+    this.toggleItemVisiblity(index, false, true);
   }
 
   _dispatchItemToggleEvent(index) {
@@ -56,7 +61,6 @@ export default class UcdlibThemeListAccordion extends LitElement {
        },
       bubbles: true,
       composed: true });
-  
     this.dispatchEvent(e);
   }
 
@@ -65,14 +69,17 @@ export default class UcdlibThemeListAccordion extends LitElement {
     super.disconnectedCallback();
   }
 
-  toggleItemVisiblity(index, isPairIndex=True){
+  async toggleItemVisiblity(index, isPairIndex=true, dispatchEvent=false){
     let pairIndex = isPairIndex ? index : Math.floor(index / 2);
     if ( this._expandedItems.has(pairIndex) ){
       this._expandedItems.delete(pairIndex)
     } else {
       this._expandedItems.add(pairIndex);
     }
-    this.requestUpdate();
+
+    await this.requestUpdate();
+    if ( dispatchEvent ) this._dispatchItemToggleEvent(index);
+    
   }
 
   itemIsExpanded(index, isPairIndex=True) {
@@ -82,12 +89,16 @@ export default class UcdlibThemeListAccordion extends LitElement {
 
   _onChildListMutation() {
     let listItems = [];
-    for (const child of this.children) {
-      if (child.tagName === "LI") {
-        listItems.push(child.innerHTML)
+    Array.from(this.children).forEach((child, index) => {
+      if (child.tagName !== "DIV")  return;
+      child.setAttribute('slot', 'list-item-'+index);
+      if( this.listStyle === 'faq' ) {
+        child.style.display = 'inline';
       }
-    }
-    if (listItems.length > 0) this.listItems = listItems;
+
+      listItems.push({child, slotName:'list-item-'+index});
+    });
+    this.listItems = listItems;
   }
 
   _isTitle(i) {

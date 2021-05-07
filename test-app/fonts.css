@@ -81,3 +81,11 @@
     src: url("../fonts/ryman-eco.woff2") format("woff2"), url("../fonts/ryman-eco.woff") format("woff"), url("../fonts/ryman-eco.svg#Ryman Eco") format("svg");
     unicode-range: U+0020-00FE;
   }
+
+  body {
+    position: relative;
+    overflow-x: hidden;
+    font-family: "proxima-nova", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    line-height: 1.618;
+  }
