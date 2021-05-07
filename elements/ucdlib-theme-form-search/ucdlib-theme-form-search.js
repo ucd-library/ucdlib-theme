@@ -5,12 +5,12 @@ export default class UcdlibThemeFormSearch extends LitElement {
 
   static get properties() {
     return {
+      value: {type: String},
+      placeholder: {type: String},
       formAction: {type: String, attribute: "form-action"},
       formClass: {type: String, attribute: "form-class"},
       labelText: {type: String, attribute: "label-text"},
-      inputClass: {type: String, attribute: "input-class"},
-      placeholder: {type: String},
-      value: {type: String}
+      inputClass: {type: String, attribute: "input-class"}
     }
   }
 

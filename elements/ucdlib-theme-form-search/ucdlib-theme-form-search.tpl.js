@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 
+import normalizeCss from "@ucd-lib/theme-sass/normalize.css.js";
 import utilityCss from "@ucd-lib/theme-sass/6_utility/_u-visibility.css.js";
 import searchCss from "@ucd-lib/theme-sass/4_component/_search-form.css.js";
 import formCss from "@ucd-lib/theme-sass/1_base_html/_forms.css.js";
@@ -13,11 +14,9 @@ export function styles() {
     [hidden] {
       display: none !important;
     }
-    input {
-      font-size: 100%;
-    }
   `;
   return [
+    normalizeCss,
     utilityCss,
     formCss,
     searchCss,
