@@ -40,10 +40,15 @@ export default class UcdlibThemeListAccordion extends LitElement {
     this._childListObserver.observe(this, {childList: true});
   }
 
-  _onItemClick(e){
+  _onTitleClick(e) {
     let index = parseInt(e.target.getAttribute("item-index"));
     this.toggleItemVisiblity(index, false);
-    this._dispatchItemToggleEvent(index);
+  }
+
+  _onTitleKeyUp(e) {
+    if( e.which !== 13 ) return;
+    let index = parseInt(e.target.getAttribute("item-index"));
+    this.toggleItemVisiblity(index, false);
   }
 
   _dispatchItemToggleEvent(index) {
@@ -56,7 +61,6 @@ export default class UcdlibThemeListAccordion extends LitElement {
        },
       bubbles: true,
       composed: true });
-  
     this.dispatchEvent(e);
   }
 
@@ -65,13 +69,16 @@ export default class UcdlibThemeListAccordion extends LitElement {
     super.disconnectedCallback();
   }
 
-  toggleItemVisiblity(index, isPairIndex=True){
+  toggleItemVisiblity(index, isPairIndex=true){
     let pairIndex = isPairIndex ? index : Math.floor(index / 2);
     if ( this._expandedItems.has(pairIndex) ){
       this._expandedItems.delete(pairIndex)
     } else {
       this._expandedItems.add(pairIndex);
     }
+
+    this._dispatchItemToggleEvent(index);
+
     this.requestUpdate();
   }
 
@@ -83,22 +90,13 @@ export default class UcdlibThemeListAccordion extends LitElement {
   _onChildListMutation() {
     let listItems = [];
     Array.from(this.children).forEach((child, index) => {
-      if (child.tagName !== "LI")  return;
-      // child.setAttribute('slot', 'list-item-'+index);
-      
-      if( !this._isContent(index) ) {
-        let div = document.createElement('div');
-        div.setAttribute('slot', 'list-item-'+index);
-
-        Array.from(child.children).forEach((subchild, index) => {
-          child.remove(subchild);
-          div.appendChild(subchild);
-        });
-
-        child.appendChild(div);
-
+      if (child.tagName !== "DIV")  return;
+      child.setAttribute('slot', 'list-item-'+index);
+      if( this.listStyle === 'faq' ) {
+        child.style.display = 'inline';
       }
-      listItems.push({child, text: child.innerHTML, slotName:'list-item-'+index});
+
+      listItems.push({child, slotName:'list-item-'+index});
     });
     this.listItems = listItems;
   }

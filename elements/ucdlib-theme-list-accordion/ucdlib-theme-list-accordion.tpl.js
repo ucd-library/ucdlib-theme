@@ -28,11 +28,21 @@ return html`
 <ul class="list--${this.listStyle}">
 ${this.listItems.map((item, index) => html`
   ${this._isTitle(index) ? html`
-    <li item-index="${index}" @click=${this._onItemClick}>
-      ${item.text}"
+    <li 
+      id="accordion-${index}"
+      item-index="${index}" 
+      tabindex="0"
+      @click=${this._onTitleClick}
+      @keyup=${this._onTitleKeyUp}
+      aria-controls="accordion-${index}-panel"
+      aria-expanded="${this.itemIsExpanded(index, false)}">
+      <slot name="${item.slotName}"></slot>
     </li>
   ` : html`
-    <li ?hidden="${!this.itemIsExpanded(index, false)}">
+    <li id="accordion-${index}-panel" 
+      role="region" 
+      aria-labelledby="accordion-${index}" 
+      ?hidden="${!this.itemIsExpanded(index, false)}">
       <slot name="${item.slotName}"></slot>
     </li>
   `}
