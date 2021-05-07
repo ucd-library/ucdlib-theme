@@ -1,22 +1,22 @@
 import { LitElement } from 'lit';
-import {render, styles} from "./ucdlib-theme-list-accordion.tpl.js";
+import {render, styles} from "./ucd-theme-list-accordion.tpl.js";
 
 /**
- * @class UcdlibThemeListAccordion
+ * @class UcdThemeListAccordion
  * @classdesc Component class for displaying lists with accordion collapse/expand functionality
  * 
  * @prop {String} listStyle - 'accordion' or 'faq'
  * @example
  * html`
- *  <ucdlib-theme-list-accordion>
+ *  <ucd-theme-list-accordion>
  *    <div>Click me to expand div below</div>
  *    <div>I will be toggled when the above item is clicked.</div>
  *    <div>The direct children of this element must be divs</div>
  *    <div>But you can pass through <a href="#">rich text</a> within.
- *  </ucdlib-theme-list-accordion>
+ *  </ucd-theme-list-accordion>
  * `
  */
-export default class UcdlibThemeListAccordion extends LitElement {
+export default class UcdThemeListAccordion extends LitElement {
 
   static get properties() {
     return {
@@ -188,4 +188,4 @@ export default class UcdlibThemeListAccordion extends LitElement {
 
 }
 
-customElements.define('ucdlib-theme-list-accordion', UcdlibThemeListAccordion);
+customElements.define('ucd-theme-list-accordion', UcdThemeListAccordion);

@@ -1,4 +1,4 @@
-import '../elements/ucdlib-theme-alert/ucdlib-theme-alert';
-import '../elements/ucdlib-theme-message-area/ucdlib-theme-message-area';
-import "../elements/ucdlib-theme-list-accordion/ucdlib-theme-list-accordion";
-import "../elements/ucdlib-theme-form-search/ucdlib-theme-form-search";
+import '../elements/ucd-theme-alert/ucd-theme-alert';
+import '../elements/ucd-theme-message-area/ucd-theme-message-area';
+import "../elements/ucd-theme-list-accordion/ucd-theme-list-accordion";
+import "../elements/ucd-theme-form-search/ucd-theme-form-search";

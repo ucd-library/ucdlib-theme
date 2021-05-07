@@ -1,10 +1,10 @@
 import { LitElement } from 'lit';
-import render from "./ucdlib-theme-message-area.tpl.js";
+import render from "./ucd-theme-message-area.tpl.js";
 
 import headingStyles from '@ucd-lib/theme-sass/1_base_html/_headings.css.js';
 import messageStyles from '@ucd-lib/theme-sass/4_component/_message-area.css.js';
 
-export default class UcdlibThemeMessageArea extends LitElement {
+export default class UcdThemeMessageArea extends LitElement {
 
   static get properties() {
     return {
@@ -28,4 +28,4 @@ export default class UcdlibThemeMessageArea extends LitElement {
 
 }
 
-customElements.define('ucdlib-theme-message-area', UcdlibThemeMessageArea);
+customElements.define('ucd-theme-message-area', UcdThemeMessageArea);

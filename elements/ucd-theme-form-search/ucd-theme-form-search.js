@@ -1,8 +1,8 @@
 import { LitElement } from 'lit';
-import {render, styles } from "./ucdlib-theme-form-search.tpl.js";
+import {render, styles } from "./ucd-theme-form-search.tpl.js";
 
 /**
- * @class UcdlibThemeFormSearch
+ * @class UcdThemeFormSearch
  * @classdesc Component class for rendering a basic search form
  * @param {String} value - The search string
  * @param {String} placeholder - The input placeholder
@@ -10,14 +10,14 @@ import {render, styles } from "./ucdlib-theme-form-search.tpl.js";
  * @example
  * // Use a form action:
  * html`
- *   <ucdlib-theme-form-search form-action="/url/to/post/to"></ucdlib-theme-form-search>
+ *   <ucd-theme-form-search form-action="/url/to/post/to"></ucd-theme-form-search>
  * `
  * // Use event listener:
  * html`
- *  <ucdlib-theme-form-search @search="${this._onSearch}"></ucdlib-theme-form-search>
+ *  <ucd-theme-form-search @search="${this._onSearch}"></ucd-theme-form-search>
  * `
  */
-export default class UcdlibThemeFormSearch extends LitElement {
+export default class UcdThemeFormSearch extends LitElement {
 
   static get properties() {
     return {
@@ -85,4 +85,4 @@ export default class UcdlibThemeFormSearch extends LitElement {
 
 }
 
-customElements.define('ucdlib-theme-form-search', UcdlibThemeFormSearch);
+customElements.define('ucd-theme-form-search', UcdThemeFormSearch);
