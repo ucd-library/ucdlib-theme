@@ -14,6 +14,8 @@
     "@ucd-lib/cork-app-build": "^0.2.0",
     "breakpoint-sass": "^2.7.1",
     "css-loader": "^0.28.11",
+    "eslint": "^7.25.0",
+    "eslint-plugin-jsdoc": "^33.1.0",
     "fs-extra": "^9.1.0",
     "mini-css-extract-plugin": "^1.5.1",
     "normalize-scss": "^7.0.1",

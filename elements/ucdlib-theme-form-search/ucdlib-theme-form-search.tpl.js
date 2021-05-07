@@ -29,12 +29,12 @@ return html`
 <form 
   @submit="${this._onSubmit}"
   action="${this.formAction}" 
-  method="post" 
+  method="POST" 
   class="search-form ${this.formClass}">
 
   <label for="search" class="u-hidden--visually">${this.labelText}</label>
   <input 
-    type="input" 
+    type="text" 
     placeholder="${this.placeholder}" 
     id="search" 
     class="search-form__input ${this.inputClass}" 

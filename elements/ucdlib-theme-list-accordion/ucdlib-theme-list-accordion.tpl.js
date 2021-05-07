@@ -24,7 +24,7 @@ export function styles() {
 export function render() { 
 return html`
 <ul class="list--${this.listStyle}">
-${this.listItems.map((item, index) => html`
+${this._listItems.map((item, index) => html`
   ${this._isTitle(index) ? html`
     <li 
       id="accordion-${index}"
