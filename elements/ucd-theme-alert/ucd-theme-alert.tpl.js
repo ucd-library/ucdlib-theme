@@ -1,15 +1,21 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
+import alertStyles from '@ucd-lib/theme-sass/4_component/_messaging-alert.css.js';
 
-export default function render() { 
-return html`
+export function styles() {
+  let customCss = css`
+    :host {
+      display: block;
+    }
+  `;
+  return [
+    alertStyles,
+    customCss
+  ]
+}
 
-<style>
-  :host {
-    display: block;
-  }
-</style>  
-
-<div class="alert ${this.styleModifier}">
+export function render() { 
+return html` 
+<div class="alert ${this._styleModifier}">
   <slot></slot>
 </div>
 

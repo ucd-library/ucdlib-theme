@@ -3,7 +3,6 @@ import { html, css } from 'lit';
 import listCss from "@ucd-lib/theme-sass/2_base_class/_lists.css.js";
 
 export function styles() {
-  window.steve = listCss;
   let customStyles = css`
     :host {
       display: block;

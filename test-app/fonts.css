@@ -81,6 +81,22 @@
     src: url("../fonts/ryman-eco.woff2") format("woff2"), url("../fonts/ryman-eco.woff") format("woff"), url("../fonts/ryman-eco.svg#Ryman Eco") format("svg");
     unicode-range: U+0020-00FE;
   }
+  html {
+    font-size: 19px;
+    min-height: 0vw;
+}
+
+@media screen and (min-width: 1200px) {
+    html {
+        font-size:calc(19px + 13 * ((100vw - 1200px) / 2640));
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    html {
+        font-size:32px;
+    }
+}
 
   body {
     position: relative;

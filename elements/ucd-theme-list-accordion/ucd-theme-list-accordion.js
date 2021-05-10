@@ -3,9 +3,13 @@ import {render, styles} from "./ucd-theme-list-accordion.tpl.js";
 
 /**
  * @class UcdThemeListAccordion
- * @classdesc Component class for displaying lists with accordion collapse/expand functionality
+ * @classdesc Component class for displaying lists with accordion collapse/expand functionality.
+ * Pattern Lab Url: 
+ *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-list-accordion
+ *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-list-faq
  * 
- * @prop {String} listStyle - 'accordion' or 'faq'
+ * @property {String} listStyle - 'accordion' or 'faq'
+ * 
  * @example
  * html`
  *  <ucd-theme-list-accordion>

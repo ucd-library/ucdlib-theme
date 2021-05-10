@@ -3,10 +3,13 @@ import {render, styles } from "./ucd-theme-form-search.tpl.js";
 
 /**
  * @class UcdThemeFormSearch
- * @classdesc Component class for rendering a basic search form
+ * @classdesc Component class for rendering a basic search form.
+ * Pattern Lab Url: http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-search-form
+ * 
  * @param {String} value - The search string
  * @param {String} placeholder - The input placeholder
  * @param {String} formAction - The action to be taken on form submit (optional)
+ * 
  * @example
  * // Use a form action:
  * html`

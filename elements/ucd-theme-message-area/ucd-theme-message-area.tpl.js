@@ -1,24 +1,43 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 
-export default function render() { 
-return html`
+import headingStyles from '@ucd-lib/theme-sass/1_base_html/_headings.css.js';
+import messageStyles from '@ucd-lib/theme-sass/4_component/_message-area.css.js';
+import formStyles from "@ucd-lib/theme-sass/1_base_html/_forms.css.js";
 
-<style>
-  :host {
-    display: block;
-  }
-</style>  
+export function styles(){
+  let customStyles = css`
+    :host {
+      display: block;
+    }
+    .message-area--closed {
+      height: 0;
+    }
+  `;
+  return [
+    headingStyles,
+    formStyles,
+    messageStyles,
+    customStyles
+  ]
+}
 
-
-<div class="message-area">
-  <div class="message-area__content" data-cy="content">
-    <h2 class="message-area__title">${this.title}</h2>
-    <div class="message-area__body">
-      <slot></slot>
+export function render() { 
+  return html`
+    <div class="message-area ${this.collapsed ? 'message-area--closed': ''}">
+      <div class="message-area__content" data-cy="content" id="content" aria-labelledby="button">
+        <h2 class="message-area__title">${this.title}</h2>
+        <div class="message-area__body">
+          <slot></slot>
+        </div>
+      </div>
+      <button 
+        id="button"
+        class="message-area__button" 
+        data-cy="button"
+        aria-controls="content"
+        aria-expanded="${!this.collapsed}"
+        title="${this.buttonText}" 
+        @click="${this._onBtnClicked}">${this.buttonText}</button>
     </div>
-  </div>
-  <button class="message-area__button" data-cy="button" title="${this.buttonText}" @click="${this._onBtnClicked}">${this.buttonText}</button>
-</div>
-
-
-`;}
+  `;
+}
