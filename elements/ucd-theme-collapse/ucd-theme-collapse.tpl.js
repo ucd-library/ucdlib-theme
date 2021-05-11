@@ -2,6 +2,8 @@ import { html, css } from 'lit';
 
 import collapseStyles from "@ucd-lib/theme-sass/4_component/_collapse.css.js";
 
+import { motionCollapse } from "../utils/directives/motion-collapse";
+
 export function styles() {
   const elementStyles = css`
     :host {
@@ -35,6 +37,7 @@ return html`
   </h2>
   <div 
     id="content"
+    ${motionCollapse()}
     aria-labelledby="button"
     class="collapse__content" ?hidden="${!this.opened}">
     <slot></slot>
