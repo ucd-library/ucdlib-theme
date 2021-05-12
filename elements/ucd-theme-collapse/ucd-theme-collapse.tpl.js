@@ -37,7 +37,7 @@ return html`
   </h2>
   <div 
     id="content"
-    ${motionCollapse()}
+    ${motionCollapse({duration: 300})}
     aria-labelledby="button"
     class="collapse__content" ?hidden="${!this.opened}">
     <slot></slot>

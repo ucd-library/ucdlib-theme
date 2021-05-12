@@ -96,7 +96,8 @@ export default class UcdThemeListAccordion extends LitElement {
       this._expandedItems.add(pairIndex);
     }
 
-    await this.requestUpdate();
+    this.requestUpdate();
+    await this.updateComplete;
     if ( dispatchEvent ) this._dispatchItemToggleEvent(index);
   }
 

@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 
 import listCss from "@ucd-lib/theme-sass/2_base_class/_lists.css.js";
+import { motionCollapse } from "../utils/directives/motion-collapse";
 
 export function styles() {
   let customStyles = css`
@@ -8,7 +9,7 @@ export function styles() {
       display: block;
     }
     [hidden] {
-      display: none !important;
+      display: none;
     }
     .item-title ::slotted(*) {
       pointer-events: none;
@@ -39,6 +40,7 @@ ${this._listItems.map((item, index) => html`
   ` : html`
     <li 
       id="accordion-${index}-panel" 
+      ${motionCollapse({duration: 300})}
       class="item-content"
       role="region" 
       aria-labelledby="accordion-${index}" 
