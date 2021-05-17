@@ -225,7 +225,6 @@ export class MotionCollapse extends AsyncDirective {
     
     this.element.style.overflow = "hidden";
     this.element.style.visibility = "visible";
-    console.log(this.element.style.display , frames);
     this.animation = this.element.animate(
       frames, 
       {

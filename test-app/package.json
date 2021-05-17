@@ -25,6 +25,7 @@
   "dependencies": {
     "@ucd-lib/theme-elements": "file:../elements",
     "@ucd-lib/theme-sass": "^5.0.3",
-    "lit": "^2.0.0-rc.1"
+    "lit": "^2.0.0-rc.1",
+    "photoswipe": "^4.1.3"
   }
 }
