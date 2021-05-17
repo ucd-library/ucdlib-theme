@@ -8,6 +8,7 @@ import {render, styles} from "./ucd-theme-collapse.tpl.js";
  * 
  * @property {String} title - The panel title
  * @property {Boolean} opened - Whether the panel content is expanded
+ * @property {String} brandClass - Any additional class modifers
  * 
  * @example
  * html`
@@ -22,6 +23,7 @@ export default class UcdThemeCollapse extends LitElement {
     return {
       title: {type: String},
       opened: {type: Boolean, reflect: true},
+      brandClass: {type: String, attribute: "brand-class"}
     };
   }
 
