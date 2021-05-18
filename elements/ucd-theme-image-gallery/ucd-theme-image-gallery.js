@@ -57,16 +57,19 @@ export default class UcdThemeImageGallery extends LitElement {
       child.setAttribute('slot', 'image-index-'+index);
 
       const msrc = child.getAttribute('src');
+      const title = child.getAttribute('title');
       const bigImage = {
-        src: child.getAttribute('big-src'),
-        width: child.getAttribute('big-width'),
-        height: child.getAttribute('big-height')
+        src: this._getImgAttr(child, 'src'),
+        width: this._getImgAttr(child, 'width'),
+        height: this._getImgAttr(child, 'height'),
       };
 
       images.push({
         child,
+        title,
         bigImage,
         msrc,
+        imageIndex: index,
         slotName:'image-index-'+index});
     });
 
@@ -76,7 +79,44 @@ export default class UcdThemeImageGallery extends LitElement {
 
   _onClick(e){
     e.preventDefault();
+    console.log(e);
+    this.openLightBox(e.target.getAttribute('image-index'));
 
+
+  }
+
+  _getImgAttr(ele, attr){
+    return ele.getAttribute(`big-${attr}`) ? ele.getAttribute(`big-${attr}`) : ele.getAttribute(attr);
+  }
+
+  openLightBox(index=0){
+    const dialog = this.shadowRoot.getElementById('light-box');
+    const items = this._images.map(image => {
+      return {
+        src: image.bigImage.src,
+        w: image.bigImage.width,
+        h: image.bigImage.height,
+        title: image.title,
+        msrc: image.msrc
+      };
+    });
+
+    const thumbnail = this._images[index].child;
+    const pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const rect = thumbnail.getBoundingClientRect();
+    const options = {
+      index,
+      bgOpacity: 0.95,
+      showHideOpacity: true,
+      shareEl: false,
+      getThumbBoundsFn() {
+        return {x: rect.left, y: rect.top + pageYScroll, w: rect.width};
+      }
+    };
+
+    console.log(dialog, items, options);
+    const lightBox = new PhotoSwipe(dialog, PhotoSwipeUI, items, options);
+    lightBox.init();
   }
 
   /**
