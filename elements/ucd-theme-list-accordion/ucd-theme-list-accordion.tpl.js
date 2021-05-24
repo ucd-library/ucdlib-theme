@@ -28,7 +28,7 @@ ${this._listItems.map((item, index) => html`
   ${this._isTitle(index) ? html`
     <li 
       id="accordion-${index}"
-      class="item-title"
+      class="item-title ${this.itemIsExpanded(index, false) ? 'active' : ''}"
       item-index="${index}" 
       tabindex="0"
       @click=${this._onTitleClick}
