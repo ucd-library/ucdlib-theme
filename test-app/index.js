@@ -5,3 +5,4 @@ import "../elements/ucd-theme-form-search/ucd-theme-form-search";
 import "../elements/ucd-theme-header-search-popup/ucd-theme-header-search-popup";
 import "../elements/ucd-theme-collapse/ucd-theme-collapse";
 import "../elements/ucd-theme-image-gallery/ucd-theme-image-gallery";
+import "../elements/ucd-theme-pagination/ucd-theme-pagination"

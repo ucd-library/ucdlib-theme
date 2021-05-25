@@ -3,6 +3,7 @@
     <title>This is a test</title>
     <script src="js/bundle.js"></script>
     <link rel="stylesheet" type="text/css" href="/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/@ucd-lib/theme-sass/style.css">
   </head>
   <body>
     <h1>Components</h1>
@@ -72,5 +73,12 @@
     <ucd-theme-image-gallery modifier="poster">
       <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
     </ucd-theme-image-gallery>
+
+
+    <h2>Navigation</h2>
+    <ucd-theme-pagination
+      current-page="1"
+      max-pages="10">
+    </ucd-theme-pagination>
   </body>
 </html>
