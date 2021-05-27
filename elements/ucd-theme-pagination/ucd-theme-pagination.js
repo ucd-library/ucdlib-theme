@@ -1,12 +1,38 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
 
-
+/**
+ * @class UcdThemePagination
+ * @classdesc Component class for pagination
+ * Pattern Lab Url: http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-pagination
+ * 
+ * @property {String} base-path - for anchor tag href
+ * @property {String} current-page - Page to show and highlight
+ * @property {String} max-pages - Max number of total pages
+ * @property {String} visible-link-count - How many page links to show
+ * 
+ * @examples
+ * 
+ * <ucd-theme-pagination
+ *  current-page="50"
+ *  max-pages="100"
+ *  use-hash>
+ * </ucd-theme-pagination>
+ * <ucd-theme-pagination
+ *  current-page="1"
+ *  max-pages="10">
+ * </ucd-theme-pagination>
+ * <ucd-theme-pagination
+ *  current-page="2"
+ *  max-pages="33"
+ *  base-path="/foo/bar/">
+ * </ucd-theme-pagination>
+ * 
+ */
 export default class UcdThemePagination extends LitElement {
 
   static get properties() {
     return {
-      type : {type: String},
       basePath : {
         type: String, 
         attribute: 'base-path'
@@ -24,9 +50,9 @@ export default class UcdThemePagination extends LitElement {
         type : Number,
         attribute : 'max-pages'
       },
-      visibleLinks : {
+      visibleLinkCount : {
         type : Number,
-        attribute : 'visible-links'
+        attribute : 'visible-link-count'
       },
       _pages : {type: Array}
     }
@@ -40,57 +66,56 @@ export default class UcdThemePagination extends LitElement {
     super();
 
     this._pages = [];
-    this.ALLOWED_TYPES = ['virtual', 'link'];
+    this.useHash = false;
+    this.type = 'virtual';
+    this.basePath = '';
+    this.visibleLinkCount = 7;
+    this.currentPage = 1;
+    this.maxPages = 1;
+
     this.render = render.bind(this);
   }
 
-  firstUpdated() {
-    if( this.ALLOWED_TYPES.includes(this.type) ) {
-      this.type = this.ALLOWED_TYPES[0];
-    }
-    if( !this.visibleLinks ) {
-      this.visibleLinks = 7;
-    }
-  }
-
   updated(props) {
-
     if( props.has('currentPage') ) {
-      let startIndex = Math.floor(this.currentPage - (this.visibleLinks/2));
+      let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
       
       if( startIndex < 0 ) {
         startIndex = 0;
-      } else if( this.currentPage + startIndex > this.maxPages ) {
-        startIndex -= (this.currentPage + startIndex) - this.maxPages;
+      } else if( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
+        startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
       }
       if( startIndex < 0 ) {
         startIndex = 0;
       }
-      let endIndex = this.visibleLinks;
+
+      let endIndex = startIndex + this.visibleLinkCount;
       if( endIndex > this.maxPages ) endIndex = this.maxPages;
 
       let pages = [];
-      for( let i = startIndex; i <= endIndex; i++ ) {
-        pages.push(i);
+      for( let i = startIndex; i < endIndex; i++ ) {
+        pages.push(i+1);
       }
       this._pages = pages;
     }
   }
 
   _renderLink(page, args={}) {
-    if( page === this.currentPage ) {
+    if( page < 1 ) page = 1;
+    if( page > this.maxPages ) page = this.maxPages;
+
+    if( args.noHighlight !== true && page === this.currentPage ) {
       if( !args.class ) args.class = '';
       args.class += ' pager__item--current';
     }
 
-
-    if( this.type === 'virtual' ) {
+    if( !this.basePath && !this.useHash ) {
       return html`<li  class="pager__item ${args.class || ''}">
         <a style="cursor:pointer" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>
       </li>`;
     }
 
-    let href = (this.useHash ? '#' : '') + (this.basePath || '') + page;
+    let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page;
     return html`<li class="pager__item ${args.class || ''}">
       <a href="${href}">${args.label || page}</a>
     </li>`;
@@ -98,8 +123,8 @@ export default class UcdThemePagination extends LitElement {
 
 
   _onPageClicked(e) {
-    this.dispatchEven(new CustomEvent('page-change', {
-      detail : {page: parseInt(e.currentTarge.getAttribute('page'))}
+    this.dispatchEvent(new CustomEvent('page-change', {
+      detail : {page: parseInt(e.currentTarget.getAttribute('page'))}
     }));
   }
 

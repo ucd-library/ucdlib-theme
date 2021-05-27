@@ -8,7 +8,7 @@ import {render, styles} from "./ucd-theme-list-accordion.tpl.js";
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-list-accordion
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-list-faq
  * 
- * @property {String} listStyle - 'accordion' or 'faq'
+ * @property {String} list-style - 'accordion' or 'faq'
  * 
  * @example
  * html`
