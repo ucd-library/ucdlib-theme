@@ -1,8 +1,11 @@
 /**
- * @class MutationObserverElement
+ * @function MutationObserverElement
+ * @param {Class} superClass - LitElement or child class.
  * @description add default functionality for mutation observer
+ * 
+ * @returns {Class} LitElement with mutation observer attached.
  */
-class MutationObserverElement {
+const MutationObserverElement = (superClass) => class extends superClass {
 
   constructor() {
     super();
@@ -39,6 +42,6 @@ class MutationObserverElement {
     this._childListObserver.disconnect();
     super.disconnectedCallback();
   }
-}
+};
 
 export {MutationObserverElement};
