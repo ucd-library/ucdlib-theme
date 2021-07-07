@@ -53,33 +53,36 @@
     <h2>Navigation</h2>
 
     <h3>Primary Nav</h3>
-    <ucd-theme-primary-nav>
-      <a>ITEM 1</a>
-    </ucd-theme-primary-nav>
+    <p>Simple nav. No dropdowns.</p>
+    <div class="category-brand__background category-brand--primary">
+      <ucd-theme-primary-nav>
+        <a>ITEM 1</a>
+        <a href=#>ITEM 2</a>
+        <a href="#">ITEM 3</a>
+      </ucd-theme-primary-nav>
+    </div>
+
+    <p class="u-space-mt--large">Nav with dropdowns</p>
+    <div class="category-brand__background category-brand--primary">
+      <ucd-theme-primary-nav>
+        <a>ITEM 1</a>
+        <ul href="#" link-text="Ta'veren">
+          <li><a href="#">Rand al'Thor</a></li>
+          <li><a href="#">Matrim Cauthon</a></li>
+          <li><a href="#">Perrin Aybara</a></li>
+        </ul>
+        <a href="#">ITEM 3</a>
+      </ucd-theme-primary-nav>
+    </div>
+
+
 
     <h3>Search popup</h3>
     <ucd-theme-header-search-popup>
       <ucd-theme-form-search></ucd-theme-form-search>
     </ucd-theme-header-search-popup>
 
-    <h2>Media</h2>
-    <h3>Image Gallery</h3>
-    <ucd-theme-image-gallery>
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
-    </ucd-theme-image-gallery>
-    <h3>Gallery Poster</h3>
-    <ucd-theme-image-gallery modifier="poster">
-      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
-    </ucd-theme-image-gallery>
-
-
-    <h2>Navigation</h2>
-
+    <h3>Pagination</h3>
     <ucd-theme-pagination
       current-page="50"
       max-pages="100"
@@ -120,5 +123,21 @@
       max-pages="100"
       visible-link-count="5">
     </ucd-theme-pagination>
+
+    <h2>Media</h2>
+    <h3>Image Gallery</h3>
+    <ucd-theme-image-gallery>
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+    </ucd-theme-image-gallery>
+    <h3>Gallery Poster</h3>
+    <ucd-theme-image-gallery modifier="poster">
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
+    </ucd-theme-image-gallery>
+
   </body>
 </html>
