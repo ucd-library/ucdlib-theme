@@ -3,7 +3,7 @@
  * https://stackoverflow.com/questions/41839198/applying-behaviors-with-js-mixins-in-polymer-2
  **/
 class MixinBuilder {  
-  constructor(superclass) {å
+  constructor(superclass) {
     this.superclass = superclass;
   }
   with(...mixins) { 
