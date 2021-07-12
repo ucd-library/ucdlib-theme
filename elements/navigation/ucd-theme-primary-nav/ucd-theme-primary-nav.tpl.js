@@ -14,6 +14,9 @@ export function styles() {
     .submenu-toggle * {
       pointer-events: none;
     }
+    button[disabled] {
+      pointer-events: none;
+    }
     @media (min-width: 992px) {
       ul.menu ul.menu {
         opacity: 0;
@@ -39,6 +42,11 @@ export function styles() {
         padding-top: 0px;
         padding-bottom: 0px;
       }
+
+      ul.menu ul.menu.menu--open {
+        display: block;
+      }
+
     }
   `;
 
@@ -66,6 +74,7 @@ return html`
 <nav 
   id=${this._classPrefix}
   class="${this._classPrefix} ${this.styleModifier ? `${this._classPrefix}--${this.styleModifier}` : ""}" 
+  @focusout=${this._onItemFocusout}
   aria-label="Main Menu">
   <ul class="menu">
     ${this.navItems.map((navItem, i) => this._renderNavItem(navItem, [i]))}

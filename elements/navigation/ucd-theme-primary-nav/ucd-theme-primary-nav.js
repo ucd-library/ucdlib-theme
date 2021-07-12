@@ -57,6 +57,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     this.maxDepth = 2;
 
     this._classPrefix = "primary-nav";
+    this._mobileBreakPoint = 992;
   }
 
   /**
@@ -66,7 +67,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    */
   _onChildListMutation(){
     const children = Array.from(this.children);
-
     let navItems = children.map((child) => this._makeNavItemTree(child)).filter(navItem => navItem.linkText);
     if ( navItems.length ) this.navItems = navItems;
   }
@@ -118,15 +118,20 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         @mouseleave=${this._onItemMouseleave}
         class="${navItem.isOpen ? 'sf--hover' : ''} ${navItem.isClosing ? 'closing': ''}">
         <div class="submenu-toggle__wrapper ${depth === 0 ? `${this._classPrefix}__top-link` : ''}">
-          <a href=${navItem.href}>${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span></a>
+          <a 
+            href=${navItem.href} 
+            @focus=${this._onItemFocus}>
+            ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>
+          </a>
           <button 
           @click=${(e) => this._toggleMobileMenu(e.target, location)}
           class="submenu-toggle ${navItem.isOpen ? 'submenu-toggle--open' : ''}" 
+          ?disabled=${navItem.isTransitioning}
           aria-label="Toggle Submenu">
           <span class="submenu-toggle__icon"></span>
         </button>
         </div>
-        <ul class="menu" style=${styleMap(this.getItemMobileStyles(location))}>
+        <ul class="menu ${navItem.isOpen ? "menu--open" : ""}" style=${styleMap(this.getItemMobileStyles(location))}>
           ${navItem.subItems.map((subItem, i) => this._renderNavItem(subItem, location.concat([i])))}
         </ul>
       </li>
@@ -145,52 +150,56 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     `;
   }
 
-  // this is a disaster
+  /**
+   * @method _toggleMobileMenu
+   * @description Expands/collapses mobile subnavs with animation on user click.
+   * @param {Object} ele - Button element that was clicked
+   * @param {Array} navLocation - Array coordinates of corresponding nav item
+   */
   async _toggleMobileMenu(ele, navLocation){
-    if ( window.innerWidth >= 992 ) return;
+    if ( window.innerWidth >= this._mobileBreakPoint ) return;
     let ul = ele.parentElement.nextElementSibling;
     if ( !ul || ul.tagName !== 'UL' ) return;
     let navItem = this.getNavItem(navLocation);
-    
+    if ( navItem.isTransitioning ) return;
+    navItem.isTransitioning = true;
+
     // collapse menu
     if ( navItem.isOpen ) {
+      // Set expanded height
       navItem.mobileStyles.height = ul.scrollHeight + "px";
       navItem.mobileStyles.display = "block";
-      navItem.mobileStyles.transition = "height 300ms";
       this.requestUpdate();
       await this.updateComplete;
-      navItem.mobileStyles.height = "0px";
-      this.requestUpdate();
-      await this.updateComplete;
-      let onClose = () => {
-        console.log("hello");
-        ul.removeEventListener('transitionend', onClose);
-        navItem.mobileStyles = {};
-        navItem.isOpen = !navItem.isOpen;
-        this.requestUpdate();
-      };
-      ul.addEventListener('transitionend', onClose);
 
+      // Set height to 0
+      requestAnimationFrame(() => {
+        navItem.mobileStyles.height = "0px";
+        this.requestUpdate();
+      });
 
     // expand menu
     } else {
+      // Get expanded height
       navItem.mobileStyles.display = "block";
       navItem.mobileStyles.height = 0 + "px";
       this.requestUpdate();
       await this.updateComplete;
-      navItem.mobileStyles.height = ul.scrollHeight + "px";
-      let onOpen = () => {
-        ul.removeEventListener('transitionend', onOpen);
-        //if (navItem.mobileStyles.height) delete navItem.mobileStyles.height;
-        navItem.isOpen = !navItem.isOpen;
-        this.requestUpdate();
-      };
-      ul.addEventListener('transitionend', onOpen);
+      const expandedHeight = ul.scrollHeight + "px";
 
-      
-
+      // Set expanded height
+      navItem.mobileStyles.height = expandedHeight;
+      this.requestUpdate();
+      await this.updateComplete;
     }
-    this.requestUpdate();
+
+    // Remove transition state after animation duration
+    navItem.timeout = setTimeout(() => {
+      navItem.mobileStyles = {};
+      navItem.isOpen = !navItem.isOpen;
+      navItem.isTransitioning = false;
+      this.requestUpdate();
+    }, this.animationDuration);
 
   }
 
@@ -200,47 +209,126 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemMouseenter(e){
-    if ( window.innerWidth < 992 ) return;
-    let navLocation = e.target.key;
-    let navItem = this.getNavItem(navLocation);
-    this.clearMobileStyles(navItem);
-    if ( navItem.isClosing ) {
-      navItem.isClosing = false;
-      this.requestUpdate();
-    }
-    if ( navItem.timeout ) clearTimeout(navItem.timeout);
-    if ( navItem.isOpen ) return;
+    if ( window.innerWidth < this._mobileBreakPoint ) return;
+    this.openSubNav(e.target.key);
+  }
 
-    
-    navItem.timeout = setTimeout(() => {
-      navItem.isOpen = true;
-      this.requestUpdate();
-    }, this.hoverDelay);
-    
-    
+  _onItemFocus(e){
+    if ( window.innerWidth < this._mobileBreakPoint ) return;
+    const LI = e.target.parentElement.parentElement;
+    this.openSubNav(LI.key);
+  }
+
+  openSubNav(navLocation){
+    if ( 
+      typeof navLocation !== 'object' ||
+      !Array.isArray(navLocation) ||
+      navLocation.length === 0
+    ) return;
+    let navItem = this.getNavItem(navLocation);
+    if ( !navItem ) return;
+
+    // Open on mobile
+    if ( window.innerWidth < this._mobileBreakPoint ) {
+
+    // Open on desktop
+    } else {
+      this.clearMobileStyles(navItem);
+      if ( navItem.isClosing ) {
+        navItem.isClosing = false;
+        this.requestUpdate();
+      }
+      if ( navItem.timeout ) clearTimeout(navItem.timeout);
+      if ( navItem.isOpen ) return;
+  
+      navItem.timeout = setTimeout(() => {
+        navItem.isOpen = true;
+        this.requestUpdate();
+      }, this.hoverDelay);
+    }
   }
 
   /**
    * @method _onItemMouseleave
    * @description Bound to nav li items with a subnav
    * @param {Event} e 
-   * @returns 
    */
   _onItemMouseleave(e){
-    if ( window.innerWidth < 992 ) return;
-    let navLocation = e.target.key;
-    let navItem = this.getNavItem(navLocation);
-    this.clearMobileStyles(navItem);
-    if ( navItem.timeout ) clearTimeout(navItem.timeout);
-    if ( !navItem.isOpen ) return;
+    if ( window.innerWidth < this._mobileBreakPoint ) return;
+    this.closeSubNav(e.target.key);
+  }
 
-    navItem.isClosing = true;
-    this.requestUpdate();
-    navItem.timeout = setTimeout(() => {
-      navItem.isOpen = false;
-      navItem.isClosing = false;
+  _onItemFocusout(){
+    if ( window.innerWidth < this._mobileBreakPoint ) return;
+    requestAnimationFrame(() => {
+      const focusedEle = this.renderRoot.activeElement;
+      if ( !focusedEle ) {
+        this.closeAllSubNavs();
+        return;
+      }
+      
+      let ele = focusedEle;
+      while ( 
+        ele &&
+        ele.tagName !== this.tagName &&
+        !Array.isArray(ele.key) 
+      ){
+        ele = ele.parentElement;
+      }
+      if ( !ele.key ) return;
+      let navLocation = [...ele.key];
+      let currentIndex = navLocation.pop();
+      let navSiblings = navLocation.length == 0 ? this.navItems : this.getNavItem(navLocation).subItems;
+      navSiblings.forEach((sibling, i) => {
+        if ( i !== currentIndex) {
+          sibling.isOpen = false;
+          this.closeAllSubNavs(sibling.subItems, false);
+        }
+      });
       this.requestUpdate();
-    }, this.hoverDelay + this.animationDuration);
+    });
+  }
+
+  closeSubNav(navLocation){
+    if ( 
+      typeof navLocation !== 'object' ||
+      !Array.isArray(navLocation) ||
+      navLocation.length === 0
+    ) return;
+    let navItem = this.getNavItem(navLocation);
+    if ( !navItem ) return;
+
+    // Open on mobile
+    if ( window.innerWidth < this._mobileBreakPoint ) {
+    
+    // Open on desktop
+    } else {
+      this.clearMobileStyles(navItem);
+      if ( navItem.timeout ) clearTimeout(navItem.timeout);
+      if ( !navItem.isOpen ) return;
+  
+      navItem.isClosing = true;
+      this.requestUpdate();
+      navItem.timeout = setTimeout(() => {
+        navItem.isOpen = false;
+        navItem.isClosing = false;
+        this.requestUpdate();
+      }, this.hoverDelay + this.animationDuration);
+    }
+    
+  }
+
+  closeAllSubNavs(navItems, requestUpdate=true){
+    if ( !navItems ) navItems = this.navItems;
+    navItems.forEach((navItem) => {
+      if ( navItem.isOpen ) {
+        navItem.isOpen = false;
+        if ( requestUpdate ) this.requestUpdate();
+      }
+      if ( navItem.subItems ) {
+        this.closeAllSubNavs(navItem.subItems);
+      }
+    });
   }
 
   /**
@@ -268,15 +356,30 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     return eval(accessor);
   }
 
+  /**
+   * @method getItemMobileStyles
+   * @description Returns inline styles on a nav element (used for mobile transition animation)
+   * @param {Array} location - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
+   * @returns {Object} - Style map
+   */
   getItemMobileStyles(location) {
-    if ( window.innerWidth >= 992 ) return {};
+    if ( window.innerWidth >= this._mobileBreakPoint ) return {};
     let navItem = this.getNavItem(location);
     if ( !navItem.mobileStyles ) return {};
     return navItem.mobileStyles;
   }
 
+  /**
+   * @method clearMobileStyles
+   * @description Removes inline styles on a nav element (used for mobile transition animation)
+   * @param {Object} navItem - Member of the this.navItems array
+   */
   clearMobileStyles(navItem){
-    if (navItem.mobileStyles && Object.keys(navItem.mobileStyles).length > 0 ) {
+    if (
+      navItem &&
+      navItem.mobileStyles && 
+      Object.keys(navItem.mobileStyles).length > 0 
+    ) {
       navItem.mobileStyles = {};
       this.requestUpdate();
     }
