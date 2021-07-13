@@ -18,6 +18,10 @@ export function styles() {
       pointer-events: none;
     }
     @media (min-width: 992px) {
+      nav.primary-nav--mega ul.menu ul.menu {
+        opacity: 1;
+        display: block;
+      }
       ul.menu ul.menu {
         opacity: 0;
       }
@@ -73,7 +77,8 @@ return html`
 </style>
 <nav 
   id=${this._classPrefix}
-  class="${this._classPrefix} ${this.styleModifier ? `${this._classPrefix}--${this.styleModifier}` : ""}" 
+  class="${this.getNavClasses()}" 
+  @mouseenter=${this._onNavMouseEnter}
   @focusout=${this._onItemFocusout}
   aria-label="Main Menu">
   <ul class="menu">

@@ -35,11 +35,13 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
   static get properties() {
     return {
-      styleModifier: {type: String, attribute: "style-modifier"},
+      navType: {type: String, attribute: "nav-type"},
+      styleModifiers: {type: String, attribute: "style-modifiers"},
       hoverDelay: {type: Number, attribute: "hover-delay"},
       animationDuration: {type: Number, attribute: "animation-duration"},
       navItems: {type: Array},
-      maxDepth: {type: Number, attribute: "max-depth"}
+      maxDepth: {type: Number, attribute: "max-depth"},
+      _megaIsOpen: {type: Boolean, state: true}
     };
   }
 
@@ -50,7 +52,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
-    this.styleModifier = "superfish";
+    this.navType = "superfish";
+    this.styleModifiers = "";
     this.hoverDelay = 300;
     this.animationDuration = 300;
     this.navItems = [];
@@ -58,6 +61,26 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     this._classPrefix = "primary-nav";
     this._mobileBreakPoint = 992;
+    this._acceptedNavTypes = ['superfish', 'mega'];
+    this._megaIsOpen = false;
+  }
+
+  /**
+   * @method getNavClasses
+   * @description Get classes to be applied to the top-level 'nav' element
+   * @returns {String}
+   */
+  getNavClasses(){
+    let navType = this._acceptedNavTypes[0];
+    if ( this._acceptedNavTypes.includes(this.navType.toLowerCase()) ) navType = this.navType;
+    
+    this.navType ? `${this._classPrefix}--${this.navType}` : "";
+    let styleModifiers = "";
+    if ( this.styleModifiers ) {
+      styleModifiers = this.styleModifiers.split(" ").map(mod => `${this._classPrefix}--${mod}`).join(" ");
+    }
+    let megaIsOpen = this._isMegaMenu() && this._megaIsOpen ? 'is-hover' : '';
+    return `${this._classPrefix} ${this._classPrefix}--${navType} ${styleModifiers} ${megaIsOpen}`;
   }
 
   /**
@@ -113,6 +136,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( this._hasSubNav(navItem) && depth < this.maxDepth) {
       return html`
       <li 
+        id="nav--${location.join("-")}"
         .key=${location}
         @mouseenter=${this._onItemMouseenter} 
         @mouseleave=${this._onItemMouseleave}
@@ -124,7 +148,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
             ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>
           </a>
           <button 
-          @click=${(e) => this._toggleMobileMenu(e.target, location)}
+          @click=${() => this._toggleMobileMenu(location)}
           class="submenu-toggle ${navItem.isOpen ? 'submenu-toggle--open' : ''}" 
           ?disabled=${navItem.isTransitioning}
           aria-label="Toggle Submenu">
@@ -140,7 +164,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     // render as normal link
     return html`
-      <li .key=${location} class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
+      <li id="nav--${location.join("-")}" .key=${location} class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
         ${navItem.href ? html`
           <a href=${navItem.href}>${navItem.linkText}</a>
         ` : html`
@@ -153,33 +177,81 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   /**
    * @method _toggleMobileMenu
    * @description Expands/collapses mobile subnavs with animation on user click.
-   * @param {Object} ele - Button element that was clicked
    * @param {Array} navLocation - Array coordinates of corresponding nav item
    */
-  async _toggleMobileMenu(ele, navLocation){
+  async _toggleMobileMenu(navLocation){
     if ( window.innerWidth >= this._mobileBreakPoint ) return;
-    let ul = ele.parentElement.nextElementSibling;
-    if ( !ul || ul.tagName !== 'UL' ) return;
     let navItem = this.getNavItem(navLocation);
-    if ( navItem.isTransitioning ) return;
-    navItem.isTransitioning = true;
-
-    // collapse menu
     if ( navItem.isOpen ) {
-      // Set expanded height
-      navItem.mobileStyles.height = ul.scrollHeight + "px";
-      navItem.mobileStyles.display = "block";
-      this.requestUpdate();
-      await this.updateComplete;
-
-      // Set height to 0
-      requestAnimationFrame(() => {
-        navItem.mobileStyles.height = "0px";
-        this.requestUpdate();
-      });
-
-    // expand menu
+      this.closeSubNav(navLocation);
     } else {
+      this.openSubNav(navLocation);
+    }
+  }
+
+  _onNavMouseEnter(){
+    if ( 
+      window.innerWidth < this._mobileBreakPoint || 
+      !this._isMegaMenu() ) 
+      return;
+
+    this.openSubNav();
+  }
+
+  /**
+   * @method _onItemMouseenter
+   * @description Bound to nav li items with a subnav
+   * @param {Event} e 
+   */
+  _onItemMouseenter(e){
+    if ( window.innerWidth < this._mobileBreakPoint || this._isMegaMenu() ) return;
+    this.openSubNav(e.target.key);
+  }
+
+  /**
+   * @method _onItemFocus
+   * @description Bound to nav a elements
+   * @param {Event} e 
+   */
+  _onItemFocus(e){
+    if ( window.innerWidth < this._mobileBreakPoint ) return;
+    const LI = e.target.parentElement.parentElement;
+    this.openSubNav(LI.key);
+  }
+
+  /**
+   * @method openSubNav
+   * @description Opens the specified subnav
+   * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
+   * @returns 
+   */
+  async openSubNav(navLocation){
+
+    // mega menu
+    if ( this._isMegaMenu() ){
+      this._megaIsOpen = true;
+      return;
+    }
+
+
+    // non-mega menu
+    if ( 
+      typeof navLocation !== 'object' ||
+      !Array.isArray(navLocation) ||
+      navLocation.length === 0
+    ) return;
+    let navItem = this.getNavItem(navLocation);
+    if ( !navItem ) return;
+
+    // Open on mobile
+    if ( window.innerWidth < this._mobileBreakPoint ) {
+      let nav = this.renderRoot.getElementById(`nav--${navLocation.join("-")}`);
+      if ( !nav ) return;
+      let ul = nav.querySelector('ul');
+      if ( !ul ) return;
+      if ( navItem.isTransitioning ) return;
+      navItem.isTransitioning = true;
+
       // Get expanded height
       navItem.mobileStyles.display = "block";
       navItem.mobileStyles.height = 0 + "px";
@@ -191,45 +263,10 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       navItem.mobileStyles.height = expandedHeight;
       this.requestUpdate();
       await this.updateComplete;
-    }
 
-    // Remove transition state after animation duration
-    navItem.timeout = setTimeout(() => {
-      navItem.mobileStyles = {};
-      navItem.isOpen = !navItem.isOpen;
-      navItem.isTransitioning = false;
-      this.requestUpdate();
-    }, this.animationDuration);
+      // Remove transition state after animation duration
+      this._completeMobileTransition(navItem);
 
-  }
-
-  /**
-   * @method _onItemMouseenter
-   * @description Bound to nav li items with a subnav
-   * @param {Event} e 
-   */
-  _onItemMouseenter(e){
-    if ( window.innerWidth < this._mobileBreakPoint ) return;
-    this.openSubNav(e.target.key);
-  }
-
-  _onItemFocus(e){
-    if ( window.innerWidth < this._mobileBreakPoint ) return;
-    const LI = e.target.parentElement.parentElement;
-    this.openSubNav(LI.key);
-  }
-
-  openSubNav(navLocation){
-    if ( 
-      typeof navLocation !== 'object' ||
-      !Array.isArray(navLocation) ||
-      navLocation.length === 0
-    ) return;
-    let navItem = this.getNavItem(navLocation);
-    if ( !navItem ) return;
-
-    // Open on mobile
-    if ( window.innerWidth < this._mobileBreakPoint ) {
 
     // Open on desktop
     } else {
@@ -249,6 +286,25 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
+   * @method _completeMobileTransition
+   * @description Sets timeout to remove animation styles from mobile transition
+   * @param {Object} navItem - Member 'navItems' element property.
+   */
+  _completeMobileTransition(navItem){
+    navItem.timeout = setTimeout(() => {
+      navItem.mobileStyles = {};
+      navItem.isOpen = !navItem.isOpen;
+      navItem.isTransitioning = false;
+      this.requestUpdate();
+    }, this.animationDuration);
+  }
+
+  _isMegaMenu(){
+    if ( this.navType.toLowerCase().trim() === 'mega') return true;
+    return false;
+  }
+
+  /**
    * @method _onItemMouseleave
    * @description Bound to nav li items with a subnav
    * @param {Event} e 
@@ -258,6 +314,10 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     this.closeSubNav(e.target.key);
   }
 
+  /**
+   * @method _onItemFocusout
+   * @description Attached to the top-level nav element. Closes subnav if it doesn't contain focused link.
+   */
   _onItemFocusout(){
     if ( window.innerWidth < this._mobileBreakPoint ) return;
     requestAnimationFrame(() => {
@@ -289,7 +349,13 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     });
   }
 
-  closeSubNav(navLocation){
+  /**
+   * @method closeSubNav
+   * @description Closes a subnav given its coordinates 
+   * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
+   * @returns 
+   */
+  async closeSubNav(navLocation){
     if ( 
       typeof navLocation !== 'object' ||
       !Array.isArray(navLocation) ||
@@ -300,7 +366,29 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     // Open on mobile
     if ( window.innerWidth < this._mobileBreakPoint ) {
+      let nav = this.renderRoot.getElementById(`nav--${navLocation.join("-")}`);
+      if ( !nav ) return;
+      let ul = nav.querySelector('ul');
+      if ( !ul ) return;
+      if ( navItem.isTransitioning ) return;
+      navItem.isTransitioning = true;
+
+      // Set expanded height
+      navItem.mobileStyles.height = ul.scrollHeight + "px";
+      navItem.mobileStyles.display = "block";
+      this.requestUpdate();
+      await this.updateComplete;
+
+      // Set height to 0
+      requestAnimationFrame(() => {
+        navItem.mobileStyles.height = "0px";
+        this.requestUpdate();
+      });
+
+      // Remove transition state after animation duration
+      this._completeMobileTransition(navItem);
     
+
     // Open on desktop
     } else {
       this.clearMobileStyles(navItem);
@@ -318,6 +406,12 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     
   }
 
+  /**
+   * @method closeAllSubNavs
+   * @description Recursively closes all nav submenus within specified menu.
+   * @param {Array} navItems - The subItems property of any object within the 'navItems' element property.
+   * @param {Boolean} requestUpdate - Should an update be requested after each subnav closing?
+   */
   closeAllSubNavs(navItems, requestUpdate=true){
     if ( !navItems ) navItems = this.navItems;
     navItems.forEach((navItem) => {
