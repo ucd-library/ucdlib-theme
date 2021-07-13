@@ -4,7 +4,7 @@
   "description": "University branding, additional theme support, theme elements",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/index.js",
     "watch": "webpack --config webpack-watch.config.js --watch"
   },
   "author": "jrmerz@ucdavis.edu",
