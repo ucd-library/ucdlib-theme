@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --config webpack-watch.config.js --watch"
+    "watch": "webpack --config webpack-watch.config.js --watch",
+    "dist": "webpack --config webpack-watch.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
   "dependencies": {
     "@ucd-lib/theme-elements": "file:../elements",
     "@ucd-lib/theme-sass": "^5.0.5",
+    "express": "^4.17.1",
     "lit": "^2.0.0-rc.1",
     "photoswipe": "^4.1.3"
   }
