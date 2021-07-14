@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 
 import listCss from "@ucd-lib/theme-sass/2_base_class/_lists.css.js";
-import { motionCollapse } from "../utils/directives/motion-collapse";
+import { motionCollapse } from "../../utils/directives/motion-collapse";
 
 export function styles() {
   let customStyles = css`

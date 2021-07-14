@@ -3,7 +3,7 @@ import { html, css } from 'lit';
 import collapseStyles from "@ucd-lib/theme-sass/4_component/_collapse.css.js";
 import colorStyles from "@ucd-lib/theme-sass/4_component/_category-brand.css.js";
 
-import { motionCollapse } from "../utils/directives/motion-collapse";
+import { motionCollapse } from "../../utils/directives/motion-collapse";
 
 export function styles() {
   const elementStyles = css`
