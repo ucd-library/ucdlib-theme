@@ -79,7 +79,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( this.styleModifiers ) {
       styleModifiers = this.styleModifiers.split(" ").map(mod => `${this._classPrefix}--${mod}`).join(" ");
     }
-    let megaIsOpen = this._isMegaMenu() && this._megaIsOpen ? 'is-hover' : '';
+    let megaIsOpen = this.isMegaMenu() && this._megaIsOpen ? 'is-hover' : '';
     return `${this._classPrefix} ${this._classPrefix}--${navType} ${styleModifiers} ${megaIsOpen}`;
   }
 
@@ -107,6 +107,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( ele.tagName === 'A' ) {
       linkText = ele.innerText;
       href = ele.href;
+    } else if ( ele.tagName === 'LI' ) {
+      linkText = ele.innerText;
     } else if ( ele.tagName === 'OL' || ele.tagName === 'UL' ) {
       linkText = ele.getAttribute('link-text');
       href = ele.getAttribute('href');
@@ -140,7 +142,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         .key=${location}
         @mouseenter=${this._onItemMouseenter} 
         @mouseleave=${this._onItemMouseleave}
-        class="${navItem.isOpen ? 'sf--hover' : ''} ${navItem.isClosing ? 'closing': ''}">
+        class="depth-${depth} ${navItem.isOpen ? 'sf--hover' : ''} ${navItem.isClosing ? 'closing': ''}">
         <div class="submenu-toggle__wrapper ${depth === 0 ? `${this._classPrefix}__top-link` : ''}">
           <a 
             href=${navItem.href} 
@@ -164,12 +166,14 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     // render as normal link
     return html`
-      <li id="nav--${location.join("-")}" .key=${location} class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
-        ${navItem.href ? html`
-          <a href=${navItem.href}>${navItem.linkText}</a>
-        ` : html`
-          <span class="${this._classPrefix}__nolink">${navItem.linkText}</span>
-        `}
+      <li id="nav--${location.join("-")}" .key=${location} class="depth-${depth}">
+        <div class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
+          ${navItem.href ? html`
+            <a href=${navItem.href}>${navItem.linkText}</a>
+          ` : html`
+            <span class="${this._classPrefix}__nolink">${navItem.linkText}</span>
+          `}
+        </div>
       </li>
     `;
   }
@@ -189,14 +193,54 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     }
   }
 
-  _onNavMouseEnter(){
+  /**
+   * @method _onNavMouseenter
+   * @description Attached to top-level nav element. Opens mega menu in desktop view
+   */
+  _onNavMouseenter(){
     if ( 
       window.innerWidth < this._mobileBreakPoint || 
-      !this._isMegaMenu() ) 
+      !this.isMegaMenu() ) 
       return;
 
-    this.openSubNav();
+    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+    this._megaTimeout = setTimeout(() => {
+      this.openSubNav();
+    }, this.hoverDelay);
   }
+
+  /**
+   * @method _onNavMouseleave
+   * @description Attached to top-level nav element. Closes mega menu in desktop view
+   */
+  _onNavMouseleave(){
+    if ( 
+      window.innerWidth < this._mobileBreakPoint || 
+      !this.isMegaMenu() ) 
+      return;
+
+    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+    
+    this._megaTimeout = setTimeout(() => {
+      this.closeSubNav();
+    }, this.hoverDelay);
+  }
+
+  _onNavFocusin(){
+    if ( 
+      window.innerWidth < this._mobileBreakPoint || 
+      !this.isMegaMenu() ) 
+      return;
+    
+    if ( this._megaIsOpen ) return;
+    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+    
+    this._megaTimeout = setTimeout(() => {
+      this.closeSubNav();
+    }, this.hoverDelay);
+
+  }
+
 
   /**
    * @method _onItemMouseenter
@@ -204,7 +248,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemMouseenter(e){
-    if ( window.innerWidth < this._mobileBreakPoint || this._isMegaMenu() ) return;
+    if ( window.innerWidth < this._mobileBreakPoint || this.isMegaMenu() ) return;
     this.openSubNav(e.target.key);
   }
 
@@ -228,11 +272,10 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   async openSubNav(navLocation){
 
     // mega menu
-    if ( this._isMegaMenu() ){
+    if ( this.isMegaMenu() ){
       this._megaIsOpen = true;
       return;
     }
-
 
     // non-mega menu
     if ( 
@@ -299,7 +342,12 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     }, this.animationDuration);
   }
 
-  _isMegaMenu(){
+  /**
+   * @method isMegaMenu
+   * @description Does this element use the mega menu?
+   * @returns {Boolean}
+   */
+  isMegaMenu(){
     if ( this.navType.toLowerCase().trim() === 'mega') return true;
     return false;
   }
@@ -310,43 +358,57 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemMouseleave(e){
-    if ( window.innerWidth < this._mobileBreakPoint ) return;
+    if ( window.innerWidth < this._mobileBreakPoint || this.isMegaMenu() ) return;
     this.closeSubNav(e.target.key);
   }
 
   /**
-   * @method _onItemFocusout
+   * @method _onNavFocusout
    * @description Attached to the top-level nav element. Closes subnav if it doesn't contain focused link.
    */
-  _onItemFocusout(){
+  _onNavFocusout(){
     if ( window.innerWidth < this._mobileBreakPoint ) return;
-    requestAnimationFrame(() => {
-      const focusedEle = this.renderRoot.activeElement;
-      if ( !focusedEle ) {
-        this.closeAllSubNavs();
-        return;
-      }
-      
-      let ele = focusedEle;
-      while ( 
-        ele &&
-        ele.tagName !== this.tagName &&
-        !Array.isArray(ele.key) 
-      ){
-        ele = ele.parentElement;
-      }
-      if ( !ele.key ) return;
-      let navLocation = [...ele.key];
-      let currentIndex = navLocation.pop();
-      let navSiblings = navLocation.length == 0 ? this.navItems : this.getNavItem(navLocation).subItems;
-      navSiblings.forEach((sibling, i) => {
-        if ( i !== currentIndex) {
-          sibling.isOpen = false;
-          this.closeAllSubNavs(sibling.subItems, false);
-        }
+    if ( this.isMegaMenu() ) {
+      if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+      requestAnimationFrame(() => {
+        const focusedEle = this.renderRoot.activeElement;
+        if ( focusedEle ) return;
+        this._megaTimeout = setTimeout(() => {
+          this.closeSubNav();
+        }, this.hoverDelay);
       });
-      this.requestUpdate();
-    });
+
+    } else {
+      requestAnimationFrame(() => {
+        const focusedEle = this.renderRoot.activeElement;
+        if ( !focusedEle ) {
+          this.closeAllSubNavs();
+          return;
+        }
+        
+        let ele = focusedEle;
+        while ( 
+          ele &&
+          ele.tagName !== this.tagName &&
+          !Array.isArray(ele.key) 
+        ){
+          ele = ele.parentElement;
+        }
+        if ( !ele.key ) return;
+        let navLocation = [...ele.key];
+        let currentIndex = navLocation.pop();
+        let navSiblings = navLocation.length == 0 ? this.navItems : this.getNavItem(navLocation).subItems;
+        navSiblings.forEach((sibling, i) => {
+          if ( i !== currentIndex) {
+            sibling.isOpen = false;
+            this.closeAllSubNavs(sibling.subItems, false);
+          }
+        });
+        this.requestUpdate();
+      });
+
+    }
+
   }
 
   /**
@@ -356,6 +418,13 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @returns 
    */
   async closeSubNav(navLocation){
+
+    // mega menu
+    if ( this.isMegaMenu() ){
+      this._megaIsOpen = false;
+      return;
+    }
+
     if ( 
       typeof navLocation !== 'object' ||
       !Array.isArray(navLocation) ||

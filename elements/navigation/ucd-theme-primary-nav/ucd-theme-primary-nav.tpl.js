@@ -18,10 +18,11 @@ export function styles() {
       pointer-events: none;
     }
     @media (min-width: 992px) {
-      nav.primary-nav--mega ul.menu ul.menu {
+      nav.primary-nav--mega li.depth-0 > ul.menu {
         opacity: 1;
         display: block;
       }
+
       ul.menu ul.menu {
         opacity: 0;
       }
@@ -78,8 +79,10 @@ return html`
 <nav 
   id=${this._classPrefix}
   class="${this.getNavClasses()}" 
-  @mouseenter=${this._onNavMouseEnter}
-  @focusout=${this._onItemFocusout}
+  @mouseenter=${this._onNavMouseenter}
+  @mouseleave=${this._onNavMouseleave}
+  @focusout=${this._onNavFocusout}
+  @focusin=${this._onNavFocusin}
   aria-label="Main Menu">
   <ul class="menu">
     ${this.navItems.map((navItem, i) => this._renderNavItem(navItem, [i]))}
