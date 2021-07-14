@@ -25,6 +25,7 @@ export function styles() {
 
       ul.menu ul.menu {
         opacity: 0;
+        display: none;
       }
       ul.menu li.sf--hover > ul.menu {
         display: block;
@@ -34,6 +35,20 @@ export function styles() {
         display: block;
         opacity: 0;
       }
+      .mega-focus .primary-nav__top-link a, 
+      .mega-focus .primary-nav__top-link a::before, .mega-focus 
+      .primary-nav__top-link a::after {
+        background-color: rgb(255, 223, 128);
+      }
+      .mega-focus .primary-nav__top-link a:focus, 
+      .mega-focus .primary-nav__top-link a:focus::before, 
+      .mega-focus .primary-nav__top-link a:focus::after {
+        background-color: rgb(255, 191, 0);
+      }
+      .mega-focus > ul {
+        background-color: rgb(255, 251, 237);
+      }
+
     }
 
     @media (max-width: 991px) {

@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-primary-nav.tpl.js";
 import { styleMap } from 'lit/directives/style-map.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import Mixin from "../../utils/mixin";
 import { MutationObserverElement } from "../../utils/mutation-observer";
@@ -140,12 +141,14 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       <li 
         id="nav--${location.join("-")}"
         .key=${location}
+        .hasnav=${true}
         @mouseenter=${this._onItemMouseenter} 
         @mouseleave=${this._onItemMouseleave}
-        class="depth-${depth} ${navItem.isOpen ? 'sf--hover' : ''} ${navItem.isClosing ? 'closing': ''}">
+        class=${classMap(this._makeLiClassMap(navItem, depth))}>
         <div class="submenu-toggle__wrapper ${depth === 0 ? `${this._classPrefix}__top-link` : ''}">
           <a 
-            href=${navItem.href} 
+            href=${navItem.href}
+            tabindex=${this.isMegaMenu() && depth > 0 && !this._megaIsOpen ? "-1" : "0"}
             @focus=${this._onItemFocus}>
             ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>
           </a>
@@ -166,16 +169,36 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     // render as normal link
     return html`
-      <li id="nav--${location.join("-")}" .key=${location} class="depth-${depth}">
+      <li id="nav--${location.join("-")}" .key=${location} class=${classMap(this._makeLiClassMap(navItem, depth))}>
         <div class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
           ${navItem.href ? html`
-            <a href=${navItem.href}>${navItem.linkText}</a>
+            <a 
+              href=${navItem.href} 
+              @focus=${this._onItemFocus}
+              tabindex=${this.isMegaMenu() && depth > 0 && !this._megaIsOpen ? "-1" : "0"}>
+              ${navItem.linkText}</a>
           ` : html`
             <span class="${this._classPrefix}__nolink">${navItem.linkText}</span>
           `}
         </div>
       </li>
     `;
+  }
+
+  /**
+   * @method _makeLiClassMap
+   * @description Classes to be assigned to each LI element in the nav.
+   * @param {Object} navItem - An item in the navItems property.
+   * @param {Number} depth - Depth of the navItem
+   * @returns {Object}
+   */
+  _makeLiClassMap(navItem, depth=0){
+    let classes = {};
+    classes[`depth-${depth}`] = true;
+    if ( navItem.isOpen ) classes['sf--hover'] = true;
+    if ( navItem.isClosing ) classes.closing = true;
+    if (navItem.megaFocus) classes['mega-focus'] = true;
+    return classes;
   }
 
   /**
@@ -205,7 +228,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
     this._megaTimeout = setTimeout(() => {
-      this.openSubNav();
+      this.openMegaNav();
     }, this.hoverDelay);
   }
 
@@ -222,10 +245,15 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
     
     this._megaTimeout = setTimeout(() => {
-      this.closeSubNav();
+      this.closeMegaNav();
     }, this.hoverDelay);
   }
 
+  /**
+   * @method _onNavFocusin
+   * @description Fires when focus enters the main nav element. Used to open the meganav
+   * @returns 
+   */
   _onNavFocusin(){
     if ( 
       window.innerWidth < this._mobileBreakPoint || 
@@ -236,7 +264,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
     
     this._megaTimeout = setTimeout(() => {
-      this.closeSubNav();
+      this.openMegaNav();
     }, this.hoverDelay);
 
   }
@@ -248,7 +276,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemMouseenter(e){
-    if ( window.innerWidth < this._mobileBreakPoint || this.isMegaMenu() ) return;
+    if ( window.innerWidth < this._mobileBreakPoint ) return;
     this.openSubNav(e.target.key);
   }
 
@@ -260,8 +288,50 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   _onItemFocus(e){
     if ( window.innerWidth < this._mobileBreakPoint ) return;
     const LI = e.target.parentElement.parentElement;
-    this.openSubNav(LI.key);
+
+    if (LI.hasnav) {
+      this.openSubNav(LI.key);
+    }
+  
+    if (this.isMegaMenu() && this._megaIsOpen) {
+      this._setMegaFocus(LI.key);
+    }
   }
+
+  /**
+   * @method _setMegaFocus
+   * @description Displays custom styling to meganav item when focused to fix bug in sitefarm code.
+   * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
+   */
+  _setMegaFocus(navLocation){
+    this.navItems.forEach((nav) => nav.megaFocus = false);
+    if ( 
+      typeof navLocation !== 'object' ||
+      !Array.isArray(navLocation) ||
+      navLocation.length < 1
+    ) return;
+    let navItem = this.getNavItem([navLocation[0]]);
+    navItem.megaFocus = true;
+    this.requestUpdate();
+
+  }
+
+  /**
+   * @method openMegaNav
+   * @description Opens the meganav menu
+   */
+  openMegaNav() {
+    this._megaIsOpen = true;
+  }
+  
+  /**
+   * @method closeMegaNav
+   * @description Closes the meganav menu
+   */
+  closeMegaNav(){
+    this._megaIsOpen = false;
+  }
+  
 
   /**
    * @method openSubNav
@@ -273,7 +343,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     // mega menu
     if ( this.isMegaMenu() ){
-      this._megaIsOpen = true;
       return;
     }
 
@@ -374,7 +443,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         const focusedEle = this.renderRoot.activeElement;
         if ( focusedEle ) return;
         this._megaTimeout = setTimeout(() => {
-          this.closeSubNav();
+          this.navItems.forEach((nav) => nav.megaFocus = false);
+          this.closeMegaNav();
         }, this.hoverDelay);
       });
 
@@ -421,7 +491,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
     // mega menu
     if ( this.isMegaMenu() ){
-      this._megaIsOpen = false;
       return;
     }
 
