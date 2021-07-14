@@ -1,5 +1,5 @@
-const createBrowser = require('../utils/create-browser');
-const wait = require('../utils/wait');
+const createBrowser = require('../../utils/create-browser');
+const wait = require('../../utils/wait');
 const assert = require('assert');
 var page, browser;
 
