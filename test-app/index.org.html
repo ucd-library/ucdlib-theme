@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>This is a test</title>
+    <script src="js/bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/@ucd-lib/theme-sass/style.css">
+  </head>
+  <body>
+    <h1>Components</h1>
+    <h2>Messaging</h2>
+
+    <h3>Alert</h3>
+    <ucd-theme-alert>Hello World</ucd-theme-alert>
+
+    <h3>Message Area</h3>
+    <ucd-theme-message-area title="Testing Alert" button-text="toggle">
+      <div>Content for the message!</div>
+    </ucd-theme-message-area>
+
+    <h2>Expandable Content</h2>
+    <h3>Collapse</h3>
+    <ucd-theme-collapse title="Toggle me please">
+      Hello world!
+    </ucd-theme-collapse>
+    <br>
+
+    <ucd-theme-collapse title="I have a brand modifier" brand-class="category-brand--tahoe">
+      Use the brand-class attribute to modify my styling
+    </ucd-theme-collapse>
+
+    <h3>FAQ</h3>
+    <ucd-theme-list-accordion list-style="faq">
+      <div>Is Steve Great?</div>
+      <div>Obviously</div>
+      <div>How do we determine what styles to import?</div>
+      <div>You could theoretically put a lot of different types of content in here.
+        What styles should be imported? 
+        Definitely links: <a href="#">hey look i'm styled</a>
+        What about headings, media, block quotes, tables?
+      </div>
+    </ucd-theme-list-accordion>
+    <br>
+    <h3>Accordion</h3>
+    <ucd-theme-list-accordion>
+      <div>Is this the same element as above?</div>
+      <div>Yes!</div>
+    </ucd-theme-list-accordion>
+
+    <h2>Inputs and Forms</h2>
+    <h3>Search Form</h3>
+    <ucd-theme-form-search></ucd-theme-form-search>
+
+    <h2>Navigation</h2>
+
+    <h3>Search popup</h3>
+    <ucd-theme-header-search-popup>
+      <ucd-theme-form-search></ucd-theme-form-search>
+    </ucd-theme-header-search-popup>
+
+    <h2>Media</h2>
+    <h3>Image Gallery</h3>
+    <ucd-theme-image-gallery>
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" />
+    </ucd-theme-image-gallery>
+    <h3>Gallery Poster</h3>
+    <ucd-theme-image-gallery modifier="poster">
+      <img src="http://placehold.it/352x198" alt="16x9 Image" width="352" height="198" big-src="http://placehold.it/2000x1125" big-width="2000" big-height="1125" />
+    </ucd-theme-image-gallery>
+
+  </body>
+</html>

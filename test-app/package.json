@@ -12,6 +12,7 @@
   "devDependencies": {
     "@ucd-lib/cork-app-build": "^0.2.0",
     "breakpoint-sass": "^2.7.1",
+    "cork-app-utils": "^1.0.5",
     "css-loader": "^5.2.4",
     "mini-css-extract-plugin": "^1.6.0",
     "sass": "^1.32.12",

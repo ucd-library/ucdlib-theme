@@ -28,10 +28,6 @@ export default class UcdlibPages extends Mixin(LitElement)
     };
   }
 
-  static get styles() {
-    return styles();
-  }
-
   constructor() {
     super();
     // this.render = render.bind(this);
@@ -60,7 +56,7 @@ export default class UcdlibPages extends Mixin(LitElement)
    * @param {ElementList} children 
    */
   _onChildListMutation(children) {
-    this._updateVisibility();
+    this._onChange();
   }
 
   /**
@@ -82,6 +78,8 @@ export default class UcdlibPages extends Mixin(LitElement)
 
     // loop through and hide/show children
     let found = this._updateVisibility(selected, attr);
+
+    // if nothing found, check fallback selection
     if( !found && this.fallbackSelection ) {
       if( typeof this.selected === 'string' && this.selected.match(/\d+/) ) {
         selected = parseInt(this.fallbackSelection);
@@ -112,7 +110,7 @@ export default class UcdlibPages extends Mixin(LitElement)
     let useIndex = (typeof selected === 'number');
     let val;
 
-    for( let i = 0; i < children; i++ ) {
+    for( let i = 0; i < children.length; i++ ) {
       if( useIndex ) {
         this._select((i === selected), children[i], this.selectedAttribute);
         if( !found ) found = (i === selected);
@@ -120,7 +118,7 @@ export default class UcdlibPages extends Mixin(LitElement)
       }
 
       val = children[i].getAttribute(attr);
-      this._select((i === selected), children[i], this.selectedAttribute);
+      this._select((val === selected), children[i], this.selectedAttribute);
       if( !found ) found = (val === selected);
     }
 
