@@ -22,7 +22,6 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  * @property {Number} maxDepth - Maximum number of submenus to show
  * 
  * @example
- * html`
  *  <ucd-theme-primary-nav>
  *    <a href="#">link 1</a>
  *    <a href="#">link 2</a>
@@ -30,7 +29,6 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  *      <li><a href="#">subnav link 1</a></li>
  *    </ul>
  *  </ucd-theme-primary-nav>
- * `
  */
 export default class UcdThemePrimaryNav extends Mixin(LitElement)
   .with(MutationObserverElement) {
@@ -68,297 +66,13 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
-   * @method isDesktop
-   * @description Is the desktop view currently active?
-   * @returns {Boolean}
-   */
-  isDesktop(){
-    return window.innerWidth >= this._mobileBreakPoint;
-  }
-
-  /**
-   * @method isMobile
-   * @description Is the mobile view currently active?
-   * @returns {Boolean}
-   */
-  isMobile(){
-    return !this.isDesktop();
-  }
-
-  /**
-   * @method getNavClasses
-   * @description Get classes to be applied to the top-level 'nav' element
-   * @returns {String}
-   */
-  getNavClasses(){
-    let navType = this._acceptedNavTypes[0];
-    if ( this._acceptedNavTypes.includes(this.navType.toLowerCase()) ) navType = this.navType;
-    
-    let styleModifiers = "";
-    if ( this.styleModifiers ) {
-      styleModifiers = this.styleModifiers.split(" ").map(mod => `${this._classPrefix}--${mod}`).join(" ");
-    }
-    let megaIsOpen = this.isMegaMenu() && this._megaIsOpen ? 'is-hover' : '';
-    return `${this._classPrefix} ${this._classPrefix}--${navType} ${styleModifiers} ${megaIsOpen}`;
-  }
-
-  /**
-   * @method _onChildListMutation
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
-   *  Sets the 'navItems' property.
-   */
-  _onChildListMutation(){
-    const children = Array.from(this.children);
-    let navItems = children.map((child) => this._makeNavItemTree(child)).filter(navItem => navItem.linkText);
-    if ( navItems.length ) this.navItems = navItems;
-  }
-
-  /**
-   * @method _makeNavItemTree
-   * @description Extracts menu item data from DOM Element
-   * @param {Element} ele - Element
-   * @returns {Object} Formatted object describing the menu item and its children
-   */
-  _makeNavItemTree(ele){
-    let linkText, href, subItems = [], isOpen=false, mobileStyles={};
-    if ( ele.tagName === 'LI' && ele.children.length > 0) ele = ele.children[0];
-
-    if ( ele.tagName === 'A' ) {
-      linkText = ele.innerText;
-      href = ele.href;
-    } else if ( ele.tagName === 'LI' ) {
-      linkText = ele.innerText;
-    } else if ( ele.tagName === 'OL' || ele.tagName === 'UL' ) {
-      linkText = ele.getAttribute('link-text');
-      href = ele.getAttribute('href');
-
-      for (const child of Array.from(ele.children)) {
-        let childItem = this._makeNavItemTree(child);
-        if ( childItem.linkText ) subItems.push(childItem);
-      }
-    }
-
-    if ( linkText ) linkText = linkText.trim();
-    return {linkText, href, subItems, isOpen, mobileStyles};
-
-  }
-
-  /**
-   * @method _renderNavItem
-   * @description Renders a menu item and all its children to the specified max depth
-   * @param {Object} navItem - An item from the 'navItems' element property
-   * @param {Array} location - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4]
-   * @returns {TemplateResult}
-   */
-  _renderNavItem(navItem, location){
-    const depth = location.length - 1;
-
-    // Render item and its subnav
-    if ( this._hasSubNav(navItem) && depth < this.maxDepth) {
-      return html`
-      <li 
-        id="nav--${location.join("-")}"
-        .key=${location}
-        .hasnav=${true}
-        @mouseenter=${this._onItemMouseenter} 
-        @mouseleave=${this._onItemMouseleave}
-        class=${classMap(this._makeLiClassMap(navItem, depth))}>
-        <div class="submenu-toggle__wrapper ${depth === 0 ? `${this._classPrefix}__top-link` : ''}">
-          <a 
-            href=${navItem.href}
-            tabindex=${this._setTabIndex(depth)}
-            @focus=${this._onItemFocus}>
-            ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>
-          </a>
-          <button 
-          @click=${() => this._toggleMobileMenu(location)}
-          class="submenu-toggle ${navItem.isOpen ? 'submenu-toggle--open' : ''}" 
-          ?disabled=${navItem.isTransitioning}
-          aria-label="Toggle Submenu">
-          <span class="submenu-toggle__icon"></span>
-        </button>
-        </div>
-        <ul class="menu ${navItem.isOpen ? "menu--open" : ""}" style=${styleMap(this.getItemMobileStyles(location))}>
-          ${navItem.subItems.map((subItem, i) => this._renderNavItem(subItem, location.concat([i])))}
-        </ul>
-      </li>
-    `;
-    }
-
-    // render as normal link
-    return html`
-      <li id="nav--${location.join("-")}" .key=${location} class=${classMap(this._makeLiClassMap(navItem, depth))}>
-        <div class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
-          ${navItem.href ? html`
-            <a 
-              href=${navItem.href} 
-              @focus=${this._onItemFocus}
-              tabindex=${this._setTabIndex(depth)}>
-              ${navItem.linkText}</a>
-          ` : html`
-            <span class="${this._classPrefix}__nolink">${navItem.linkText}</span>
-          `}
-        </div>
-      </li>
-    `;
-  }
-
-  /**
-   * @method _setTabIndex
-   * @description Sets the tab index of menu links
-   * @param {Number} depth - Level of the menu link
-   * @returns {Number}
-   */
-  _setTabIndex(depth=0){
-    let i = 0;
-    if (
-      this.isMegaMenu() && 
-      depth > 0 && 
-      !this._megaIsOpen &&
-      this.isDesktop()
-    ) i = -1;
-
-    return i;
-  }
-
-  /**
-   * @method _makeLiClassMap
-   * @description Classes to be assigned to each LI element in the nav.
-   * @param {Object} navItem - An item in the navItems property.
-   * @param {Number} depth - Depth of the navItem
-   * @returns {Object}
-   */
-  _makeLiClassMap(navItem, depth=0){
-    let classes = {};
-    classes[`depth-${depth}`] = true;
-    if ( navItem.isOpen ) classes['sf--hover'] = true;
-    if ( navItem.isClosing ) classes.closing = true;
-    if (navItem.megaFocus) classes['mega-focus'] = true;
-    return classes;
-  }
-
-  /**
-   * @method _toggleMobileMenu
-   * @description Expands/collapses mobile subnavs with animation on user click.
-   * @param {Array} navLocation - Array coordinates of corresponding nav item
-   */
-  async _toggleMobileMenu(navLocation){
-    if ( this.isDesktop() ) return;
-    let navItem = this.getNavItem(navLocation);
-    if ( navItem.isOpen ) {
-      this.closeSubNav(navLocation);
-    } else {
-      this.openSubNav(navLocation);
-    }
-  }
-
-  /**
-   * @method _onNavMouseenter
-   * @description Attached to top-level nav element. Opens mega menu in desktop view
-   */
-  _onNavMouseenter(){
-    if ( 
-      this.isMobile() || 
-      !this.isMegaMenu() ) 
-      return;
-
-    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
-    this._megaTimeout = setTimeout(() => {
-      this.openMegaNav();
-    }, this.hoverDelay);
-  }
-
-  /**
-   * @method _onNavMouseleave
-   * @description Attached to top-level nav element. Closes mega menu in desktop view
-   */
-  _onNavMouseleave(){
-    if ( 
-      this.isMobile() || 
-      !this.isMegaMenu() ) 
-      return;
-
-    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
-    
-    this._megaTimeout = setTimeout(() => {
-      this.closeMegaNav();
-    }, this.hoverDelay);
-  }
-
-  /**
-   * @method _onNavFocusin
-   * @description Fires when focus enters the main nav element. Used to open the meganav
-   */
-  _onNavFocusin(){
-    if ( 
-      this.isMobile() || 
-      !this.isMegaMenu() ) 
-      return;
-    
-    if ( this._megaIsOpen ) return;
-    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
-    
-    this._megaTimeout = setTimeout(() => {
-      this.openMegaNav();
-    }, this.hoverDelay);
-
-  }
-
-
-  /**
-   * @method _onItemMouseenter
-   * @description Bound to nav li items with a subnav
-   * @param {Event} e 
-   */
-  _onItemMouseenter(e){
-    if ( this.isMobile() ) return;
-    this.openSubNav(e.target.key);
-  }
-
-  /**
-   * @method _onItemFocus
-   * @description Bound to nav a elements
-   * @param {Event} e 
-   */
-  _onItemFocus(e){
-    if ( this.isMobile() ) return;
-    const LI = e.target.parentElement.parentElement;
-
-    if (LI.hasnav) {
-      this.openSubNav(LI.key);
-    }
-  
-    if (this.isMegaMenu() && this._megaIsOpen) {
-      this._setMegaFocus(LI.key);
-    }
-  }
-
-  /**
-   * @method _setMegaFocus
-   * @description Displays custom styling to meganav item when focused to fix bug in sitefarm code.
-   * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
-   */
-  _setMegaFocus(navLocation){
-    this.navItems.forEach((nav) => nav.megaFocus = false);
-    if ( 
-      typeof navLocation !== 'object' ||
-      !Array.isArray(navLocation) ||
-      navLocation.length < 1
-    ) return;
-    let navItem = this.getNavItem([navLocation[0]]);
-    navItem.megaFocus = true;
-    this.requestUpdate();
-
-  }
-
-  /**
    * @method openMegaNav
    * @description Opens the meganav menu
    */
   openMegaNav() {
     this._megaIsOpen = true;
   }
-  
+    
   /**
    * @method closeMegaNav
    * @description Closes the meganav menu
@@ -366,7 +80,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   closeMegaNav(){
     this._megaIsOpen = false;
   }
-  
 
   /**
    * @method openSubNav
@@ -417,7 +130,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         return;
       }
 
-      this.clearMobileStyles(navItem);
+      this.clearMobileAnimationStyles(navItem);
       if ( navItem.isClosing ) {
         navItem.isClosing = false;
         this.requestUpdate();
@@ -430,90 +143,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         this.requestUpdate();
       }, this.hoverDelay);
     }
-  }
-
-  /**
-   * @method _completeMobileTransition
-   * @description Sets timeout to remove animation styles from mobile transition
-   * @param {Object} navItem - Member 'navItems' element property.
-   */
-  _completeMobileTransition(navItem){
-    navItem.timeout = setTimeout(() => {
-      navItem.mobileStyles = {};
-      navItem.isOpen = !navItem.isOpen;
-      navItem.isTransitioning = false;
-      this.requestUpdate();
-    }, this.animationDuration);
-  }
-
-  /**
-   * @method isMegaMenu
-   * @description Does this element use the mega menu?
-   * @returns {Boolean}
-   */
-  isMegaMenu(){
-    if ( this.navType.toLowerCase().trim() === 'mega') return true;
-    return false;
-  }
-
-  /**
-   * @method _onItemMouseleave
-   * @description Bound to nav li items with a subnav
-   * @param {Event} e 
-   */
-  _onItemMouseleave(e){
-    if ( this.isMobile() || this.isMegaMenu() ) return;
-    this.closeSubNav(e.target.key);
-  }
-
-  /**
-   * @method _onNavFocusout
-   * @description Attached to the top-level nav element. Closes subnav if it doesn't contain focused link.
-   */
-  _onNavFocusout(){
-    if ( this.isMobile() ) return;
-    if ( this.isMegaMenu() ) {
-      if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
-      requestAnimationFrame(() => {
-        const focusedEle = this.renderRoot.activeElement;
-        if ( focusedEle ) return;
-        this._megaTimeout = setTimeout(() => {
-          this.navItems.forEach((nav) => nav.megaFocus = false);
-          this.closeMegaNav();
-        }, this.hoverDelay);
-      });
-
-    } else {
-      requestAnimationFrame(() => {
-        const focusedEle = this.renderRoot.activeElement;
-        if ( !focusedEle ) {
-          this.closeAllSubNavs();
-          return;
-        }
-        
-        let ele = focusedEle;
-        while ( 
-          ele &&
-          ele.tagName !== this.tagName &&
-          !Array.isArray(ele.key) 
-        ){
-          ele = ele.parentElement;
-        }
-        if ( !ele.key ) return;
-        let navLocation = [...ele.key];
-        let currentIndex = navLocation.pop();
-        let navSiblings = navLocation.length == 0 ? this.navItems : this.getNavItem(navLocation).subItems;
-        navSiblings.forEach((sibling, i) => {
-          if ( i !== currentIndex) {
-            sibling.isOpen = false;
-            this.closeAllSubNavs(sibling.subItems, false);
-          }
-        });
-        this.requestUpdate();
-      });
-
-    }
-
   }
 
   /**
@@ -570,7 +199,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       }
 
 
-      this.clearMobileStyles(navItem);
+      this.clearMobileAnimationStyles(navItem);
       if ( navItem.timeout ) clearTimeout(navItem.timeout);
       if ( !navItem.isOpen ) return;
   
@@ -605,13 +234,46 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
-   * @method _hasSubNav
-   * @description Utility function for determining if a menu has subitems
-   * @param {Object} navItem - A member of the navItems array.
+   * @method clearMobileAnimationStyles
+   * @description Removes inline styles on a nav element (used for mobile transition animation)
+   * @param {Object} navItem - Member of the this.navItems array
+   */
+  clearMobileAnimationStyles(navItem){
+    if (
+      navItem &&
+      navItem.mobileStyles && 
+      Object.keys(navItem.mobileStyles).length > 0 
+    ) {
+      navItem.mobileStyles = {};
+      this.requestUpdate();
+    }
+  }
+
+  /**
+   * @method isDesktop
+   * @description Is the desktop view currently active?
    * @returns {Boolean}
    */
-  _hasSubNav(navItem){
-    if ( navItem && navItem.subItems && navItem.subItems.length) return true;
+  isDesktop(){
+    return window.innerWidth >= this._mobileBreakPoint;
+  }
+
+  /**
+   * @method isMobile
+   * @description Is the mobile view currently active?
+   * @returns {Boolean}
+   */
+  isMobile(){
+    return !this.isDesktop();
+  }
+
+  /**
+   * @method isMegaMenu
+   * @description Does this element use the mega menu?
+   * @returns {Boolean}
+   */
+  isMegaMenu(){
+    if ( this.navType.toLowerCase().trim() === 'mega') return true;
     return false;
   }
 
@@ -630,32 +292,385 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
-   * @method getItemMobileStyles
+   * @method getNavClasses
+   * @private
+   * @description Get classes to be applied to the top-level 'nav' element
+   * @returns {String}
+   */
+  _getNavClasses(){
+    let navType = this._acceptedNavTypes[0];
+    if ( this._acceptedNavTypes.includes(this.navType.toLowerCase()) ) navType = this.navType;
+    
+    let styleModifiers = "";
+    if ( this.styleModifiers ) {
+      styleModifiers = this.styleModifiers.split(" ").map(mod => `${this._classPrefix}--${mod}`).join(" ");
+    }
+    let megaIsOpen = this.isMegaMenu() && this._megaIsOpen ? 'is-hover' : '';
+    return `${this._classPrefix} ${this._classPrefix}--${navType} ${styleModifiers} ${megaIsOpen}`;
+  }
+
+  /**
+   * @method _onChildListMutation
+   * @private
+   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   *  Sets the 'navItems' property.
+   */
+  _onChildListMutation(){
+    const children = Array.from(this.children);
+    let navItems = children.map((child) => this._makeNavItemTree(child)).filter(navItem => navItem.linkText);
+    if ( navItems.length ) this.navItems = navItems;
+  }
+
+  /**
+   * @method _makeNavItemTree
+   * @private
+   * @description Extracts menu item data from DOM Element
+   * @param {Element} ele - Element
+   * @returns {Object} Formatted object describing the menu item and its children
+   */
+  _makeNavItemTree(ele){
+    let linkText, href, subItems = [], isOpen=false, mobileStyles={};
+    if ( ele.tagName === 'LI' && ele.children.length > 0) ele = ele.children[0];
+
+    if ( ele.tagName === 'A' ) {
+      linkText = ele.innerText;
+      href = ele.href;
+    } else if ( ele.tagName === 'LI' ) {
+      linkText = ele.innerText;
+    } else if ( ele.tagName === 'OL' || ele.tagName === 'UL' ) {
+      linkText = ele.getAttribute('link-text');
+      href = ele.getAttribute('href');
+
+      for (const child of Array.from(ele.children)) {
+        let childItem = this._makeNavItemTree(child);
+        if ( childItem.linkText ) subItems.push(childItem);
+      }
+    }
+
+    if ( linkText ) linkText = linkText.trim();
+    return {linkText, href, subItems, isOpen, mobileStyles};
+
+  }
+
+  /**
+   * @method _renderNavItem
+   * @private
+   * @description Renders a menu item and all its children to the specified max depth
+   * @param {Object} navItem - An item from the 'navItems' element property
+   * @param {Array} location - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4]
+   * @returns {TemplateResult}
+   */
+  _renderNavItem(navItem, location){
+    const depth = location.length - 1;
+
+    // Render item and its subnav
+    if ( this._hasSubNav(navItem) && depth < this.maxDepth) {
+      return html`
+      <li 
+        id="nav--${location.join("-")}"
+        .key=${location}
+        .hasnav=${true}
+        @mouseenter=${this._onItemMouseenter} 
+        @mouseleave=${this._onItemMouseleave}
+        class=${classMap(this._makeLiClassMap(navItem, depth))}>
+        <div class="submenu-toggle__wrapper ${depth === 0 ? `${this._classPrefix}__top-link` : ''}">
+          <a 
+            href=${navItem.href}
+            tabindex=${this._setTabIndex(depth)}
+            @focus=${this._onItemFocus}>
+            ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>
+          </a>
+          <button 
+          @click=${() => this._toggleMobileMenu(location)}
+          class="submenu-toggle ${navItem.isOpen ? 'submenu-toggle--open' : ''}" 
+          ?disabled=${navItem.isTransitioning}
+          aria-label="Toggle Submenu">
+          <span class="submenu-toggle__icon"></span>
+        </button>
+        </div>
+        <ul class="menu ${navItem.isOpen ? "menu--open" : ""}" style=${styleMap(this._getItemMobileStyles(location))}>
+          ${navItem.subItems.map((subItem, i) => this._renderNavItem(subItem, location.concat([i])))}
+        </ul>
+      </li>
+    `;
+    }
+
+    // render as normal link
+    return html`
+      <li id="nav--${location.join("-")}" .key=${location} class=${classMap(this._makeLiClassMap(navItem, depth))}>
+        <div class="${depth === 0 ? `${this._classPrefix}__top-link`: '' }">
+          ${navItem.href ? html`
+            <a 
+              href=${navItem.href} 
+              @focus=${this._onItemFocus}
+              tabindex=${this._setTabIndex(depth)}>
+              ${navItem.linkText}</a>
+          ` : html`
+            <span class="${this._classPrefix}__nolink">${navItem.linkText}</span>
+          `}
+        </div>
+      </li>
+    `;
+  }
+
+  /**
+   * @method _setTabIndex
+   * @private
+   * @description Sets the tab index of menu links
+   * @param {Number} depth - Level of the menu link
+   * @returns {Number}
+   */
+  _setTabIndex(depth=0){
+    let i = 0;
+    if (
+      this.isMegaMenu() && 
+      depth > 0 && 
+      !this._megaIsOpen &&
+      this.isDesktop()
+    ) i = -1;
+
+    return i;
+  }
+
+  /**
+   * @method _makeLiClassMap
+   * @private
+   * @description Classes to be assigned to each LI element in the nav.
+   * @param {Object} navItem - An item in the navItems property.
+   * @param {Number} depth - Depth of the navItem
+   * @returns {Object}
+   */
+  _makeLiClassMap(navItem, depth=0){
+    let classes = {};
+    classes[`depth-${depth}`] = true;
+    if ( navItem.isOpen ) classes['sf--hover'] = true;
+    if ( navItem.isClosing ) classes.closing = true;
+    if (navItem.megaFocus) classes['mega-focus'] = true;
+    return classes;
+  }
+
+  /**
+   * @method _toggleMobileMenu
+   * @private
+   * @description Expands/collapses mobile subnavs with animation on user click.
+   * @param {Array} navLocation - Array coordinates of corresponding nav item
+   */
+  async _toggleMobileMenu(navLocation){
+    if ( this.isDesktop() ) return;
+    let navItem = this.getNavItem(navLocation);
+    if ( navItem.isOpen ) {
+      this.closeSubNav(navLocation);
+    } else {
+      this.openSubNav(navLocation);
+    }
+  }
+
+  /**
+   * @method _onNavMouseenter
+   * @private
+   * @description Attached to top-level nav element. Opens mega menu in desktop view
+   */
+  _onNavMouseenter(){
+    if ( 
+      this.isMobile() || 
+      !this.isMegaMenu() ) 
+      return;
+
+    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+    this._megaTimeout = setTimeout(() => {
+      this.openMegaNav();
+    }, this.hoverDelay);
+  }
+
+  /**
+   * @method _onNavMouseleave
+   * @private
+   * @description Attached to top-level nav element. Closes mega menu in desktop view
+   */
+  _onNavMouseleave(){
+    if ( 
+      this.isMobile() || 
+      !this.isMegaMenu() ) 
+      return;
+
+    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+    
+    this._megaTimeout = setTimeout(() => {
+      this.closeMegaNav();
+    }, this.hoverDelay);
+  }
+
+  /**
+   * @method _onNavFocusin
+   * @private
+   * @description Fires when focus enters the main nav element. Used to open the meganav
+   */
+  _onNavFocusin(){
+    if ( 
+      this.isMobile() || 
+      !this.isMegaMenu() ) 
+      return;
+    
+    if ( this._megaIsOpen ) return;
+    if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+    
+    this._megaTimeout = setTimeout(() => {
+      this.openMegaNav();
+    }, this.hoverDelay);
+
+  }
+
+
+  /**
+   * @method _onItemMouseenter
+   * @private
+   * @description Bound to nav li items with a subnav
+   * @param {Event} e 
+   */
+  _onItemMouseenter(e){
+    if ( this.isMobile() ) return;
+    this.openSubNav(e.target.key);
+  }
+
+  /**
+   * @method _onItemFocus
+   * @private
+   * @description Bound to nav a elements
+   * @param {Event} e 
+   */
+  _onItemFocus(e){
+    if ( this.isMobile() ) return;
+    const LI = e.target.parentElement.parentElement;
+
+    if (LI.hasnav) {
+      this.openSubNav(LI.key);
+    }
+  
+    if (this.isMegaMenu() && this._megaIsOpen) {
+      this._setMegaFocus(LI.key);
+    }
+  }
+
+  /**
+   * @method _setMegaFocus
+   * @private
+   * @description Displays custom styling to meganav item when focused to fix bug in sitefarm code.
+   * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
+   */
+  _setMegaFocus(navLocation){
+    this.navItems.forEach((nav) => nav.megaFocus = false);
+    if ( 
+      typeof navLocation !== 'object' ||
+      !Array.isArray(navLocation) ||
+      navLocation.length < 1
+    ) return;
+    let navItem = this.getNavItem([navLocation[0]]);
+    navItem.megaFocus = true;
+    this.requestUpdate();
+
+  }
+
+  /**
+   * @method _completeMobileTransition
+   * @private
+   * @description Sets timeout to remove animation styles from mobile transition
+   * @param {Object} navItem - Member 'navItems' element property.
+   */
+  _completeMobileTransition(navItem){
+    navItem.timeout = setTimeout(() => {
+      navItem.mobileStyles = {};
+      navItem.isOpen = !navItem.isOpen;
+      navItem.isTransitioning = false;
+      this.requestUpdate();
+    }, this.animationDuration);
+  }
+
+  /**
+   * @method _onItemMouseleave
+   * @private
+   * @description Bound to nav li items with a subnav
+   * @param {Event} e 
+   */
+  _onItemMouseleave(e){
+    if ( this.isMobile() || this.isMegaMenu() ) return;
+    this.closeSubNav(e.target.key);
+  }
+
+  /**
+   * @method _onNavFocusout
+   * @private
+   * @description Attached to the top-level nav element. Closes subnav if it doesn't contain focused link.
+   */
+  _onNavFocusout(){
+    if ( this.isMobile() ) return;
+    if ( this.isMegaMenu() ) {
+      if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
+      requestAnimationFrame(() => {
+        const focusedEle = this.renderRoot.activeElement;
+        if ( focusedEle ) return;
+        this._megaTimeout = setTimeout(() => {
+          this.navItems.forEach((nav) => nav.megaFocus = false);
+          this.closeMegaNav();
+        }, this.hoverDelay);
+      });
+
+    } else {
+      requestAnimationFrame(() => {
+        const focusedEle = this.renderRoot.activeElement;
+        if ( !focusedEle ) {
+          this.closeAllSubNavs();
+          return;
+        }
+        
+        let ele = focusedEle;
+        while ( 
+          ele &&
+          ele.tagName !== this.tagName &&
+          !Array.isArray(ele.key) 
+        ){
+          ele = ele.parentElement;
+        }
+        if ( !ele.key ) return;
+        let navLocation = [...ele.key];
+        let currentIndex = navLocation.pop();
+        let navSiblings = navLocation.length == 0 ? this.navItems : this.getNavItem(navLocation).subItems;
+        navSiblings.forEach((sibling, i) => {
+          if ( i !== currentIndex) {
+            sibling.isOpen = false;
+            this.closeAllSubNavs(sibling.subItems, false);
+          }
+        });
+        this.requestUpdate();
+      });
+
+    }
+
+  }
+
+  /**
+   * @method _hasSubNav
+   * @private
+   * @description Utility function for determining if a menu has subitems
+   * @param {Object} navItem - A member of the navItems array.
+   * @returns {Boolean}
+   */
+  _hasSubNav(navItem){
+    if ( navItem && navItem.subItems && navItem.subItems.length) return true;
+    return false;
+  }
+
+  /**
+   * @method _getItemMobileStyles
+   * @private
    * @description Returns inline styles on a nav element (used for mobile transition animation)
    * @param {Array} location - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
    * @returns {Object} - Style map
    */
-  getItemMobileStyles(location) {
+  _getItemMobileStyles(location) {
     if ( this.isDesktop() ) return {};
     let navItem = this.getNavItem(location);
     if ( !navItem.mobileStyles ) return {};
     return navItem.mobileStyles;
-  }
-
-  /**
-   * @method clearMobileStyles
-   * @description Removes inline styles on a nav element (used for mobile transition animation)
-   * @param {Object} navItem - Member of the this.navItems array
-   */
-  clearMobileStyles(navItem){
-    if (
-      navItem &&
-      navItem.mobileStyles && 
-      Object.keys(navItem.mobileStyles).length > 0 
-    ) {
-      navItem.mobileStyles = {};
-      this.requestUpdate();
-    }
   }
 
 }

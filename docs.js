@@ -14,7 +14,9 @@ console.log('Generating docs for:');
 
     console.log('  - '+element);
 
-    let md = await jsdoc2md.render({ files: path.join(ELE_ROOT, element, element+'.js') });
+    let md = await jsdoc2md.render({ 
+      files: path.join(ELE_ROOT, element, element+'.js') , 
+      "heading-depth" : 3});
     fs.writeFileSync(path.join(DOC_ROOT, element+'.md'), md);
   }
 })();
