@@ -1,1 +1,1 @@
-require('./elements/ucd-theme-collapse');
+require('./elements/brand/ucd-theme-collapse');

@@ -1,4 +1,4 @@
-import {nothing} from 'lit/html.js';
+import {nothing} from 'lit';
 import {AsyncDirective} from 'lit/async-directive.js';
 import {directive, PartType} from 'lit/directive.js';
 

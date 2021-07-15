@@ -21,18 +21,24 @@ module.exports = function generateSrc(elements) {
     const fs = createFsFromVolume(new Volume());
 
     const compiler = webpack({
-      entry : elements.map(element => path.join(ROOT_DIR, 'elements', element, element+'.js')),
+      entry : elements.map(element => path.join(ROOT_DIR, 'elements', 'brand', element, element+'.js')),
       output : {
         filename: 'bundle.js',
         path : '/'
       },
       resolve: {
-        modules: ["node_modules", path.resolve(ROOT_DIR, 'elements')]
+        modules: ["node_modules", path.resolve(ROOT_DIR, 'elements', 'brand', 'node_modules')]
       }
     });
 
     compiler.outputFileSystem = fs;
     compiler.run((err, stats) => {  
+      if( err ) throw err;
+
+      if( stats.compilation && stats.compilation.errors && stats.compilation.errors.length ) {
+        throw new Error(stats.compilation.errors.join('\n'));
+      }
+
       compiler.close((closeErr) => {
         fs.readFile('/bundle.js', 'utf-8', (err, content) => {
           resolve(content);
