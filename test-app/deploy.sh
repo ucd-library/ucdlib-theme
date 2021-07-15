@@ -11,6 +11,7 @@ IMAGE=gcr.io/$GCR_PROJECT_ID/$CONTAINER_NAME
 
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 npm run dist
+node ../docs.js
 
 gcloud config set project $PROJECT_ID
 gcloud builds submit --tag $IMAGE

@@ -31,5 +31,8 @@
     "to-string-loader": "^1.1.6",
     "webpack": "^5.36.1",
     "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "jsdoc-to-markdown": "^7.0.1"
   }
 }

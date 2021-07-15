@@ -97,7 +97,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   /**
    * @method _makeNavItemTree
    * @description Extracts menu item data from DOM Element
-   * @param {DOM Node} ele - Element
+   * @param {Element} ele - Element
    * @returns {Object} Formatted object describing the menu item and its children
    */
   _makeNavItemTree(ele){
@@ -267,7 +267,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @method openSubNav
    * @description Opens the specified subnav
    * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
-   * @returns 
    */
   async openSubNav(navLocation){
 
@@ -415,7 +414,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @method closeSubNav
    * @description Closes a subnav given its coordinates 
    * @param {Array} navLocation - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
-   * @returns 
    */
   async closeSubNav(navLocation){
 

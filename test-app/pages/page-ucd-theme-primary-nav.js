@@ -5,7 +5,7 @@ import {Mixin, MainDomElement} from '../../elements/utils/index.js';
 import "../../elements/brand/ucd-theme-primary-nav/ucd-theme-primary-nav.js";
 
 export default class PageUcdThemePrimaryNav extends Mixin(LitElement)
-  .with(MainDomElement) {
+  .with(MainDomElement, MdElement) {
 
   static get properties() {
     return {

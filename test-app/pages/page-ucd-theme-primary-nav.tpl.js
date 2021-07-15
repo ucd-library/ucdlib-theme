@@ -14,7 +14,10 @@ export function render() {
 return html`
 
 
-<h3>Primary Nav</h3>
+<h1>Primary Nav</h1>
+
+<slot></slot>
+
 <p>Simple nav. No dropdowns.</p>
 <div class="category-brand__background category-brand--primary">
   <ucd-theme-primary-nav>

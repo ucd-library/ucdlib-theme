@@ -5,7 +5,7 @@ import {Mixin, MainDomElement} from '../../elements/utils/index.js';
 import "../../elements/brand/ucd-theme-pagination/ucd-theme-pagination.js";
 
 export default class PageUcdThemePagination extends Mixin(LitElement)
-  .with(MainDomElement) {
+  .with(MainDomElement, MdElement) {
   static get properties() {
     return {
       

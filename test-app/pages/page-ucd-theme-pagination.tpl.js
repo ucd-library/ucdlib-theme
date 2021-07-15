@@ -13,7 +13,10 @@ export function styles() {
 export function render() { 
 return html`
 
-<h3>Pagination</h3>
+<h1>Pagination</h1>
+
+<slot></slot>
+
 <ucd-theme-pagination
   current-page="50"
   max-pages="100"
