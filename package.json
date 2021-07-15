@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/index.js --timeout 10000",
-    "watch": "webpack --config webpack-watch.config.js --watch"
+    "watch": "webpack --config webpack-watch.config.js --watch",
+    "deploy-demo": "cd test-app; ./deploy.sh",
+    "docs": "node docs.js"
   },
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
