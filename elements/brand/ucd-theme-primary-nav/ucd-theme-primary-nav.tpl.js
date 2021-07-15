@@ -93,7 +93,7 @@ return html`
 </style>
 <nav 
   id=${this._classPrefix}
-  class="${this.getNavClasses()}" 
+  class="${this._getNavClasses()}" 
   @mouseenter=${this._onNavMouseenter}
   @mouseleave=${this._onNavMouseleave}
   @focusout=${this._onNavFocusout}

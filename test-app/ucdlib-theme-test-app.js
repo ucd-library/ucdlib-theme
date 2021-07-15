@@ -78,7 +78,7 @@ window.MdElement = (superClass) => class extends superClass {
     let docs = await resp.text();
 
     let div = document.createElement('div');
-    div.innerHTML = '<div><h1>Documentation</h1><div>'+marked(docs);
+    div.innerHTML = `<div class="u-space-mt--large"><h2>Documentation</h2><div>`+marked(docs);
     this.appendChild(div);
 
     
