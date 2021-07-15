@@ -14,6 +14,12 @@ Pattern Lab Url:</p>
 ## Functions
 
 <dl>
+<dt><a href="#isDesktop">isDesktop()</a> ⇒ <code>Boolean</code></dt>
+<dd><p>Is the desktop view currently active?</p>
+</dd>
+<dt><a href="#isMobile">isMobile()</a> ⇒ <code>Boolean</code></dt>
+<dd><p>Is the mobile view currently active?</p>
+</dd>
 <dt><a href="#getNavClasses">getNavClasses()</a> ⇒ <code>String</code></dt>
 <dd><p>Get classes to be applied to the top-level &#39;nav&#39; element</p>
 </dd>
@@ -27,6 +33,12 @@ Pattern Lab Url:</p>
 <dt><a href="#_renderNavItem">_renderNavItem(navItem, location)</a> ⇒ <code>TemplateResult</code></dt>
 <dd><p>Renders a menu item and all its children to the specified max depth</p>
 </dd>
+<dt><a href="#_setTabIndex">_setTabIndex(depth)</a> ⇒ <code>Number</code></dt>
+<dd><p>Sets the tab index of menu links</p>
+</dd>
+<dt><a href="#_makeLiClassMap">_makeLiClassMap(navItem, depth)</a> ⇒ <code>Object</code></dt>
+<dd><p>Classes to be assigned to each LI element in the nav.</p>
+</dd>
 <dt><a href="#_toggleMobileMenu">_toggleMobileMenu(navLocation)</a></dt>
 <dd><p>Expands/collapses mobile subnavs with animation on user click.</p>
 </dd>
@@ -36,11 +48,23 @@ Pattern Lab Url:</p>
 <dt><a href="#_onNavMouseleave">_onNavMouseleave()</a></dt>
 <dd><p>Attached to top-level nav element. Closes mega menu in desktop view</p>
 </dd>
+<dt><a href="#_onNavFocusin">_onNavFocusin()</a></dt>
+<dd><p>Fires when focus enters the main nav element. Used to open the meganav</p>
+</dd>
 <dt><a href="#_onItemMouseenter">_onItemMouseenter(e)</a></dt>
 <dd><p>Bound to nav li items with a subnav</p>
 </dd>
 <dt><a href="#_onItemFocus">_onItemFocus(e)</a></dt>
 <dd><p>Bound to nav a elements</p>
+</dd>
+<dt><a href="#_setMegaFocus">_setMegaFocus(navLocation)</a></dt>
+<dd><p>Displays custom styling to meganav item when focused to fix bug in sitefarm code.</p>
+</dd>
+<dt><a href="#openMegaNav">openMegaNav()</a></dt>
+<dd><p>Opens the meganav menu</p>
+</dd>
+<dt><a href="#closeMegaNav">closeMegaNav()</a></dt>
+<dd><p>Closes the meganav menu</p>
 </dd>
 <dt><a href="#openSubNav">openSubNav(navLocation)</a></dt>
 <dd><p>Opens the specified subnav</p>
@@ -90,11 +114,24 @@ Pattern Lab Url:
 
 | Name | Type | Description |
 | --- | --- | --- |
-| styleModifier | <code>String</code> | Apply an alternate style with a keyword:  'superfish' - The default  'mega' - Hovering over any top-level link opens a single nav with all subnav links |
+| navType | <code>String</code> | The primary style type of the nav:  'superfish' - The default  'mega' - Hovering over any top-level link opens a single nav with all subnav links |
+| styleModifiers | <code>String</code> | Apply alternate styles with a space-separated list.  e.g. 'justify' for 'primary-nav--justify' |
 | hoverDelay | <code>Number</code> | How long (ms) after hover will menu open/close |
 | animationDuration | <code>Number</code> | How long (ms) for a menu to fade in/out |
 | maxDepth | <code>Number</code> | Maximum number of submenus to show |
 
+<a name="isDesktop"></a>
+
+## isDesktop() ⇒ <code>Boolean</code>
+Is the desktop view currently active?
+
+**Kind**: global function  
+<a name="isMobile"></a>
+
+## isMobile() ⇒ <code>Boolean</code>
+Is the mobile view currently active?
+
+**Kind**: global function  
 <a name="getNavClasses"></a>
 
 ## getNavClasses() ⇒ <code>String</code>
@@ -132,6 +169,29 @@ Renders a menu item and all its children to the specified max depth
 | navItem | <code>Object</code> | An item from the 'navItems' element property |
 | location | <code>Array</code> | Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4] |
 
+<a name="_setTabIndex"></a>
+
+## \_setTabIndex(depth) ⇒ <code>Number</code>
+Sets the tab index of menu links
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| depth | <code>Number</code> | Level of the menu link |
+
+<a name="_makeLiClassMap"></a>
+
+## \_makeLiClassMap(navItem, depth) ⇒ <code>Object</code>
+Classes to be assigned to each LI element in the nav.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| navItem | <code>Object</code> | An item in the navItems property. |
+| depth | <code>Number</code> | Depth of the navItem |
+
 <a name="_toggleMobileMenu"></a>
 
 ## \_toggleMobileMenu(navLocation)
@@ -153,6 +213,12 @@ Attached to top-level nav element. Opens mega menu in desktop view
 
 ## \_onNavMouseleave()
 Attached to top-level nav element. Closes mega menu in desktop view
+
+**Kind**: global function  
+<a name="_onNavFocusin"></a>
+
+## \_onNavFocusin()
+Fires when focus enters the main nav element. Used to open the meganav
 
 **Kind**: global function  
 <a name="_onItemMouseenter"></a>
@@ -177,6 +243,29 @@ Bound to nav a elements
 | --- | --- |
 | e | <code>Event</code> | 
 
+<a name="_setMegaFocus"></a>
+
+## \_setMegaFocus(navLocation)
+Displays custom styling to meganav item when focused to fix bug in sitefarm code.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| navLocation | <code>Array</code> | Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4]. |
+
+<a name="openMegaNav"></a>
+
+## openMegaNav()
+Opens the meganav menu
+
+**Kind**: global function  
+<a name="closeMegaNav"></a>
+
+## closeMegaNav()
+Closes the meganav menu
+
+**Kind**: global function  
 <a name="openSubNav"></a>
 
 ## openSubNav(navLocation)

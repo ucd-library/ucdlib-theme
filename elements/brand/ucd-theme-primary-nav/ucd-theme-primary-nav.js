@@ -288,7 +288,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   /**
    * @method _onNavFocusin
    * @description Fires when focus enters the main nav element. Used to open the meganav
-   * @returns 
    */
   _onNavFocusin(){
     if ( 

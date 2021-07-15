@@ -10,8 +10,6 @@ console.log('Generating docs for:');
   let elements = fs.readdirSync(ELE_ROOT);
   for( let element of elements ) {
     if( !fs.statSync(path.join(ELE_ROOT, element)).isDirectory() ) continue;
-
-    console.log(path.join(DOC_ROOT, 'page-'+element+'.js'));
     if( !fs.existsSync(path.join(DOC_ROOT, 'page-'+element+'.js')) ) continue;
 
     console.log('  - '+element);
