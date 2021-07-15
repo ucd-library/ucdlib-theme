@@ -16,8 +16,6 @@ return html`
 
 <h1>Primary Nav</h1>
 
-<slot></slot>
-
 <p>Simple nav. No dropdowns.</p>
 <div class="category-brand__background category-brand--primary">
   <ucd-theme-primary-nav>

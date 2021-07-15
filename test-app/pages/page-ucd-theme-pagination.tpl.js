@@ -15,8 +15,6 @@ return html`
 
 <h1>Pagination</h1>
 
-<slot></slot>
-
 <ucd-theme-pagination
   current-page="50"
   max-pages="100"
