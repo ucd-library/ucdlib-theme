@@ -13,5 +13,6 @@ COPY fonts fonts
 COPY index.html .
 
 COPY js js
+COPY pages pages
 
 CMD node server.js
