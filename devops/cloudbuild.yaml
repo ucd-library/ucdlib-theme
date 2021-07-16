@@ -68,7 +68,10 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     entrypoint: "docker"
-    args: ["build", "test-app", "-t", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
+    args: ["build", "test-app", 
+          "-t", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo",
+          "--cache-from", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"
+    ]
 
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: "gcloud"
