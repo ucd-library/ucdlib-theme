@@ -58,6 +58,14 @@ steps:
     entrypoint: "bash"
     args: ["-c", "cd test-app; npm install" ]
 
+  - name: node:14
+    entrypoint: "bash"
+    args: ["-c", "cd test-app; npm run dist" ]
+
+  - name: gcr.io/cloud-builders/docker
+    entrypoint: "docker"
+    args: ["pull", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
+
   - name: gcr.io/cloud-builders/docker
     entrypoint: "docker"
     args: ["build", "test-app", "-t", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
