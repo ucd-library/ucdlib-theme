@@ -54,6 +54,10 @@ steps:
     env:
       - 'PUPPETEER_SANDBOX=true'
 
+  - name: node:14
+    entrypoint: "bash"
+    args: ["-c", "cd test-app; npm install" ]
+
   - name: gcr.io/cloud-builders/docker
     entrypoint: "docker"
     args: ["build", "test-app", "-t", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
