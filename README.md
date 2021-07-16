@@ -1,4 +1,4 @@
-# UC Davis Library Theme
+# UC Davis Theme
 
 Derived from https://bitbucket.org/ietwebdev/sitefarm-pattern-lab-one/src/redesign/ wrapping complex widgets as W3C web components.
 
