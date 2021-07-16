@@ -1,7 +1,6 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-theme-test-app.tpl.js";
 import {Mixin, MainDomElement} from '../elements/utils/index.js';
-import marked from 'marked';
 
 import "../elements/ucdlib/ucdlib-pages/ucdlib-pages.js";
 
@@ -62,29 +61,5 @@ export default class UcdlibThemeTestApp extends Mixin(LitElement)
   }
 
 }
-
-
-window.MdElement = (superClass) => class extends superClass {
-
-  
-  /**
-   * @method renderMd
-   * @description load and render the element markdown
-   */
-  async renderMd() {
-    if( this.mdRendered ) return;
-    
-    let resp = await fetch('/pages/'+this.id+'.md');
-    let docs = await resp.text();
-
-    let div = document.createElement('div');
-    div.innerHTML = `<div class="u-space-mt--large"><h2>Documentation</h2><div>`+marked(docs);
-    this.appendChild(div);
-
-    
-    this.mdRendered = true;
-  }
-
-};
 
 customElements.define('ucdlib-theme-test-app', UcdlibThemeTestApp);

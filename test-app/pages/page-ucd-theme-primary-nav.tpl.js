@@ -14,63 +14,21 @@ export function render() {
 return html`
 
 
-<h1>Primary Nav</h1>
+${this.pageTitle('Primary Nav')}
 
-<p>Simple nav. No dropdowns.</p>
-<div class="category-brand__background category-brand--primary">
-  <ucd-theme-primary-nav>
-    <a>ITEM 1</a>
-    <a href=#>ITEM 2</a>
-    <a href="#">ITEM 3</a>
-  </ucd-theme-primary-nav>
-</div>
+<h2>Simple Nav</h2>
+<p>Pass through <code>a</code> tags as children to make a simple nav. By default, the element does not have a background color, so make sure it is within a blue parent</p>
+${this.examplePanel(this.exSimple)}
 
-<p class="u-space-mt--large">Nav with dropdowns</p>
-<div class="category-brand__background category-brand--primary">
-  <ucd-theme-primary-nav>
-    <a>ITEM 1</a>
-    <ul href="#" link-text="Wheel of Time">
-      <li><a href="#">Aes Sedai</a></li>
-      <ul href="#" link-text="Ta'veren">
-        <li><a href="#">Rand al'Thor</a></li>
-        <li><a href="#">Matrim Cauthon</a></li>
-        <li><a href="#">Perrin Aybara</a></li>
-      </ul>
-      <li><a href="#">Warders</a></li>
-    </ul>
 
-    <a href="#">ITEM 3</a>
-  </ucd-theme-primary-nav>
-</div>
+<h2>Nav with Dropdowns</h2>
+<p>Pass through a UL element with a <code>link-text</code> attribute to make a nav with dropdowns.
+By default, the element only goes two menus deep.
+</p>
+${this.examplePanel(this.exAdvanced)}
 
-<p class="u-space-mt--large">Mega nav</p>
-  <div>
-    <ucd-theme-primary-nav nav-type="mega" style-modifiers="justify">
-      <ul link-text="Lord of the Rings">
-        <li><a href="">Wizards</a></li>
-        <li><a href="">Ents</a></li>
-        <li><a href="">Men</a></li>
-        <li><a href="">Orcs</a></li>
-        <li><a href="">Elves</a></li>
-        <li><a href="">Dwarves</a></li>
-      </ul>
-        
-      <ul href="#" link-text="Wheel of Time">
-        <li><a href="#">Aes Sedai</a></li>
-        <ul href="#" link-text="Ta'veren">
-          <li><a href="#">Rand al'Thor</a></li>
-          <li><a href="#">Matrim Cauthon</a></li>
-          <li><a href="#">Perrin Aybara</a></li>
-        </ul>
-        <li><a href="#">Warders</a></li>
-        <li><a href="">Ogiers</a></li>
-      </ul>
-
-      <ul link-text="Kingkiller Chronicle">
-        <li><a href="">Humans</a></li>
-        <li><a href="">Fae</a></li>
-      </ul>
-    </ucd-theme-primary-nav>
-  </div>
+<h2>Mega Menu</h2>
+<p>Specify <code>nav-type="mega"</code> to make all the menus open at once. Submenus can only be one level deep.</p>
+${this.examplePanel(this.exMega)}
 
 `;}

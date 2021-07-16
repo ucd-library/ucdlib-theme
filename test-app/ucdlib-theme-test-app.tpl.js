@@ -12,11 +12,29 @@ export function styles() {
 
 export function render() { 
 return html`
+  <style>
+    .snippet {
+      background-color: #DBEAF7
+    }
+    .snippet pre {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    p code {
+      background-color: #DBEAF7;
+      padding: 3px;
+    }
+  </style>
 
   <select id="elementSelector" @change="${this._onSelectChange}">
     ${this.elements.map(item => html`<option value="${item}">${item}</option>`)}
   </select>
 
-  <ucdlib-pages id="pages" selected="${this.selectedPage}" ></ucdlib-pages>
+  <div class="l-container">
+    <div class="l-content">
+      <ucdlib-pages id="pages" selected="${this.selectedPage}" ></ucdlib-pages>
+    </div>
+  </div>
+  
 
 `;}
