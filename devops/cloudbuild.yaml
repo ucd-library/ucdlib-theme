@@ -93,6 +93,7 @@ steps:
       - '_GITHUB_PR_USER=$_GITHUB_PR_USER'
       - '_GITHUB_PR_MERGED_BY=$_GITHUB_PR_MERGED_BY'
 
+images: ['gcr.io/ucdlib-pubreg/ucdlib-theme-demo']
 
 substitutions:
   _CONFIG_BUCKET: ci-build-config
