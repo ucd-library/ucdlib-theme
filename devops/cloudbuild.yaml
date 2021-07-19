@@ -73,6 +73,10 @@ steps:
           "--cache-from", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"
     ]
 
+  - name: gcr.io/cloud-builders/docker
+    entrypoint: "docker"
+    args: ["push", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
+
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: "gcloud"
     args: ["beta", "run", "deploy", "ucdlib-theme-demo", 
