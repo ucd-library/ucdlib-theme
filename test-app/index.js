@@ -3,6 +3,7 @@ import "./ucdlib-theme-test-app.js";
 // PAGES
 import "./pages/page-ucd-theme-primary-nav.js";
 import "./pages/page-ucd-theme-pagination.js";
+import "./pages/page-ucd-theme-quick-links";
 
 // import "../elements/navigation/ucd-theme-primary-nav/ucd-theme-primary-nav";
 // import '../elements/ucd-theme-alert/ucd-theme-alert';
