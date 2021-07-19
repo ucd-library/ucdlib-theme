@@ -11,7 +11,7 @@ export default class PageUcdThemePagination extends Mixin(LitElement)
   static get properties() {
     return {
       
-    }
+    };
   }
 
   static get styles() {

@@ -89,7 +89,7 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="33"
     max-pages="33"
-    @page-change=${e => console.log(e.detail.page)}>
+    @page-change="${e => console.log(e.detail.page)}">
   </ucd-theme-pagination>
 `)}
 
