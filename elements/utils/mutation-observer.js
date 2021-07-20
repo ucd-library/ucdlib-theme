@@ -20,7 +20,7 @@ const MutationObserverElement = (superClass) => class extends superClass {
    */
   firstUpdated(props) {
     super.firstUpdated(props);
-    this._onChildListMutation(this.children);
+    this._onChildListMutation();
   }
 
   /**

@@ -1,4 +1,4 @@
-import { LitElement } from 'lit';
+import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-quick-links.tpl.js";
 
 import { Mixin, MutationObserverElement } from "../../utils/index.js";
@@ -20,9 +20,12 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     return {
       title: {type: String},
       styleModifiers: {type: String, attribute: "style-modifiers"},
-      open: {type: Boolean},
+      opened: {type: Boolean},
+      animationDuration: {type: Number, attribute: "animation-duration"},
       _links: {type: Array, state: true},
-      _customIcons: {type: Boolean, state: true}
+      _hasCustomIcons: {type: Boolean, state: true},
+      _transitioning: {type: Boolean, state: true},
+      _openedHeight: {type: Number, state: true}
     };
   }
 
@@ -36,12 +39,84 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
 
     this.title = "Quick Links";
     this.styleModifiers = "";
-    this.open = false;
-    this._links = [];
+    this.opened = false;
+    this.animationDuration = 300;
 
+    this._links = [];
     this._classPrefix = "quick-links";
     this._mobileBreakPoint = 992;
-    this._customIcons = false;
+    this._hasCustomIcons = false;
+    this._transitioning = false;
+    this._openedHeight = 0;
+  }
+
+  async open(){
+    if ( this._transitioning || this.opened ) return false;
+
+    this._openedHeight = 0;
+    this._transitioning = true;
+    await this.updateComplete;
+    this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
+    await this.updateComplete;
+
+    await this._waitForAnimation();
+    this._transitioning = false;
+    this.opened = true;
+    return true;
+  }
+
+  async close(){
+    if ( this._transitioning || !this.opened ) return false;
+    this._transitioning = true;
+
+    this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
+    await this.updateComplete;
+    await this._waitForFrames();
+    this._openedHeight = 0;
+    await this.updateComplete;
+
+    await this._waitForAnimation();
+
+    this._transitioning = false;
+    this.opened = false;
+    return true;
+  }
+
+  /**
+   * @method ingestChildren
+   * @description Copies lightdom children into the shadowdom.
+   */
+  ingestChildren(){
+    // remove any slotted icons created from a previous render
+    this.querySelectorAll('[slot]').forEach(ele => ele.remove());
+    this._hasCustomIcons = false;
+
+    let links = [];
+    this.querySelectorAll('a').forEach((child, index) => {
+      if (child.tagName !== "A")  return;
+      let link = {};
+
+      // if first child exists, we assume it is an icon
+      if ( 
+        child.childElementCount > 0 && 
+        index < 3 &&
+        child.children[0].tagName !== 'A'
+      ){
+        this._hasCustomIcons = true;
+        let icon = child.children[0].cloneNode(true);
+        let iconSlot = `icon-${index}`;
+        icon.setAttribute('slot', iconSlot);
+        this.appendChild(icon);
+        link.iconSlot = iconSlot;
+      }
+
+      if ( child.href ) link.href = child.href;
+      link.text = child.innerText;
+
+      links.push(link);
+    });
+
+    if ( links.length > 0 ) this._links = links;
   }
 
   /**
@@ -62,6 +137,28 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     return !this.isDesktop();
   }
 
+  _onClick(){
+    if ( this.opened ) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  async _waitForAnimation() {
+    return new Promise(resolve => {
+      setTimeout(resolve, this.animationDuration);
+    });
+  }
+
+  async _waitForFrames(ct=1) {
+    for (let i = 0; i < ct; i++) {
+      await new Promise(resolve => {
+        requestAnimationFrame(resolve);
+      });
+    }
+  }
+
   /**
    * @method _getNavClasses
    * @private
@@ -78,47 +175,55 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
       });
     }
 
+    classes['transitioning'] = this._transitioning;
+    classes['open'] = this.opened;
+
     return classes;
+  }
+
+  _getNavStyles(){
+    let styles = {};
+    if ( this._transitioning) {
+      styles['height'] = this._openedHeight;
+    }
+    return styles;
   }
 
   /**
    * @method _onChildListMutation
+   * @param {Array} mutationsList - List of mutation records
    * @private
    * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
-   *  Sets the 'navItems' property.
+   *  Sets the '_links' property.
    */
-  _onChildListMutation(){
-    
-    // remove any slotted icons created from a previous render
-    this.querySelectorAll('slot').forEach(ele => ele.remove());
-    this._customIcons = false;
+  _onChildListMutation(mutationsList){
 
-    let links = [];
-    this.querySelectorAll('a').forEach((child, index) => {
-      if (child.tagName !== "A")  return;
-      let link = {};
-
-      // if first child exists, we assume it is an icon
-      if ( 
-        child.childElementCount > 0 && 
-        index < 3 &&
-        child.children[0].tagName !== 'A'
-      ){
-        this._customIcons = true;
-        let icon = child.children[0].cloneNode(true);
-        let iconSlot = `icon-${index}`;
-        icon.setAttribute('slot', iconSlot);
-        this.appendChild(icon);
-        link.iconSlot = iconSlot;
+    // Check to see if this element triggered the mutation and avoid infinite loop.
+    if ( mutationsList ) {
+      for (const mutation of mutationsList) {
+        for (const n of Array.from(mutation.addedNodes)){
+          if ( n instanceof Element && n.hasAttribute('slot')) return;
+        }
+        for (const n of Array.from(mutation.removedNodes)){
+          if ( n instanceof Element && n.hasAttribute('slot')) return;
+        }
       }
+    }
+    this.ingestChildren();
+  }
 
-      if ( child.href ) link.href = child.href;
-      link.text = child.innerText;
-
-      links.push(link);
-    });
-
-    if ( links.length > 0 ) this._links = links;
+  /**
+   * @method _renderSlot
+   * @private
+   * @description Renders slot for an icon
+   * @param {Object} link - Member of the _links property.
+   * @returns {TemplateResult}
+   */
+  _renderSlot(link) {
+    if ( link.iconSlot ) {
+      return html`<div class='slot-parent'><slot name=${link.iconSlot}></slot></div>`;
+    }
+    return html``;
   }
   
 
