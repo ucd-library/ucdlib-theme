@@ -26,6 +26,9 @@ export function styles() {
     nav.transitioning {
       display: block;
     }
+    .click-attached {
+      cursor: pointer;
+    }
     @media (min-width: 992px) {
       .slot-parent {
         display: block;
@@ -77,7 +80,7 @@ return html`
   <div class="quick-links">
     <button 
       class="quick-links__title"
-      @click=${this._onClick}
+      @click=${this._onBtnClick}
       aria-controls="quick-links" 
       aria-expanded="${this.opened}" 
       aria-label="Toggle ${this.title} Menu">
@@ -89,12 +92,17 @@ return html`
       style=${styleMap(this._getNavStyles())}
       aria-label="Quick Links Menu">
     <ul class="menu" id="menu">
-      ${this._links.map(link => html`
+      ${this._links.map((link, i) => html`
         <li>
           ${link.href ? html`
             <a href="${link.href}">${this._renderSlot(link)}${link.text}</a>
           ` : html`
-            <a>${this._renderSlot(link)}${link.text}</a>
+            <a 
+              class="click-attached" 
+              tabindex="0"
+              @click=${this._onItemClick}
+              @keyup=${this._onItemKeyup}
+              .index=${i}>${this._renderSlot(link)}${link.text}</a>
           `}
         </li>
       `)}

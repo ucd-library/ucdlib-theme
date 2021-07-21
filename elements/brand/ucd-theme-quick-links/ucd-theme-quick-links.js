@@ -12,6 +12,9 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-highlight
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-home-site
  * @property {String} title - Text to be displayed instead of "Quick Links"
+ * @property {String} styleModifiers - Apply alternate styles with a space-separated list.
+ * @property {Boolean} opened - Menu is open
+ * @property {Number} animationDuration - Length of animation when opening/closing menu
  */
 export default class UcdThemeQuickLinks extends Mixin(LitElement)
   .with(MutationObserverElement) {
@@ -50,6 +53,11 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     this._openedHeight = 0;
   }
 
+  /**
+   * @method open
+   * @description Opens the quick links menu if not already open or in a transition state.
+   * @returns {Promise} Returns true if successful
+   */
   async open(){
     if ( this._transitioning || this.opened ) return false;
 
@@ -65,13 +73,18 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     return true;
   }
 
+  /**
+   * @method close
+   * @description Closes the quick links menu if not already closed or in a transition state.
+   * @returns {Promise} Returns true if successful
+   */
   async close(){
     if ( this._transitioning || !this.opened ) return false;
     this._transitioning = true;
 
     this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
     await this.updateComplete;
-    await this._waitForFrames();
+    await this._waitForFrames(2);
     this._openedHeight = 0;
     await this.updateComplete;
 
@@ -112,6 +125,7 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
 
       if ( child.href ) link.href = child.href;
       link.text = child.innerText;
+      link.ele = child;
 
       links.push(link);
     });
@@ -137,26 +151,60 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     return !this.isDesktop();
   }
 
-  _onClick(){
+  /**
+   * @method _onBtnClick
+   * @private
+   * @description Attached to menu open/close button
+   */
+  async _onBtnClick(){
+    let didToggle;
     if ( this.opened ) {
-      this.close();
+      didToggle = await this.close();
     } else {
-      this.open();
+      didToggle = await this.open();
+    }
+    if ( didToggle ) {
+      this.dispatchEvent(new CustomEvent('toggle', {
+        detail : {open: this.opened}
+      }));
     }
   }
 
-  async _waitForAnimation() {
-    return new Promise(resolve => {
-      setTimeout(resolve, this.animationDuration);
-    });
+  /**
+   * @method _onItemClick
+   * @private
+   * @description Attached to menu item links without an href
+   * @param {Event} e 
+   */
+  _onItemClick(e){
+    this._dispatchItemClick(e.target.index);
   }
 
-  async _waitForFrames(ct=1) {
-    for (let i = 0; i < ct; i++) {
-      await new Promise(resolve => {
-        requestAnimationFrame(resolve);
-      });
-    }
+  /**
+   * @method _onItemKeyup
+   * @private
+   * @description Attached to menu item links without an href
+   * @param {Event} e 
+   */
+  _onItemKeyup(e){
+    if( e.which !== 13 ) return;
+    this._dispatchItemClick(e.target.index);
+  }
+
+  /**
+   * @method _dispatchItemClick
+   * @private
+   * @description Fires the item-click event
+   * @param {Number} index - The array index of the selected menu item
+   */
+  _dispatchItemClick(index){
+    this.dispatchEvent(new CustomEvent('item-click', {
+      detail : {
+        index: index,
+        item: this._links[index]
+      }
+    }));
+
   }
 
   /**
@@ -181,6 +229,12 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     return classes;
   }
 
+  /**
+   * @method _getNavStyles
+   * @private
+   * @description Get styles to be applied to the 'nav' element
+   * @returns {Object}
+   */
   _getNavStyles(){
     let styles = {};
     if ( this._transitioning) {
@@ -224,6 +278,32 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
       return html`<div class='slot-parent'><slot name=${link.iconSlot}></slot></div>`;
     }
     return html``;
+  }
+
+  /**
+   * @method _waitForAnimation
+   * @private
+   * @description Wait for time designated for open/close animation
+   * @returns {Promise}
+   */
+  async _waitForAnimation() {
+    return new Promise(resolve => {
+      setTimeout(resolve, this.animationDuration);
+    });
+  }
+
+  /**
+   * @method _waitForFrames
+   * @private
+   * @description Wait for specified number of animation frames
+   * @param {Number} ct Number of frames
+   */
+  async _waitForFrames(ct=1) {
+    for (let i = 0; i < ct; i++) {
+      await new Promise(resolve => {
+        requestAnimationFrame(resolve);
+      });
+    }
   }
   
 

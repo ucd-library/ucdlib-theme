@@ -113,5 +113,25 @@ return html`
 
 
   <h2>Events</h2>
-  <i class="fas fa-baby"></i>
+  <p>A <code>toggle</code> event is dispatched when the menu is opened or closed.</p>
+  ${this.examplePanel(html`
+    <ucd-theme-quick-links 
+      @toggle="${e => console.log('is open:', e.detail.open)}">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </ucd-theme-quick-links>
+  `)}
+
+  <p>If an <code>a</code> tag is missing an href, a <code>item-click</code> event is dispatched when it is clicked.</p>
+  ${this.examplePanel(html`
+    <ucd-theme-quick-links 
+      @item-click="${e => console.log('item clicked:', e.detail.item)}">
+      <a>Link 1</a>
+      <a>Link 2</a>
+      <a>Link 3</a>
+    </ucd-theme-quick-links>
+  `)}
+
+
 `;}
