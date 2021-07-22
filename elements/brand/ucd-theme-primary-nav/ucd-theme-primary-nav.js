@@ -292,7 +292,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
-   * @method getNavClasses
+   * @method _getNavClasses
    * @private
    * @description Get classes to be applied to the top-level 'nav' element
    * @returns {String}
