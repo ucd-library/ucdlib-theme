@@ -123,7 +123,7 @@ return html`
     </ucd-theme-quick-links>
   `)}
 
-  <p>If an <code>a</code> tag is missing an href, a <code>item-click</code> event is dispatched when it is clicked.</p>
+  <p>If an <code>a</code> tag is missing an href, an <code>item-click</code> event is dispatched when it is clicked.</p>
   ${this.examplePanel(html`
     <ucd-theme-quick-links 
       @item-click="${e => console.log('item clicked:', e.detail.item)}">

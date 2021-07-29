@@ -4,6 +4,7 @@ import "./ucdlib-theme-test-app.js";
 import "./pages/page-ucd-theme-primary-nav.js";
 import "./pages/page-ucd-theme-pagination.js";
 import "./pages/page-ucd-theme-quick-links";
+import "./pages/page-ucd-theme-header";
 
 // import "../elements/navigation/ucd-theme-primary-nav/ucd-theme-primary-nav";
 // import '../elements/ucd-theme-alert/ucd-theme-alert';
