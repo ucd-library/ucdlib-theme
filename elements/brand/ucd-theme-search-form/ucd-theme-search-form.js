@@ -1,8 +1,8 @@
 import { LitElement } from 'lit';
-import {render, styles } from "./ucd-theme-form-search.tpl.js";
+import {render, styles } from "./ucd-theme-search-form.tpl.js";
 
 /**
- * @class UcdThemeFormSearch
+ * @class UcdThemeSearchForm
  * @classdesc Component class for rendering a basic search form.
  * Pattern Lab Url: http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-search-form
  * 
@@ -20,7 +20,7 @@ import {render, styles } from "./ucd-theme-form-search.tpl.js";
  *  <ucd-theme-form-search @search="${this._onSearch}"></ucd-theme-form-search>
  * `
  */
-export default class UcdThemeFormSearch extends LitElement {
+export default class UcdThemeSearchForm extends LitElement {
 
   static get properties() {
     return {
@@ -88,4 +88,4 @@ export default class UcdThemeFormSearch extends LitElement {
 
 }
 
-customElements.define('ucd-theme-form-search', UcdThemeFormSearch);
+customElements.define('ucd-theme-search-form', UcdThemeSearchForm);
