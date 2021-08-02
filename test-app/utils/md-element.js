@@ -13,7 +13,7 @@ const MdElement = (superClass) => class extends superClass {
     let docs = await resp.text();
 
     let div = document.createElement('div');
-    div.innerHTML = `<div class="u-space-mt--large"><h2>Documentation</h2><div>`+marked(docs);
+    div.innerHTML = `<div class="u-space-mt--large md-docs"><h2>Class Documentation</h2><div>`+marked(docs);
     this.appendChild(div);
 
     

@@ -4,21 +4,17 @@ import {render, styles } from "./ucd-theme-search-form.tpl.js";
 /**
  * @class UcdThemeSearchForm
  * @classdesc Component class for rendering a basic search form.
- * Pattern Lab Url: http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-search-form
  * 
- * @param {String} value - The search string
- * @param {String} placeholder - The input placeholder
- * @param {String} formAction - The action to be taken on form submit (optional)
+ * Pattern Lab Url: 
+ *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-search-form
+ * 
+ * @property {String} value - The search string
+ * @property {String} placeholder - The input placeholder
+ * @property {String} formAction - The action to be taken on form submit (optional)
  * 
  * @example
- * // Use a form action:
- * html`
- *   <ucd-theme-form-search form-action="/url/to/post/to"></ucd-theme-form-search>
- * `
- * // Use event listener:
- * html`
+ *  <ucd-theme-form-search form-action="/url/to/post/to"></ucd-theme-form-search>
  *  <ucd-theme-form-search @search="${this._onSearch}"></ucd-theme-form-search>
- * `
  */
 export default class UcdThemeSearchForm extends LitElement {
 
@@ -51,6 +47,7 @@ export default class UcdThemeSearchForm extends LitElement {
   /**
    * @method _onSubmit
    * @description Attached to form submit
+   * @private
    * @param {Event} e - submit event
    */
   _onSubmit(e){
@@ -64,6 +61,7 @@ export default class UcdThemeSearchForm extends LitElement {
   /**
    * @method _onInput
    * @description Attached to search input change
+   * @private
    * @param {Event} e - input event
    */
   _onInput(e){
@@ -73,6 +71,7 @@ export default class UcdThemeSearchForm extends LitElement {
   /**
    * @method _dispatchSearchEvent
    * @description Fires 'search' custom event
+   * @private
    */
   _dispatchSearchEvent() {
     let e = new CustomEvent('search', {

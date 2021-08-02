@@ -22,7 +22,8 @@ return html`
       <li><a href="#ucd-theme-search-popup">search-popup</a></li>
     </ul>
 
-    Pass through these elements as children to construct the site header.
+    Pass through these elements as children to construct the site header. 
+    Only <code>ucd-theme-primary-nav</code> is required.
   </p>
 
   ${this.examplePanel(html`
@@ -54,12 +55,13 @@ return html`
         <a href="#">Carlson</a>
         <a href="#">Special Collections</a>
       </ucd-theme-quick-links>
+
     </ucd-theme-header>
   `)}
 
 
   <div class="alert alert--warning">
-  Note the <code>is-demo</code> attribute adjusts the position of the mobile menu so it doesn't cover the "close" button in this demo application.
+  Note, the <code>is-demo</code> attribute adjusts the position of the mobile menu so it doesn't cover the "close" button in this demo application.
     It should not be used otherwise.
   </div>
 

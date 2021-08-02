@@ -6,8 +6,33 @@ import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.j
 /**
  * @class UcdThemeHeader
  * @classdesc Component class for displaying the site header
+ * 
  *  PatternLab Url:
- *    http://dev.webstyleguide.ucdavis.edu/redesign/?p=organisms-header
+ *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=organisms-header
+ * 
+ * @property {String} siteName - Name of website to display
+ * @property {String} slogan - Optional text to display below site name
+ * @property {String} figureSrc - Site logo/icon to display next to site name
+ * @property {String} siteUrl - Url to use for links around site name and figure
+ * @property {Boolean} opened - Whether header is open in the mobile view
+ * 
+ * @example
+ *  <ucd-theme-header site-name="A UC Davis Website">
+ *    <ucd-theme-primary-nav>
+ *      <a href="#">LINK 1</a>
+ *      <a href="#">LINK 2</a>
+ *      <a href="#">LINK 3</a>
+ *    </ucd-theme-primary-nav>
+ *    <ucd-theme-search-popup>
+ *      <ucd-theme-search-form>
+ *      </ucd-theme-search-form>
+ *    </ucd-theme-search-popup>
+ *    <ucd-theme-quick-links>
+ *      <a href="#">LINK 4</a>
+ *      <a href="#">LINK 5</a>
+ *      <a href="#">LINK 6</a>
+ *    </ucd-theme-quick-links>
+ *  </ucd-theme-header>
  * 
  */
 export default class UcdThemeHeader extends Mixin(LitElement)
@@ -55,6 +80,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
    * @method updated
    * @description Lit lifecycle method called after element has updated.
    * @param {Map} props - Properties updated in cycle
+   * @private
    */
   updated( props ){
 
@@ -69,6 +95,11 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     }
   }
 
+  /**
+   * @method open
+   * @description Opens header menu in mobile
+   * @returns {Promise}
+   */
   async open(){
     if ( this._transitioning || this.opened ) return false;
 
@@ -80,6 +111,11 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
   }
 
+  /**
+   * @method close
+   * @description Closes heaader menu in mobile
+   * @returns {Promise}
+   */
   async close(){
     if ( this._transitioning || !this.opened ) return false;
 
@@ -110,6 +146,12 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     }
   }
 
+  /**
+   * @method _getNavbarClasses
+   * @description Get classes to be assigned to the navbar container
+   * @private
+   * @returns {Object}
+   */
   _getNavbarClasses(){
     let classes = {
       "l-navbar": true,
@@ -126,6 +168,13 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     return classes;
   }
 
+  /**
+   * @method _ucdLogo
+   * @description Returns URI-encoded svg string of UC Davis logo
+   * @private
+   * @param {String} color - Color of logo. 'blue' or 'gold'.
+   * @returns {String}
+   */
   _ucdLogo(color="blue"){
     const colors = {
       "blue": "#022851",
@@ -136,6 +185,11 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
   }
 
+  /**
+   * @method _onChildListMutation
+   * @description Fires when there are changes to this element's non-shadow DOM children
+   * @private
+   */
   _onChildListMutation(){
     let primaryNav = this.querySelector('ucd-theme-primary-nav');
     if ( primaryNav ) {

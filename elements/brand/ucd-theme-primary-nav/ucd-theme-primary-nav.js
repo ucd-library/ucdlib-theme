@@ -8,6 +8,7 @@ import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.j
 /**
  * @class UcdThemePrimaryNav
  * @classdesc Component class for displaying a primary site nav
+ * 
  * Pattern Lab Url:
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav/molecules-navigation-00-primary-nav.rendered.html
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav-megamenu/molecules-navigation-00-primary-nav-megamenu.rendered.html

@@ -6,6 +6,7 @@ import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.j
 /**
  * @class UcdThemeQuickLinks
  * @classdesc Component class for displaying a quick links nav
+ * 
  *  Patternlab Url:
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-2-columns

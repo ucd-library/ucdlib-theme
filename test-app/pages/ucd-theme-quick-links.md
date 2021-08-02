@@ -2,8 +2,8 @@
 
 <dl>
 <dt><a href="#UcdThemeQuickLinks">UcdThemeQuickLinks</a></dt>
-<dd><p>Component class for displaying a quick links nav
- Patternlab Url:</p>
+<dd><p>Component class for displaying a quick links nav</p>
+<p> Patternlab Url:</p>
 <ul>
 <li><a href="http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links">http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links</a></li>
 <li><a href="http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-2-columns">http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-2-columns</a></li>
@@ -16,20 +16,14 @@
 ### Functions
 
 <dl>
-<dt><a href="#open">open()</a> ⇒ <code>Boolean</code></dt>
+<dt><a href="#open">open()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Opens the quick links menu if not already open or in a transition state.</p>
 </dd>
-<dt><a href="#close">close()</a> ⇒ <code>Boolean</code></dt>
+<dt><a href="#close">close()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Closes the quick links menu if not already closed or in a transition state.</p>
 </dd>
 <dt><a href="#ingestChildren">ingestChildren()</a></dt>
 <dd><p>Copies lightdom children into the shadowdom.</p>
-</dd>
-<dt><a href="#isDesktop">isDesktop()</a> ⇒ <code>Boolean</code></dt>
-<dd><p>Is the desktop view currently active?</p>
-</dd>
-<dt><a href="#isMobile">isMobile()</a> ⇒ <code>Boolean</code></dt>
-<dd><p>Is the mobile view currently active?</p>
 </dd>
 </dl>
 
@@ -37,6 +31,7 @@
 
 ### UcdThemeQuickLinks
 Component class for displaying a quick links nav
+
  Patternlab Url:
    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links
    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-2-columns
@@ -55,33 +50,21 @@ Component class for displaying a quick links nav
 
 <a name="open"></a>
 
-### open() ⇒ <code>Boolean</code>
+### open() ⇒ <code>Promise</code>
 Opens the quick links menu if not already open or in a transition state.
 
 **Kind**: global function  
-**Returns**: <code>Boolean</code> - True if successful  
+**Returns**: <code>Promise</code> - Returns true if successful  
 <a name="close"></a>
 
-### close() ⇒ <code>Boolean</code>
+### close() ⇒ <code>Promise</code>
 Closes the quick links menu if not already closed or in a transition state.
 
 **Kind**: global function  
-**Returns**: <code>Boolean</code> - True if successful  
+**Returns**: <code>Promise</code> - Returns true if successful  
 <a name="ingestChildren"></a>
 
 ### ingestChildren()
 Copies lightdom children into the shadowdom.
-
-**Kind**: global function  
-<a name="isDesktop"></a>
-
-### isDesktop() ⇒ <code>Boolean</code>
-Is the desktop view currently active?
-
-**Kind**: global function  
-<a name="isMobile"></a>
-
-### isMobile() ⇒ <code>Boolean</code>
-Is the mobile view currently active?
 
 **Kind**: global function  
