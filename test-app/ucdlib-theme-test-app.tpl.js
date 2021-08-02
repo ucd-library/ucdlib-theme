@@ -24,6 +24,18 @@ return html`
       background-color: #DBEAF7;
       padding: 3px;
     }
+    .md-docs #classes {
+      display: none;
+    }
+    .md-docs #classes + dl{
+      display: none;
+    }
+    .md-docs #functions {
+      display: none;
+    }
+    .md-docs #functions + dl{
+      display: none;
+    }
   </style>
 
   <select id="elementSelector" @change="${this._onSelectChange}">

@@ -2,7 +2,9 @@
 
 ### UcdThemePagination
 Component class for pagination
-Pattern Lab Url: http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-pagination
+
+Pattern Lab Url: 
+ - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-pagination
 
 **Kind**: global class  
 **Examples**: <ucd-theme-pagination

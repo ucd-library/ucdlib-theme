@@ -2,8 +2,8 @@
 
 <dl>
 <dt><a href="#UcdThemePrimaryNav">UcdThemePrimaryNav</a></dt>
-<dd><p>Component class for displaying a primary site nav
-Pattern Lab Url:</p>
+<dd><p>Component class for displaying a primary site nav</p>
+<p>Pattern Lab Url:</p>
 <ul>
 <li><a href="http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav/molecules-navigation-00-primary-nav.rendered.html">http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav/molecules-navigation-00-primary-nav.rendered.html</a></li>
 <li><a href="http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav-megamenu/molecules-navigation-00-primary-nav-megamenu.rendered.html">http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav-megamenu/molecules-navigation-00-primary-nav-megamenu.rendered.html</a></li>
@@ -32,12 +32,6 @@ Pattern Lab Url:</p>
 <dt><a href="#clearMobileAnimationStyles">clearMobileAnimationStyles(navItem)</a></dt>
 <dd><p>Removes inline styles on a nav element (used for mobile transition animation)</p>
 </dd>
-<dt><a href="#isDesktop">isDesktop()</a> ⇒ <code>Boolean</code></dt>
-<dd><p>Is the desktop view currently active?</p>
-</dd>
-<dt><a href="#isMobile">isMobile()</a> ⇒ <code>Boolean</code></dt>
-<dd><p>Is the mobile view currently active?</p>
-</dd>
 <dt><a href="#isMegaMenu">isMegaMenu()</a> ⇒ <code>Boolean</code></dt>
 <dd><p>Does this element use the mega menu?</p>
 </dd>
@@ -50,6 +44,7 @@ Pattern Lab Url:</p>
 
 ### UcdThemePrimaryNav
 Component class for displaying a primary site nav
+
 Pattern Lab Url:
  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav/molecules-navigation-00-primary-nav.rendered.html
  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav-megamenu/molecules-navigation-00-primary-nav-megamenu.rendered.html
@@ -122,18 +117,6 @@ Removes inline styles on a nav element (used for mobile transition animation)
 | --- | --- | --- |
 | navItem | <code>Object</code> | Member of the this.navItems array |
 
-<a name="isDesktop"></a>
-
-### isDesktop() ⇒ <code>Boolean</code>
-Is the desktop view currently active?
-
-**Kind**: global function  
-<a name="isMobile"></a>
-
-### isMobile() ⇒ <code>Boolean</code>
-Is the mobile view currently active?
-
-**Kind**: global function  
 <a name="isMegaMenu"></a>
 
 ### isMegaMenu() ⇒ <code>Boolean</code>

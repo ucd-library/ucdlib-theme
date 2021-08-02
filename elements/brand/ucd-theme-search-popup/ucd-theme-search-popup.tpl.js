@@ -24,7 +24,14 @@ return html`
   <span class="search-popup__open-icon">${this.buttonText}</span>
 </button>
 <div class="search-popup ${this.opened ? 'is-open' : ''}">
-  <slot></slot>
+  ${this._defaultForm ? html`
+    <div class="search-form">
+      <slot></slot>
+    </div>
+  ` : html`
+    <slot></slot>
+  `}
+
 </div>
 
 `;}
