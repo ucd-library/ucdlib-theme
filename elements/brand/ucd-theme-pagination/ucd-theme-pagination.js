@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit';
+//import { Page } from 'puppeteer';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
 
 /**
@@ -66,7 +67,7 @@ export default class UcdThemePagination extends LitElement {
         attribute : 'ellipses'
       }
 
-    }
+    };
   }
 
   static get styles() {
@@ -122,7 +123,7 @@ export default class UcdThemePagination extends LitElement {
           this._pages = this._renderEllipse(); // SB: New Ellipse pagination
         }else if(this.ellipses && this.maxPages < 8){
           this._pages = this._renderOriginal();
-        }else { //SB: This is the original render that should be replaced
+        }else { //SB: This is the original render that should be deleted
           let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
           
           if( startIndex < 0 ) {
