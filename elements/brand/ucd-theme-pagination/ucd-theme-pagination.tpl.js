@@ -25,7 +25,7 @@ return html`
     
     ${this._pages.map(page => this._renderLink(page))}
 
-    ${this.isMobile() ? 
+    ${this.isMobile ? 
       html`
         <span style="display: flex;justify-content: center;align-items: center;">of ${this.maxPages}</span>  
         ${this._renderLink(

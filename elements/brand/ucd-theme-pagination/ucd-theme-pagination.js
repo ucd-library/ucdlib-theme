@@ -65,8 +65,11 @@ export default class UcdThemePagination extends LitElement {
       ellipses : {
         type: Boolean,
         attribute : 'ellipses'
-      }
-
+      },
+      isMobile : {
+        type: Boolean,
+        attribute : 'is-mobile'
+      }     
     };
   }
 
@@ -87,27 +90,28 @@ export default class UcdThemePagination extends LitElement {
     this.maxPages = 1;
     this.ellipses = false;
     this._mobileBreakPoint = 992;
+    this.isMobile = false;
     
     this.render = render.bind(this);
   }
 
-  /**
-   * @method isDesktop
-   * @description Is the desktop view currently active?
-   * @returns {Boolean}
-   */
-   isDesktop(){   
-    return window.innerWidth >= this._mobileBreakPoint;
-  }
+  // /**
+  //  * @method isDesktop
+  //  * @description Is the desktop view currently active?
+  //  * @returns {Boolean}
+  //  */
+  //  isDesktop(){   
+  //   return window.innerWidth >= this._mobileBreakPoint;
+  // }
 
-  /**
-   * @method isMobile
-   * @description Is the mobile view currently active?
-   * @returns {Boolean}
-   */
-  isMobile(){
-    return !this.isDesktop();
-  }
+  // /**
+  //  * @method isMobile
+  //  * @description Is the mobile view currently active?
+  //  * @returns {Boolean}
+  //  */
+  // isMobile(){
+  //   return !this.isDesktop();
+  // }
 
   /**
    * @method updated()
@@ -115,7 +119,7 @@ export default class UcdThemePagination extends LitElement {
    */
   updated(props3) {
     if( props3.has('currentPage') ) {
-      if(this.isMobile()) {
+      if(this.isMobile) {
         let pages = [this.currentPage];
         this._pages = pages;  // Mobile Pagination
       }else{
@@ -167,14 +171,14 @@ export default class UcdThemePagination extends LitElement {
     if( !this.basePath && !this.useHash ) { 
       return html `<li  class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-          html`<a style="cursor:none; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
-          html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
-        }  
+        html`<a style="cursor:none; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
+        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
+         }  
         </li>`;            
     }
 
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page;
-      return html`<li class="pager__item ${args.class || ''}">
+    return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
           html` <a style="cursor:none; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 
           html` <a href="${href}">${args.label || page}</a>`
@@ -220,15 +224,26 @@ export default class UcdThemePagination extends LitElement {
     let endIndex = this.maxPages;
 
     let pages = [];
-
-    if(this.currentPage == startIndex + 1){
+    if ((this.currentPage <= endIndex - 4) && (this.currentPage >= startIndex + 4)){
       for( let i = startIndex; i < endIndex; i++ ) {
-        if(i > 0 && i < (endIndex - 6)) continue;
+        if(i == 0) pages.push(i+1);    
+        else if (i == (startIndex + 1)) pages.push("...");
+        else if (i > (startIndex + 1) && i < this.currentPage - 3) continue; 
+        else if (i >= (this.currentPage - 3) && i < (this.currentPage + 2)) pages.push(i+1);
+        else if (i < 4 && i < this.currentPage + 2) continue; 
+        else if (i == (endIndex - 2)) pages.push("...");
+        else if (i == endIndex - 1) pages.push(i+1);  
+      }
+    } //Middle ellipses
+    else if(this.currentPage >= startIndex + 4){
+      for( let i = startIndex; i < endIndex; i++ ) {
+        if (i == 0) pages.push(i+1);
+        else if(i > 0 && i < (endIndex - 6)) continue;
         else if (i == (endIndex - 6)) pages.push("...");
         else pages.push(i+1);       
       }
     } //Left ellipses
-    else if(this.currentPage == endIndex){
+    else if(this.currentPage <= endIndex - 4){
       for( let i = startIndex; i < endIndex; i++ ) {
         if(i < 6) pages.push(i+1);
         else if (i == 6) pages.push("...");
@@ -236,17 +251,6 @@ export default class UcdThemePagination extends LitElement {
         else if (i == endIndex - 1) pages.push(i+1);  
       }
     } //Right ellipses
-    else {
-      for( let i = startIndex; i < endIndex; i++ ) {
-        if(i == 0 ) pages.push(i+1);    
-        else if (i == (startIndex + 1)) pages.push("...");
-        else if (i > (startIndex + 1) && i < this.currentPage - 3) continue; 
-        if (i >= (this.currentPage - 3) && i < (this.currentPage + 2)) pages.push(i+1);
-        else if (i < 4 && i < this.currentPage + 2) continue; 
-        else if (i == (endIndex - 2)) pages.push("...");
-        else if (i == endIndex - 1) pages.push(i+1);    
-      }
-    } //Middle ellipses
     return pages;
   }
 
