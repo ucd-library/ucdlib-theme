@@ -7,3 +7,4 @@ import "./pages/page-ucd-theme-quick-links";
 import "./pages/page-ucd-theme-header";
 import "./pages/page-ucd-theme-search-form";
 import "./pages/page-ucd-theme-search-popup";
+import "./pages/page-ucdlib-icon";
