@@ -28,6 +28,12 @@ export default class UcdlibIconset extends Mixin(LitElement)
     this.style.display = "none";
   }
 
+  /**
+   * @method updated
+   * @description Lit lifecyle method called after element updates
+   * @param {Map} props - Updated properties
+   * @private
+   */
   updated( props ){
     if (props.has('name') && this.name ) {
       this.dispatchEvent(
@@ -36,6 +42,13 @@ export default class UcdlibIconset extends Mixin(LitElement)
     }
   }
 
+  /**
+   * @method applyIcon
+   * @description Adds icon to ucdlib-icon element from iconset
+   * @param {Element} element - A ucdlib-icon element
+   * @param {String} iconName - The icon identifier
+   * @returns
+   */
   applyIcon(element, iconName){
     this.removeIcon(element);
     let svg = this._cloneIcon(iconName);
@@ -60,6 +73,14 @@ export default class UcdlibIconset extends Mixin(LitElement)
     }
   }
 
+  /**
+   * @method _cloneIcon
+   * @description Produce installable clone of the SVG element matching `id` in this
+   * iconset, or `undefined` if there is no matching element.
+   * @param {String} id - Icon id
+   * @returns {Element} - an SVG element
+   * @private
+   */
   _cloneIcon(id){
     if ( !this._iconMap ) this._updateIconMap();
     if ( this._iconMap[id] ){
@@ -85,6 +106,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
    * @description Returns shadowroot if exists
    * @param {Element} element
    * @returns {Object}
+   * @private
    */
   _getElementRoot(element){
     if ( element.renderRoot ) {
@@ -96,10 +118,19 @@ export default class UcdlibIconset extends Mixin(LitElement)
     return element;
   }
 
+  /**
+   * @method _onChildListMutation
+   * @description Fires when element child list changes
+   * @private
+   */
   _onChildListMutation(){
     this._updateIconMap();
   }
 
+  /**
+   * @method _updateIconMap
+   * @description Sets the _iconMap property with object: {icon_id: icon}
+   */
   _updateIconMap(){
     let iconMap = {};
     this.querySelectorAll('g[id]').forEach(icon => {
