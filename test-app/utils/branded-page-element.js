@@ -1,6 +1,19 @@
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Prism from 'prismjs';
+import Normalizer from "prismjs/plugins/normalize-whitespace/prism-normalize-whitespace";
+
+const nw = new Normalizer({
+  'remove-trailing': true,
+  'remove-indent': true,
+  'left-trim': true,
+  'right-trim': true,
+  /*'break-lines': 80,
+  'indent': 2,
+  'remove-initial-line-feed': false,
+  'tabs-to-spaces': 4,
+  'spaces-to-tabs': 4*/
+});
 
 const BrandedPageElement = (superClass) => class extends superClass {
 
@@ -43,7 +56,8 @@ const BrandedPageElement = (superClass) => class extends superClass {
       return "${" + code.values[i-1] + "}" + s;
     });
 
-    codeString = unsafeHTML(Prism.highlight(codeString.join(""), Prism.languages.html, 'html'));
+    codeString = nw.normalize(codeString.join(""));
+    codeString = unsafeHTML(Prism.highlight(codeString, Prism.languages.html, 'html'));
 
     const codeBlock = html`
       <pre>
@@ -63,6 +77,27 @@ const BrandedPageElement = (superClass) => class extends superClass {
         <div class="snippet">
           ${codeBlock}
         </div>
+      </div>
+    </div>
+    `;
+  }
+
+  /**
+   * @method jsPanel
+   * @description Display a stylized javascript code block
+   * @param code {String} - js code to display
+   * @returns {TemplateResult}
+   */
+  jsPanel(code){
+    code = nw.normalize(code);
+    return html`
+    <div class="quick-summary">
+      <div class="snippet">
+      <pre>
+        <code class="language-javascript">
+        ${unsafeHTML(Prism.highlight(code, Prism.languages.javascript, 'javascript'))}
+        </code>
+      </pre>
       </div>
     </div>
     `;

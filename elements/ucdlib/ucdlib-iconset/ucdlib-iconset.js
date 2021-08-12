@@ -30,8 +30,70 @@ export default class UcdlibIconset extends Mixin(LitElement)
 
   updated( props ){
     if (props.has('name') && this.name ) {
-      // fire loaded event
+      this.dispatchEvent(
+        new CustomEvent('ucdlib-iconset-added', {bubbles: true, composed: true})
+      );
     }
+  }
+
+  applyIcon(element, iconName){
+    this.removeIcon(element);
+    let svg = this._cloneIcon(iconName);
+    if ( svg ) {
+      let eleRoot = this._getElementRoot(element);
+      eleRoot.insertBefore(svg, eleRoot.childNodes[0]);
+      return element._svgIcon = svg;
+    }
+    return  null;
+  }
+
+  /**
+   * @method removeIcon
+   * @description Remove an icon from the given element by undoing the changes effected by `applyIcon`.
+   * 
+   * @param {Element} element The element from which the icon is removed.
+   */
+  removeIcon(element){
+    if (element._svgIcon) {
+      this._getElementRoot(element).removeChild(element._svgIcon);
+      element._svgIcon = null;
+    }
+  }
+
+  _cloneIcon(id){
+    if ( !this._iconMap ) this._updateIconMap();
+    if ( this._iconMap[id] ){
+      let content = this._iconMap[id].cloneNode(true), 
+        svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+        viewBox =
+          content.getAttribute('viewBox') || '0 0 ' + this.size + ' ' + this.size,
+        cssText =
+          'pointer-events: none; display: block; width: 100%; height: 100%;';
+      svg.setAttribute('viewBox', viewBox);
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      svg.setAttribute('focusable', 'false');
+      svg.style.cssText = cssText;
+      svg.appendChild(content).removeAttribute('id');
+      return svg;
+    }
+
+    return null;
+  }
+
+  /**
+   * @method _getElementRoot
+   * @description Returns shadowroot if exists
+   * @param {Element} element
+   * @returns {Object}
+   */
+  _getElementRoot(element){
+    if ( element.renderRoot ) {
+      return element.renderRoot;
+    }
+    if ( element.shadowRoot ) {
+      return element.shadowRoot;
+    }
+    return element;
   }
 
   _onChildListMutation(){

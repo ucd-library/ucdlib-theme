@@ -5,6 +5,7 @@ import {Mixin, MainDomElement} from '../../elements/utils/index.js';
 import {BrandedPageElement, MdElement} from "../utils/index.js";
 
 import "../../elements/ucdlib/ucdlib-iconset/ucdlib-iconset";
+import "../../elements/ucdlib/ucdlib-icon/ucdlib-icon";
 
 export default class PageUcdlibIcon extends Mixin(LitElement)
   .with(MainDomElement, BrandedPageElement, MdElement) {
@@ -22,6 +23,13 @@ export default class PageUcdlibIcon extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+  }
+
+  firstUpdated(){
+    const iconsets = this.renderRoot.querySelectorAll('ucdlib-iconset');
+    Array.from(iconsets).forEach(iconset => {
+      document.head.appendChild(iconset);
+    });
   }
 
 }
