@@ -5,7 +5,9 @@ import {render, styles} from "./ucd-theme-pagination.tpl.js";
 /**
  * @class UcdThemePagination
  * @classdesc Component class for pagination
- * Pattern Lab Url: http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-pagination
+ * 
+ * Pattern Lab Url: 
+ *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-pagination
  * 
  * @property {String} base-path - for anchor tag href
  * @property {String} current-page - Page to show and highlight

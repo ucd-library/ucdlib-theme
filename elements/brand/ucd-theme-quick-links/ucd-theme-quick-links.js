@@ -1,11 +1,12 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-quick-links.tpl.js";
 
-import { Mixin, MutationObserverElement } from "../../utils/index.js";
+import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
 
 /**
  * @class UcdThemeQuickLinks
  * @classdesc Component class for displaying a quick links nav
+ * 
  *  Patternlab Url:
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-2-columns
@@ -17,7 +18,7 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  * @property {Number} animationDuration - Length of animation when opening/closing menu
  */
 export default class UcdThemeQuickLinks extends Mixin(LitElement)
-  .with(MutationObserverElement) {
+  .with(MutationObserverElement, BreakPoints) {
 
   static get properties() {
     return {
@@ -47,7 +48,6 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
 
     this._links = [];
     this._classPrefix = "quick-links";
-    this._mobileBreakPoint = 992;
     this._hasCustomIcons = false;
     this._transitioning = false;
     this._openedHeight = 0;
@@ -131,24 +131,6 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     });
 
     if ( links.length > 0 ) this._links = links;
-  }
-
-  /**
-  * @method isDesktop
-  * @description Is the desktop view currently active?
-  * @returns {Boolean}
-  */
-  isDesktop(){
-    return window.innerWidth >= this._mobileBreakPoint;
-  }
-
-  /**
-   * @method isMobile
-   * @description Is the mobile view currently active?
-   * @returns {Boolean}
-   */
-  isMobile(){
-    return !this.isDesktop();
   }
 
   /**

@@ -3,11 +3,12 @@ import {render, styles} from "./ucd-theme-primary-nav.tpl.js";
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { Mixin, MutationObserverElement } from "../../utils/index.js";
+import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
 
 /**
  * @class UcdThemePrimaryNav
  * @classdesc Component class for displaying a primary site nav
+ * 
  * Pattern Lab Url:
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav/molecules-navigation-00-primary-nav.rendered.html
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav-megamenu/molecules-navigation-00-primary-nav-megamenu.rendered.html
@@ -31,7 +32,7 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  *  </ucd-theme-primary-nav>
  */
 export default class UcdThemePrimaryNav extends Mixin(LitElement)
-  .with(MutationObserverElement) {
+  .with(MutationObserverElement, BreakPoints) {
 
   static get properties() {
     return {
@@ -60,7 +61,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     this.maxDepth = 2;
 
     this._classPrefix = "primary-nav";
-    this._mobileBreakPoint = 992;
     this._acceptedNavTypes = ['superfish', 'mega'];
     this._megaIsOpen = false;
   }
@@ -247,24 +247,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       navItem.mobileStyles = {};
       this.requestUpdate();
     }
-  }
-
-  /**
-   * @method isDesktop
-   * @description Is the desktop view currently active?
-   * @returns {Boolean}
-   */
-  isDesktop(){
-    return window.innerWidth >= this._mobileBreakPoint;
-  }
-
-  /**
-   * @method isMobile
-   * @description Is the mobile view currently active?
-   * @returns {Boolean}
-   */
-  isMobile(){
-    return !this.isDesktop();
   }
 
   /**

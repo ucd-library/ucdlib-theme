@@ -15,5 +15,6 @@ COPY index.html .
 COPY js js
 COPY pages pages
 COPY utils utils
+COPY img img
 
 CMD node server.js
