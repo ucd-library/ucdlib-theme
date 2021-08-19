@@ -69,7 +69,12 @@ export default class UcdThemePagination extends LitElement {
       isMobile : {
         type: Boolean,
         attribute : 'is-mobile'
-      }     
+      },
+      size : {
+        type: String,
+        attribute : 'size'
+      }
+
     };
   }
 
@@ -91,7 +96,8 @@ export default class UcdThemePagination extends LitElement {
     this.ellipses = false;
     this._mobileBreakPoint = 992;
     this.isMobile = false;
-    
+    this.size = '';
+
     this.render = render.bind(this);
   }
 
@@ -153,6 +159,24 @@ export default class UcdThemePagination extends LitElement {
 
     }
   }
+
+  /**
+   * @method _constructClasses
+   * @description Makes a class map object based on element properties/attributes. 
+   * Classes are applied to the element.
+   * 
+   * @returns {Object} - {class1: true, class2: false}
+   */
+   _constructClasses() {
+    let classes = {'main': true};
+
+    if (this.size) {
+      classes['size-' + this.size] = true;
+    }
+    
+    return classes;
+  }
+
 
   /**
    * @method _renderLink

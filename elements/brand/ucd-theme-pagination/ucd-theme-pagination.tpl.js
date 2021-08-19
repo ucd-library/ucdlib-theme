@@ -9,6 +9,12 @@ export function styles() {
     :host {
       display: block;
     }
+    @media (min-width: 991px) {
+      .pager__item--next {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
   `;
 
   return [normalizeCss, resetCss, paginationCss, elementStyles];

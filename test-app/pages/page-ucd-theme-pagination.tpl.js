@@ -53,35 +53,35 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
     max-pages="20"
-    ellipses=${true}>
+    ellipses>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="12"
     max-pages="20"
-    ellipses=${true}>
+    ellipses>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="20"
     max-pages="20"
-    ellipses=${true}>
+    ellipses>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
     max-pages="8"
-    ellipses=${true}>
+    ellipses>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
     max-pages="7"
-    ellipses=${true}>
+    ellipses>
   </ucd-theme-pagination>
 `)}
 
@@ -90,21 +90,21 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
     max-pages="20"
-    is-mobile=${true}>
+    is-mobile>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="16"
     max-pages="20"
-    is-mobile=${true}>
+    is-mobile>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="20"
     max-pages="20"
-    is-mobile=${true}>
+    is-mobile>
   </ucd-theme-pagination>
 `)}
 
@@ -153,7 +153,7 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="50"
     max-pages="100"
-    ellipses=${true}
+    ellipses
     use-hash>
   </ucd-theme-pagination>
 `)}
@@ -162,7 +162,7 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="2"
     max-pages="33"
-    ellipses=${true}
+    ellipses
     base-path="/foo/bar/">
   </ucd-theme-pagination>
 `)} 
@@ -171,7 +171,7 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="32"
     max-pages="33"
-    ellipses=${true}
+    ellipses
     use-hash
     base-path="/foo/bar/">
   </ucd-theme-pagination>
@@ -182,7 +182,7 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="33"
     max-pages="33"
-    ellipses=${true}
+    ellipses
     base-path="/foo/bar/">
   </ucd-theme-pagination>
 `)}
@@ -202,7 +202,7 @@ ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="33"
     max-pages="33"
-    ellipses=${true}
+    ellipses
     @page-change="${e => console.log(e.detail.page)}">
   </ucd-theme-pagination>
 `)}
