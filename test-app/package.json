@@ -27,7 +27,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@ucd-lib/theme-elements": "file:../elements",
-    "@ucd-lib/theme-sass": "^5.0.5",
+    "@ucd-lib/theme-sass": "^5.0.7",
     "express": "^4.17.1",
     "lit": "^2.0.0-rc.1",
     "marked": "^2.1.3",
