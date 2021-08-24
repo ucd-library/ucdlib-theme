@@ -85,26 +85,27 @@ ${this.examplePanel(html`
   </ucd-theme-pagination>
 `)}
 
-<h3>Basic Use (Mobile)</h3>
+<h3>Basic Use (Mobile) </h3>
+<p><code>Mobile</code> also goes into effect if the screen changes to mobile view</p>
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
     max-pages="20"
-    is-mobile>
+    xs-screen>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="16"
     max-pages="20"
-    is-mobile>
+    xs-screen>
   </ucd-theme-pagination>
 `)}
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="20"
     max-pages="20"
-    is-mobile>
+    xs-screen>
   </ucd-theme-pagination>
 `)}
 

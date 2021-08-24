@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 //import { Page } from 'puppeteer';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
+import { Mixin, BreakPoints } from "../../utils/index.js";
 
 /**
  * @class UcdThemePagination
@@ -32,7 +33,8 @@ import {render, styles} from "./ucd-theme-pagination.tpl.js";
  * </ucd-theme-pagination>
  * 
  */
-export default class UcdThemePagination extends LitElement {
+export default class UcdThemePagination extends Mixin(LitElement)
+  .with(BreakPoints) {
 
   static get properties() {
     return {
@@ -68,9 +70,9 @@ export default class UcdThemePagination extends LitElement {
         type: Boolean,
         attribute : 'ellipses'
       },
-      isMobile : {
+      xs_screen : {
         type: Boolean,
-        attribute : 'is-mobile'
+        attribute : 'xs-screen'
       },
       size : {
         type: String,
@@ -96,30 +98,13 @@ export default class UcdThemePagination extends LitElement {
     this.currentPage = 1;
     this.maxPages = 1;
     this.ellipses = false;
-    this._mobileBreakPoint = 992;
-    this.isMobile = false;
+    this.xs_screen = false;
     this.size = '';
+
+    if (window.innerWidth <= this._mobileBreakPoint) this.xs_screen = true;
 
     this.render = render.bind(this);
   }
-
-  // /**
-  //  * @method isDesktop
-  //  * @description Is the desktop view currently active?
-  //  * @returns {Boolean}
-  //  */
-  //  isDesktop(){   
-  //   return window.innerWidth >= this._mobileBreakPoint;
-  // }
-
-  // /**
-  //  * @method isMobile
-  //  * @description Is the mobile view currently active?
-  //  * @returns {Boolean}
-  //  */
-  // isMobile(){
-  //   return !this.isDesktop();
-  // }
 
   /**
    * @method updated()
@@ -127,15 +112,16 @@ export default class UcdThemePagination extends LitElement {
    */
   updated(props3) {
     if( props3.has('currentPage') ) {
-      if(this.isMobile) {
+      
+      if(this.xs_screen) {
         let pages = [this.currentPage];
         this._pages = pages;  // Mobile Pagination
       }else{
         if(this.ellipses && this.maxPages >= 8){
-          this._pages = this._renderEllipse(); // SB: New Ellipse pagination
+          this._pages = this._renderEllipse();
         }else if(this.ellipses && this.maxPages < 8){
           this._pages = this._renderOriginal();
-        }else { //SB: This is the original render that should be deleted
+        }else {
           let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
           
           if( startIndex < 0 ) {
@@ -197,7 +183,7 @@ export default class UcdThemePagination extends LitElement {
     if( !this.basePath && !this.useHash ) { 
       return html `<li  class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-        html`<a style="cursor:none; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
+        html`<a style="pointer-events: none; cursor: default; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
         html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
          }  
         </li>`;            
@@ -206,7 +192,7 @@ export default class UcdThemePagination extends LitElement {
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page;
     return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-          html` <a style="cursor:none; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 
+          html` <a style="pointer-events: none; cursor: default; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 
           html` <a href="${href}">${args.label || page}</a>`
         }   
         </li>`;
