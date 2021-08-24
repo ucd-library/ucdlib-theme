@@ -1,4 +1,5 @@
 import { html, css } from 'lit';
+import cssProps from '@ucd-lib/theme-sass/css-properties.css';
 
 export function styles() {
   const elementStyles = css`
@@ -13,6 +14,7 @@ export function styles() {
 export function render() { 
 return html`
   <style>
+    ${cssProps}
     .snippet {
       background-color: #DBEAF7
     }
