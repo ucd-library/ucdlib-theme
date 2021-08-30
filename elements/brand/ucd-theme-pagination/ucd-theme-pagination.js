@@ -1,5 +1,7 @@
 import { LitElement, html } from 'lit';
+//import { Page } from 'puppeteer';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
+import { Mixin, BreakPoints } from "../../utils/index.js";
 
 /**
  * @class UcdThemePagination
@@ -14,7 +16,7 @@ import {render, styles} from "./ucd-theme-pagination.tpl.js";
  * @property {String} visible-link-count - How many page links to show
  * 
  * @examples
- * 
+ * change!!!
  * <ucd-theme-pagination
  *  current-page="50"
  *  max-pages="100"
@@ -31,7 +33,8 @@ import {render, styles} from "./ucd-theme-pagination.tpl.js";
  * </ucd-theme-pagination>
  * 
  */
-export default class UcdThemePagination extends LitElement {
+export default class UcdThemePagination extends Mixin(LitElement)
+  .with(BreakPoints) {
 
   static get properties() {
     return {
@@ -56,8 +59,27 @@ export default class UcdThemePagination extends LitElement {
         type : Number,
         attribute : 'visible-link-count'
       },
-      _pages : {type: Array}
-    }
+      disableLabel : {
+        type: Boolean,
+        attribute : 'disable-label'
+      },
+      _pages : {
+        type: Array
+      },
+      ellipses : {
+        type: Boolean,
+        attribute : 'ellipses'
+      },
+      xs_screen : {
+        type: Boolean,
+        attribute : 'xs-screen'
+      },
+      size : {
+        type: String,
+        attribute : 'size'
+      }
+
+    };
   }
 
   static get styles() {
@@ -69,39 +91,86 @@ export default class UcdThemePagination extends LitElement {
 
     this._pages = [];
     this.useHash = false;
+    this.disableLabel = false;
     this.type = 'virtual';
     this.basePath = '';
     this.visibleLinkCount = 7;
     this.currentPage = 1;
     this.maxPages = 1;
+    this.ellipses = false;
+    this.xs_screen = false;
+    this.size = '';
+
+    if (window.innerWidth <= this._mobileBreakPoint) this.xs_screen = true;
 
     this.render = render.bind(this);
   }
 
-  updated(props) {
-    if( props.has('currentPage') ) {
-      let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
+  /**
+   * @method updated()
+   * @description Changes occur on update
+   */
+  updated(props3) {
+    if( props3.has('currentPage') ) {
       
-      if( startIndex < 0 ) {
-        startIndex = 0;
-      } else if( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
-        startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
-      }
-      if( startIndex < 0 ) {
-        startIndex = 0;
-      }
+      if(this.xs_screen) {
+        let pages = [this.currentPage];
+        this._pages = pages;  // Mobile Pagination
+      }else{
+        if(this.ellipses && this.maxPages >= 8){
+          this._pages = this._renderEllipse();
+        }else if(this.ellipses && this.maxPages < 8){
+          this._pages = this._renderOriginal();
+        }else {
+          let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
+          
+          if( startIndex < 0 ) {
+            startIndex = 0;
+          } else if( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
+            startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
+          }
+          if( startIndex < 0 ) {
+            startIndex = 0;
+          }
+      
+          let endIndex = startIndex + this.visibleLinkCount;
+          if( endIndex > this.maxPages ) endIndex = this.maxPages;
+      
+          let pages = [];
+          for( let i = startIndex; i < endIndex; i++ ) {
+            pages.push(i+1);
+          }
+          this._pages = pages;
+        } 
 
-      let endIndex = startIndex + this.visibleLinkCount;
-      if( endIndex > this.maxPages ) endIndex = this.maxPages;
+      } // Desktop Pagination
 
-      let pages = [];
-      for( let i = startIndex; i < endIndex; i++ ) {
-        pages.push(i+1);
-      }
-      this._pages = pages;
     }
   }
 
+  /**
+   * @method _constructClasses
+   * @description Makes a class map object based on element properties/attributes. 
+   * Classes are applied to the element.
+   * 
+   * @returns {Object} - {class1: true, class2: false}
+   */
+   _constructClasses() {
+    let classes = {'main': true};
+
+    if (this.size) {
+      classes['size-' + this.size] = true;
+    }
+    
+    return classes;
+  }
+
+
+  /**
+   * @method _renderLink
+   * @description render the links on the pagination 
+   * @returns {HTML}
+   */
   _renderLink(page, args={}) {
     if( page < 1 ) page = 1;
     if( page > this.maxPages ) page = this.maxPages;
@@ -111,19 +180,97 @@ export default class UcdThemePagination extends LitElement {
       args.class += ' pager__item--current';
     }
 
-    if( !this.basePath && !this.useHash ) {
-      return html`<li  class="pager__item ${args.class || ''}">
-        <a style="cursor:pointer" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>
-      </li>`;
+    if( !this.basePath && !this.useHash ) { 
+      return html `<li  class="pager__item ${args.class || ''}">
+        ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
+        html`<a style="pointer-events: none; cursor: default; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
+        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
+         }  
+        </li>`;            
     }
 
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page;
     return html`<li class="pager__item ${args.class || ''}">
-      <a href="${href}">${args.label || page}</a>
-    </li>`;
+        ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
+          html` <a style="pointer-events: none; cursor: default; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 
+          html` <a href="${href}">${args.label || page}</a>`
+        }   
+        </li>`;
   }
 
+  /**
+   * @method _renderOriginal
+   * @description render the ellipses pattern in pagination
+   * @returns {Array} pages
+   */  
+  _renderOriginal(){
+    let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
+          
+    if( startIndex < 0 ) {
+      startIndex = 0;
+    } else if( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
+      startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
+    }
+    if( startIndex < 0 ) {
+      startIndex = 0;
+    }
 
+    let endIndex = startIndex + this.visibleLinkCount;
+    if( endIndex > this.maxPages ) endIndex = this.maxPages;
+
+    let pages = [];
+    for( let i = startIndex; i < endIndex; i++ ) {
+      pages.push(i+1);
+    }   
+
+    return pages;
+  }
+
+  /**
+   * @method _renderEllipse
+   * @description render the ellipses pattern in pagination
+   * @returns {Array} pages
+   */  
+  _renderEllipse(){
+    let startIndex = 0;
+    let endIndex = this.maxPages;
+
+    let pages = [];
+    if ((this.currentPage <= endIndex - 4) && (this.currentPage >= startIndex + 4)){
+      for( let i = startIndex; i < endIndex; i++ ) {
+        if(i == 0) pages.push(i+1);    
+        else if (i == (startIndex + 1)) pages.push("...");
+        else if (i > (startIndex + 1) && i < this.currentPage - 3) continue; 
+        else if (i >= (this.currentPage - 3) && i < (this.currentPage + 2)) pages.push(i+1);
+        else if (i < 4 && i < this.currentPage + 2) continue; 
+        else if (i == (endIndex - 2)) pages.push("...");
+        else if (i == endIndex - 1) pages.push(i+1);  
+      }
+    } //Middle ellipses
+    else if(this.currentPage >= startIndex + 4){
+      for( let i = startIndex; i < endIndex; i++ ) {
+        if (i == 0) pages.push(i+1);
+        else if(i > 0 && i < (endIndex - 6)) continue;
+        else if (i == (endIndex - 6)) pages.push("...");
+        else pages.push(i+1);       
+      }
+    } //Left ellipses
+    else if(this.currentPage <= endIndex - 4){
+      for( let i = startIndex; i < endIndex; i++ ) {
+        if(i < 6) pages.push(i+1);
+        else if (i == 6) pages.push("...");
+        else if (i > 6 && i < (endIndex - 2)) continue; 
+        else if (i == endIndex - 1) pages.push(i+1);  
+      }
+    } //Right ellipses
+    return pages;
+  }
+
+  /**
+   * @method _onPageClicked
+   * @description event fires on page click
+   * 
+   */    
   _onPageClicked(e) {
     this.dispatchEvent(new CustomEvent('page-change', {
       detail : {page: parseInt(e.currentTarget.getAttribute('page'))}

@@ -21,6 +21,18 @@ Pattern Lab Url:
  max-pages="33"
  base-path="/foo/bar/">
 </ucd-theme-pagination>  
+<ucd-theme-pagination
+ current-page="2"
+ max-pages="33"
+ ellipses=${true}
+ base-path="/foo/bar/">
+</ucd-theme-pagination>  
+<ucd-theme-pagination
+ current-page="2"
+ max-pages="33"
+ is-mobile=${true}
+ base-path="/foo/bar/">
+</ucd-theme-pagination>  
 **Properties**
 
 | Name | Type | Description |
@@ -29,4 +41,6 @@ Pattern Lab Url:
 | current-page | <code>String</code> | Page to show and highlight |
 | max-pages | <code>String</code> | Max number of total pages |
 | visible-link-count | <code>String</code> | How many page links to show |
+| is-mobile | <code>Boolean</code> | Whether the pagination is mobile view |
+| ellipses | <code>Boolean</code> | Whether it is default or ellipses view|
 
