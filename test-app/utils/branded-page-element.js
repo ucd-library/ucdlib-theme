@@ -39,20 +39,12 @@ const BrandedPageElement = (superClass) => class extends superClass {
    * @returns {TemplateResult}
    */
   examplePanel(code, hideRendered=false){
-    if ( !code ) return html``;
+    if ( !code || !code.strings ) return html``;
 
     let codeString = code.strings.map((s, i) => {
       if ( i===0 ) {
-        //if (s.startsWith("\n")) s = s.slice(1);
-        //s = s.trimLeft();
         return s;
       }
-      /*
-      if ( 
-        i === code.strings.length - 1 && 
-        s.endsWith("\n")
-      ) s = s.slice(0, -1);
-      */
       return "${" + code.values[i-1] + "}" + s;
     });
 
