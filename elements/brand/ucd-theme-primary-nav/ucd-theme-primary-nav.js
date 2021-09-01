@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-primary-nav.tpl.js";
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
 
@@ -357,7 +358,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         class=${classMap(this._makeLiClassMap(navItem, depth))}>
         <div class="submenu-toggle__wrapper ${depth === 0 ? `${this._classPrefix}__top-link` : ''}">
           <a 
-            href=${navItem.href}
+            href=${ifDefined(navItem.href ? navItem.href : null)}
             tabindex=${this._setTabIndex(depth)}
             @focus=${this._onItemFocus}>
             ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>

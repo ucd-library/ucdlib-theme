@@ -5,6 +5,11 @@ import {Mixin, MutationObserverElement} from '../../utils/index.js';
  * @class UcdlibPages
  * @description similar to the old iron-pages element, allows you to control which element is visible
  * based on child index or tag attribute
+ * @property {String} selected - Denotes which child is currently displayed.
+ *  If numeric, refers to index of child. Else, refers to child id.
+ *  If attrForSelected is used, refers to the value of that attribute instead of id.
+ * @property {String} attrForSelected - Use a custom attribute instead of id for matching 'selected'
+ * @property {String} selectedAttribute - Will assign attribute to selected child.
  * 
  * <ucdlib-pages selected="page2" attr-for-selected="id">
  *   <div id="page1">Test 1</div>
@@ -30,7 +35,6 @@ export default class UcdlibPages extends Mixin(LitElement)
 
   constructor() {
     super();
-    // this.render = render.bind(this);
   }
 
   /**
@@ -52,10 +56,8 @@ export default class UcdlibPages extends Mixin(LitElement)
   /**
    * @method _onChildListMutation
    * @description called when children change via MutationObserverElement
-   * 
-   * @param {ElementList} children 
    */
-  _onChildListMutation(children) {
+  _onChildListMutation() {
     this._onChange();
   }
 
@@ -69,7 +71,7 @@ export default class UcdlibPages extends Mixin(LitElement)
 
     // find what the selected attribute is
     if( this.selected !== undefined || this.selected !== null ) {
-      if( typeof this.selected === 'string' && this.selected.match(/\d+/) ) {
+      if( typeof this.selected === 'string' && /^\d+$/.test(this.selected) ) {
         selected = parseInt(this.selected);
       } else {
         selected = this.selected;

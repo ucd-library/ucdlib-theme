@@ -40,15 +40,54 @@ return html`
     }
   </style>
 
-  <select id="elementSelector" @change="${this._onSelectChange}">
-    ${this.elements.map(item => html`<option value="${item}">${item}</option>`)}
-  </select>
 
-  <div class="l-container">
-    <div class="l-content">
-      <ucdlib-pages id="pages" selected="${this.selectedPage}" ></ucdlib-pages>
-    </div>
+
+  <div class="page">
+    <ucd-theme-header
+      site-name="UC Davis Library Digital Brand"
+      slogan="Using the UC Davis brand in Library applications"
+      figure-src="/img/book-logo.png">
+
+      <ucd-theme-primary-nav>
+        <ul link-text="Brand Web Components">
+          <ul link-text="Header">
+            <li><a href="#ucd-theme-header">Controller</a></li>
+            <li><a href="#ucd-primary-nav">Primary Nav</a></li>
+            <li><a href="#ucd-theme-search-popup">Search Popup</a></li>
+            <li><a href="#ucd-theme-search-form">Search Form</a></li>
+            <li><a href="#ucd-theme-quick-links">Quick Links</a></li>
+          </ul>
+          <ul link-text="Other Navigation">
+            <li><a href="#ucd-theme-pagination">Pagination</a></li>
+          </ul>
+        </ul>
+
+        <ul link-text="Library Web Components">
+          <ul link-text="Icons">
+            <li><a href="#ucdlib-icon">Icon</a></li>
+            <li><a href="#ucdlib-iconset">Icon Set</a></li>
+          </ul>
+          <li><a href="#ucdlib-pages">Pages</a></li>
+        </ul>
+
+        <ul link-text="Brand Guides">
+          <li><a href="#brand-colors">Colors</a></li>
+        </ul>
+      </ucd-theme-primary-nav>
+
+    </ucd-theme-header>
+
+    <main class="l-main">
+      <div class="l-container">
+        <div class="l-content">
+          <ucdlib-pages id="pages" selected="${this.selectedPage}" ></ucdlib-pages>
+        </div>
+      </div>
+    </main>
+    
   </div>
+
+
   
 
 `;}

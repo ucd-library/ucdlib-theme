@@ -2,11 +2,14 @@ const jsdoc2md = require('jsdoc-to-markdown');
 const path = require('path');
 const fs = require('fs');
 
-const ELE_ROOT = path.join(__dirname, 'elements', 'brand');
+const ELE_ROOTS = [
+  path.join(__dirname, 'elements', 'brand'),
+  path.join(__dirname, 'elements', 'ucdlib')
+];
 const DOC_ROOT = path.join(__dirname, 'test-app', 'pages');
 
 console.log('Generating docs for:');
-(async function() {
+ELE_ROOTS.forEach(async function(ELE_ROOT) {
   let elements = fs.readdirSync(ELE_ROOT);
   for( let element of elements ) {
     if( !fs.statSync(path.join(ELE_ROOT, element)).isDirectory() ) continue;
@@ -19,4 +22,4 @@ console.log('Generating docs for:');
       "heading-depth" : 3});
     fs.writeFileSync(path.join(DOC_ROOT, element+'.md'), md);
   }
-})();
+});

@@ -2,11 +2,20 @@ import { LitElement } from 'lit';
 import { Mixin, MutationObserverElement, MainDomElement} from "../../utils";
 
 /**
- * @class UCdlibIconset
+ * @class UcdlibIconset
  * @classdesc Component for creating svg iconsets to be consumed by the 'icon' attribute of ucdlib-icon
  * 
  * @property {String} name - Name of the icon set. Usage: <ucdlib-icon icon="{thisProperty}:{icon}"></ucdlib-icon>
  * @property {Number} size - The size of an individual icon. Note that icons must be square. 
+ * @example
+ * <ucdlib-iconset name="arrows">
+    <svg>
+      <defs>
+        <g id="back"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></g>
+        <g id="downward"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"></path></g>
+      </defs>
+    </svg>
+  </ucdlib-iconset>
  */
 export default class UcdlibIconset extends Mixin(LitElement)
   .with(MutationObserverElement, MainDomElement) {
@@ -47,7 +56,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
    * @description Adds icon to ucdlib-icon element from iconset
    * @param {Element} element - A ucdlib-icon element
    * @param {String} iconName - The icon identifier
-   * @returns
+   * @returns {Boolean}
    */
   applyIcon(element, iconName){
     this.removeIcon(element);
@@ -57,7 +66,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
       eleRoot.insertBefore(svg, eleRoot.childNodes[0]);
       return element._svgIcon = svg;
     }
-    return  null;
+    return null;
   }
 
   /**
@@ -130,6 +139,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
   /**
    * @method _updateIconMap
    * @description Sets the _iconMap property with object: {icon_id: icon}
+   * @private
    */
   _updateIconMap(){
     let iconMap = {};

@@ -3,6 +3,7 @@ import {render, styles} from "./ucdlib-theme-test-app.tpl.js";
 import {Mixin, MainDomElement} from '../elements/utils/index.js';
 
 import "../elements/ucdlib/ucdlib-pages/ucdlib-pages.js";
+import "../elements/brand/ucd-theme-header/ucd-theme-header";
 
 export default class UcdlibThemeTestApp extends Mixin(LitElement)
   .with(MainDomElement) {
@@ -49,8 +50,10 @@ export default class UcdlibThemeTestApp extends Mixin(LitElement)
 
   async renderMd() {
     if( !this.selectedPage ) return;
+    const pageEle = this.querySelector('#'+this.selectedPage);
+    if ( !pageEle.renderMd ) return;
     try {
-      await this.querySelector('#'+this.selectedPage).renderMd();
+      await pageEle.renderMd();
     } catch(e) {
       console.error('Failed to render markdown'+ e);
     }

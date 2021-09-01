@@ -128,6 +128,7 @@ export default class UcdlibIcon extends LitElement {
    * @method _getIconset
    * @description Return the specified ucdlib-iconset element from the head
    * @returns {Element}
+   * @private
    */
   _getIconset(){
     return document.head.querySelector(`ucdlib-iconset[name=${this._iconsetName}]`);

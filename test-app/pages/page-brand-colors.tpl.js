@@ -19,8 +19,10 @@ return html`
     } 
   </style>
   ${this.pageTitle("Using Brand Colors")}
-  <h2>Site Classes</h2>
-  <p>If your element does not use the shadowroot, and you loaded the styles into the site's renderRoot, 
+  <p>There are several ways to use the UCD theme color pallete. 
+    Depending on your site architecture, at least one of the following options will work.</p>
+  <h2>Sitefarm Classes</h2>
+  <p>If your element does not use the shadowroot, and you loaded the Sitefarm styles into the site's renderRoot, 
     you can use css classes to apply colors:</p>
   
   <p>to text:</p>
@@ -47,7 +49,7 @@ return html`
   </div>
 
   <h2>CSS Custom Properties</h2>
-  <p>If loaded, you can use CSS custom properties from the <code>@ucd-lib/theme-sass</code> package:</p>
+  <p>Once loaded, you can use CSS custom properties from the <code>@ucd-lib/theme-sass</code> package:</p>
   <div class="colored-backgrounds">
   ${this.examplePanel(html`
       <div style="background-color:var(--tahoe)"></div>
@@ -57,7 +59,7 @@ return html`
   </div>
   <h2>Inside a ShadowRoot</h2>
   <p>To use colors inside an element that uses ShadowRoot, you can use CSS properties since they pierce through.</p>
-  <p>You can also use the classes listed above by importing the scss partial:</p>
+  <p>You can also use the Sitefarm classes listed above by importing the scss partial:</p>
   ${this.jsPanel('import brandStyles from "@ucd-lib/theme-sass/4_component/_category-brand.css.js"')}
 
   <h2>Color Objects</h2>
