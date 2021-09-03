@@ -11,7 +11,7 @@ export function styles() {
   return [elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
   <style>
     ${cssProps}
@@ -72,6 +72,7 @@ return html`
 
         <ul link-text="Brand Guides">
           <li><a href="#brand-colors">Colors</a></li>
+          <li><a href="#infographics">Infographics</a></li>
         </ul>
       </ucd-theme-primary-nav>
 
@@ -84,10 +85,8 @@ return html`
         </div>
       </div>
     </main>
-    
+
   </div>
 
-
-  
 
 `;}

@@ -11,20 +11,20 @@ export function styles() {
   return [elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
   <style>
     .colored-backgrounds .quick-summary__body > div {
       height: 30px;
-    } 
+    }
   </style>
   ${this.pageTitle("Using Brand Colors")}
-  <p>There are several ways to use the UCD theme color pallete. 
+  <p>There are several ways to use the UCD theme color pallete.
     Depending on your site architecture, at least one of the following options will work.</p>
   <h2>Sitefarm Classes</h2>
-  <p>If your element does not use the shadowroot, and you loaded the Sitefarm styles into the site's renderRoot, 
+  <p>If your element does not use the shadowroot, and you loaded the Sitefarm styles into the site's renderRoot,
     you can use css classes to apply colors:</p>
-  
+
   <p>to text:</p>
   ${this.examplePanel(html`
     <p class="double-decker">double-decker</p>
@@ -34,7 +34,7 @@ return html`
   `)}
 
   <p>To backgrounds:</p>
-  
+
   <div class="colored-backgrounds">
   ${this.examplePanel(html`
       <div class="category-brand--tahoe category-brand__background"></div>
@@ -44,7 +44,7 @@ return html`
   </div>
 
   <div class="alert">
-  The <code>category-brand--</code> prefix can be used to style many components. 
+  The <code>category-brand--</code> prefix can be used to style many components.
   <a href="http://dev.webstyleguide.ucdavis.edu/redesign/?p=viewall-organisms-branding">See Patternlab for more details</a>
   </div>
 
@@ -65,12 +65,12 @@ return html`
   <h2>Color Objects</h2>
   <p>If you need access to a list of brand colors and associated hex values, you can import them as objects:</p>
   ${this.jsPanel(`
-  import { 
-    baseColors, 
-    blueTints, 
-    goldTints, 
-    blackTints, 
-    categoryBrands } 
+  import {
+    baseColors,
+    blueTints,
+    goldTints,
+    blackTints,
+    categoryBrands }
   from "@ucd-lib/theme-sass/colors";`)}
 
   <h2>Color Reference</h2>

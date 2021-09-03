@@ -4,7 +4,7 @@ import "./ucdlib-theme-test-app.js";
 
 // guides
 import "./pages/page-brand-colors";
-import "./pages/page-infographics";
+import "./pages/page-infographics.js";
 
 // brand components
 import "./pages/page-ucd-theme-primary-nav.js";
