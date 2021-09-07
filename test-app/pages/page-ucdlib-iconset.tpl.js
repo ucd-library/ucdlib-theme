@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import * as academicIcon from '../utils/academicicons.svg';
+//import * as academicIcon from '../utils/academicicons.svg';
 
 export function styles() {
   const elementStyles = css`
