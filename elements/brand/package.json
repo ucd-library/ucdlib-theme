@@ -9,7 +9,7 @@
   "author": "jrmerz@ucdavis.edu",
   "license": "MIT",
   "dependencies": {
-    "@ucd-lib/theme-sass": "^5.0.4",
+    "@ucd-lib/theme-sass": "^5.0.10",
     "photoswipe": "^4.1.3"
   }
 }
