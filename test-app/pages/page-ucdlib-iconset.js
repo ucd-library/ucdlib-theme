@@ -26,7 +26,7 @@ export default class PageUcdlibIconset extends Mixin(LitElement)
   }
 
   firstUpdated(){
-    const iconsets = this.renderRoot.querySelectorAll('ucdlib-iconset');
+    const iconsets = this.renderRoot.querySelectorAll('#ucdlib-iconset ucdlib-iconset');
     Array.from(iconsets).forEach(iconset => {
       document.head.appendChild(iconset);
     });
