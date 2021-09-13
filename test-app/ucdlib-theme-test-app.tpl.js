@@ -52,7 +52,7 @@ return html`
         <ul link-text="Brand Web Components">
           <ul link-text="Header">
             <li><a href="#ucd-theme-header">Controller</a></li>
-            <li><a href="#ucd-primary-nav">Primary Nav</a></li>
+            <li><a href="#ucd-theme-primary-nav">Primary Nav</a></li>
             <li><a href="#ucd-theme-search-popup">Search Popup</a></li>
             <li><a href="#ucd-theme-search-form">Search Form</a></li>
             <li><a href="#ucd-theme-quick-links">Quick Links</a></li>
@@ -63,7 +63,8 @@ return html`
         </ul>
 
         <ul link-text="Library Web Components">
-          <ul link-text="Icons">
+          <ul link-text="Icons" href="#ucdlib-icons">
+            <li><a href="#ucdlib-icons">Icons</a></li>
             <li><a href="#ucdlib-icon">Icon</a></li>
             <li><a href="#ucdlib-iconset">Icon Set</a></li>
           </ul>

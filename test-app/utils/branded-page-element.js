@@ -81,13 +81,16 @@ const BrandedPageElement = (superClass) => class extends superClass {
    * @returns {TemplateResult}
    */
   jsPanel(code){
+    if (!code) return html``;
     code = nw.normalize(code);
+    code = Prism.highlight(code, Prism.languages.javascript, 'javascript');
+    if ( !code ) return html``;
     return html`
     <div class="quick-summary">
       <div class="snippet">
       <pre>
         <code class="language-javascript">
-        ${unsafeHTML(Prism.highlight(code, Prism.languages.javascript, 'javascript'))}
+        ${unsafeHTML(code)}
         </code>
       </pre>
       </div>
