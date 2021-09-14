@@ -5,6 +5,10 @@ import {Mixin, MainDomElement} from '../elements/utils/index.js';
 import "../elements/ucdlib/ucdlib-pages/ucdlib-pages.js";
 import "../elements/brand/ucd-theme-header/ucd-theme-header";
 
+// Import all of our iconsets:
+import "../elements/ucdlib/ucdlib-icons/ucdlib-icons";
+import "../elements/ucdlib/ucdlib-icons/academic";
+
 export default class UcdlibThemeTestApp extends Mixin(LitElement)
   .with(MainDomElement) {
 
@@ -51,7 +55,7 @@ export default class UcdlibThemeTestApp extends Mixin(LitElement)
   async renderMd() {
     if( !this.selectedPage ) return;
     const pageEle = this.querySelector('#'+this.selectedPage);
-    if ( !pageEle.renderMd ) return;
+    if ( !pageEle || !pageEle.renderMd ) return;
     try {
       await pageEle.renderMd();
     } catch(e) {

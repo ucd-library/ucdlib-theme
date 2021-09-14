@@ -52,6 +52,15 @@ export default class UcdlibIconset extends Mixin(LitElement)
   }
 
   /**
+   * @method getIconNames
+   * @description Returns a list of icon names for this set
+   * @returns {Array} 
+   */
+  getIconNames(){
+    return Object.keys(this._iconMap);
+  }
+
+  /**
    * @method applyIcon
    * @description Adds icon to ucdlib-icon element from iconset
    * @param {Element} element - A ucdlib-icon element
