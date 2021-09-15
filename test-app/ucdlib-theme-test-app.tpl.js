@@ -60,6 +60,9 @@ return html`
           <ul link-text="Other Navigation">
             <li><a href="#ucd-theme-pagination">Pagination</a></li>
           </ul>
+          <ul link-text="Collapsible Content">
+            <li><a href="#ucd-theme-collapse">Collapse</a></li>
+          </ul>
         </ul>
 
         <ul link-text="Library Web Components">
@@ -72,6 +75,7 @@ return html`
         </ul>
 
         <ul link-text="Brand Guides">
+          <li><a href="#overview">Overview</a></li>
           <li><a href="#brand-colors">Colors</a></li>
           <li><a href="#infographics">Infographics</a></li>
         </ul>

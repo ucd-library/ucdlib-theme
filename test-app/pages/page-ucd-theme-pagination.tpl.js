@@ -48,7 +48,7 @@ ${this.examplePanel(html`
   </ucd-theme-pagination>
 `)}
 
-<p><code>ellipses</code> will display with an ellipses inbetween numbers instead of sections at a time</p>
+<p>Adding the <code>ellipses</code>attribute will always show the min and max pages, and display ellipses if <code>max-pages</code> exceeds <code>visible-link-count</code> </p>
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="8"
@@ -64,7 +64,9 @@ ${this.examplePanel(html`
   </ucd-theme-pagination>
 `)}
 
-<p><code>xs-screen</code> is an alternative way of displaying mobile view</p>
+<p><code>xs-screen</code> is an alternative way of displaying the mobile view that only shows the current and max page.
+This is the preferred behavior for most Library applications.
+</p>
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"

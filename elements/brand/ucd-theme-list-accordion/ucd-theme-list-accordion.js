@@ -1,33 +1,32 @@
 import { LitElement } from 'lit';
-import {render, styles} from "./ucd-theme-list-accordion.tpl.js";
+import { render, styles } from './ucd-theme-list-accordion.tpl.js';
 
 /**
  * @class UcdThemeListAccordion
  * @classdesc Component class for displaying lists with accordion collapse/expand functionality.
- * Pattern Lab Url: 
+ * Pattern Lab Url:
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-list-accordion
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-list-faq
- * 
+ *
  * @property {String} list-style - 'accordion' or 'faq'
- * 
+ *
  * @example
  * html`
  *  <ucd-theme-list-accordion>
- *    <div>Click me to expand div below</div>
- *    <div>I will be toggled when the above item is clicked.</div>
- *    <div>The direct children of this element must be divs</div>
- *    <div>But you can pass through <a href="#">rich text</a> within.
+ *    <li>Click me to expand div below</li>
+ *    <li>I will be toggled when the above item is clicked.</li>
+ *    <li>The direct children of this element must be divs</li>
+ *    <li>But you can pass through <a href="#">rich text</a> within.</li >
  *  </ucd-theme-list-accordion>
  * `
  */
 export default class UcdThemeListAccordion extends LitElement {
-
   static get properties() {
     return {
-      listStyle: {type: String, attribute: "list-style"},
-      _listItems: {attribute: false, state: true},
-      _availableStyles: {attribute: false, state: true},
-      _expandedItems: {attribute: false, state: true}
+      listStyle: { type: String, attribute: 'list-style' },
+      _listItems: { attribute: false, state: true },
+      _availableStyles: { attribute: false, state: true },
+      _expandedItems: { attribute: false, state: true },
     };
   }
 
@@ -47,11 +46,11 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method updated
    * @description Lit lifecycle method called after element has updated.
-   * @param {Map} props - properties that have changed 
+   * @param {Map} props - properties that have changed
    */
-  updated(props){
-    if ( props.has("listStyle") ) {
-      if ( !this._availableStyles.includes(this.listStyle.toLowerCase()) ) {
+  updated(props) {
+    if (props.has('listStyle')) {
+      if (!this._availableStyles.includes(this.listStyle.toLowerCase())) {
         this.listStyle = this._availableStyles[0];
       }
     }
@@ -61,18 +60,19 @@ export default class UcdThemeListAccordion extends LitElement {
    * @method connectedCallback
    * @description Native lifecycle method called when element is connected
    */
-  connectedCallback(){
+  connectedCallback() {
     super.connectedCallback();
-    this._childListObserver = new MutationObserver(
-      (mutationsList, observer) => this._onChildListMutation(mutationsList, observer));
-    this._childListObserver.observe(this, {childList: true});
+    this._childListObserver = new MutationObserver((mutationsList, observer) =>
+      this._onChildListMutation(mutationsList, observer)
+    );
+    this._childListObserver.observe(this, { childList: true });
   }
 
   /**
    * @method disconnectedCallback
    * @description Native lifecycle method called when element is disconnected
    */
-  disconnectedCallback(){
+  disconnectedCallback() {
     this._childListObserver.disconnect();
     super.disconnectedCallback();
   }
@@ -88,9 +88,9 @@ export default class UcdThemeListAccordion extends LitElement {
    *    0: first pair, 1: second pair, etc
    * @param {Boolean} dispatchEvent - Will dispatch custom 'item-toggle' event
    */
-  async toggleItemVisiblity(index, isPairIndex=true, dispatchEvent=false){
+  async toggleItemVisiblity(index, isPairIndex = true, dispatchEvent = false) {
     let pairIndex = isPairIndex ? index : Math.floor(index / 2);
-    if ( this._expandedItems.has(pairIndex) ){
+    if (this._expandedItems.has(pairIndex)) {
       this._expandedItems.delete(pairIndex);
     } else {
       this._expandedItems.add(pairIndex);
@@ -98,7 +98,7 @@ export default class UcdThemeListAccordion extends LitElement {
 
     this.requestUpdate();
     await this.updateComplete;
-    if ( dispatchEvent ) this._dispatchItemToggleEvent(index);
+    if (dispatchEvent) this._dispatchItemToggleEvent(index);
   }
 
   /**
@@ -108,7 +108,7 @@ export default class UcdThemeListAccordion extends LitElement {
    * @param {Boolean} isPairIndex - Does the index param refer to Q/A pair or the flattened index?
    * @returns {Boolean}
    */
-  itemIsExpanded(index, isPairIndex=true) {
+  itemIsExpanded(index, isPairIndex = true) {
     let pairIndex = isPairIndex ? index : Math.floor(index / 2);
     return this._expandedItems.has(pairIndex);
   }
@@ -116,21 +116,21 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method _onTitleClick
    * @description Attached to item title
-   * @param {Event} e 
+   * @param {Event} e
    */
   _onTitleClick(e) {
-    let index = parseInt(e.target.getAttribute("item-index"));
+    let index = parseInt(e.target.getAttribute('item-index'));
     this.toggleItemVisiblity(index, false, true);
   }
 
   /**
    * @method _onTitleKeyUp
    * @description Attached to item title
-   * @param {Event} e 
+   * @param {Event} e
    */
   _onTitleKeyUp(e) {
-    if( e.which !== 13 ) return;
-    let index = parseInt(e.target.getAttribute("item-index"));
+    if (e.which !== 13) return;
+    let index = parseInt(e.target.getAttribute('item-index'));
     this.toggleItemVisiblity(index, false, true);
   }
 
@@ -141,13 +141,13 @@ export default class UcdThemeListAccordion extends LitElement {
   _onChildListMutation() {
     let listItems = [];
     Array.from(this.children).forEach((child, index) => {
-      if (child.tagName !== "DIV")  return;
-      child.setAttribute('slot', 'list-item-'+index);
-      if( this.listStyle === 'faq' ) {
+      if (child.tagName !== 'DIV') return;
+      child.setAttribute('slot', 'list-item-' + index);
+      if (this.listStyle === 'faq') {
         child.style.display = 'inline';
       }
 
-      listItems.push({child, slotName:'list-item-'+index});
+      listItems.push({ child, slotName: 'list-item-' + index });
     });
     this._listItems = listItems;
   }
@@ -159,15 +159,19 @@ export default class UcdThemeListAccordion extends LitElement {
    */
   _dispatchItemToggleEvent(index) {
     let e = new CustomEvent('item-toggle', {
-      detail: { 
-        message: 'A list item has been expanded or collapsed', 
+      detail: {
+        message: 'A list item has been expanded or collapsed',
         isExpanded: this.itemIsExpanded(index, false),
-        item: {title: this._listItems[index], content: this._listItems[index + 1]},
+        item: {
+          title: this._listItems[index],
+          content: this._listItems[index + 1],
+        },
         listItemIndex: index,
-        listItemPairIndex: Math.floor(index / 2)
+        listItemPairIndex: Math.floor(index / 2),
       },
       bubbles: true,
-      composed: true });
+      composed: true,
+    });
     this.dispatchEvent(e);
   }
 
@@ -187,10 +191,9 @@ export default class UcdThemeListAccordion extends LitElement {
    * @param {Number} i - Array index.
    * @returns {Boolean}
    */
-  _isContent(i){
+  _isContent(i) {
     return !this._isTitle(i);
   }
-
 }
 
 customElements.define('ucd-theme-list-accordion', UcdThemeListAccordion);

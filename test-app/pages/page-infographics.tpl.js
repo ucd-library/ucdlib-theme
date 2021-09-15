@@ -26,7 +26,7 @@ return html`
 
   ${this.pageTitle('Infographics')}
 
-<H1> Factoids </H1>
+<H2> Factoids </H2>
 
 <p>Factoids are small components of a statistic,title,icon and link, that are
 typically used to display a brief datum, with a link to more information.  The

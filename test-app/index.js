@@ -1,8 +1,9 @@
-import "./ucdlib-theme-test-app.js";
+import './ucdlib-theme-test-app.js';
 
 // IMPORT APP PAGES HERE
 
 // guides
+import "./pages/page-overview.js";
 import "./pages/page-brand-colors";
 import "./pages/page-infographics.js";
 
@@ -13,6 +14,8 @@ import "./pages/page-ucd-theme-quick-links";
 import "./pages/page-ucd-theme-header";
 import "./pages/page-ucd-theme-search-form";
 import "./pages/page-ucd-theme-search-popup";
+import './pages/page-ucd-theme-collapse';
+
 // ucdlib components
 import "./pages/page-ucdlib-icon";
 import "./pages/page-ucdlib-icons";
