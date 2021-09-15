@@ -48,24 +48,10 @@ ${this.examplePanel(html`
   </ucd-theme-pagination>
 `)}
 
-<h2>Basic Use (Ellipses)</h2>
+<p><code>ellipses</code> will display with an ellipses inbetween numbers instead of sections at a time</p>
 ${this.examplePanel(html`
   <ucd-theme-pagination
-    current-page="1"
-    max-pages="20"
-    ellipses>
-  </ucd-theme-pagination>
-`)}
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="12"
-    max-pages="20"
-    ellipses>
-  </ucd-theme-pagination>
-`)}
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="20"
+    current-page="8"
     max-pages="20"
     ellipses>
   </ucd-theme-pagination>
@@ -73,20 +59,12 @@ ${this.examplePanel(html`
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
-    max-pages="8"
-    ellipses>
-  </ucd-theme-pagination>
-`)}
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="1"
-    max-pages="7"
+    max-pages="20"
     ellipses>
   </ucd-theme-pagination>
 `)}
 
-<h3>Basic Use (Mobile) </h3>
-<p><code>Mobile</code> also goes into effect if the screen changes to mobile view</p>
+<p><code>xs-screen</code> is an alternative way of displaying mobile view</p>
 ${this.examplePanel(html`
   <ucd-theme-pagination
     current-page="1"
@@ -101,13 +79,7 @@ ${this.examplePanel(html`
     xs-screen>
   </ucd-theme-pagination>
 `)}
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="20"
-    max-pages="20"
-    xs-screen>
-  </ucd-theme-pagination>
-`)}
+
 
 <h2>Wiring It Up</h2>
 <p>If <code>use-hash</code> or <code>base-path</code> attributes are used, an href will be constructed based on those parameters</p>
@@ -147,46 +119,6 @@ ${this.examplePanel(html`
 `)}
 
 
-<h2>Wiring It Up (Ellipses)</h2>
-<p>If <code>use-hash</code> or <code>base-path</code> attributes are used, an href will be constructed based on those parameters</p>
-
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="50"
-    max-pages="100"
-    ellipses
-    use-hash>
-  </ucd-theme-pagination>
-`)}
-
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="2"
-    max-pages="33"
-    ellipses
-    base-path="/foo/bar/">
-  </ucd-theme-pagination>
-`)} 
-
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="32"
-    max-pages="33"
-    ellipses
-    use-hash
-    base-path="/foo/bar/">
-  </ucd-theme-pagination>
-`)}
-
-
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="33"
-    max-pages="33"
-    ellipses
-    base-path="/foo/bar/">
-  </ucd-theme-pagination>
-`)}
 
 <p>Otherwise a <code>page-change</code> custom event will be fired</p>
 ${this.examplePanel(html`
@@ -196,25 +128,5 @@ ${this.examplePanel(html`
     @page-change="${e => console.log(e.detail.page)}">
   </ucd-theme-pagination>
 `)}
-
-<p>Same as above but with <code>ellipses</code></p>
-
-${this.examplePanel(html`
-  <ucd-theme-pagination
-    current-page="33"
-    max-pages="33"
-    ellipses
-    @page-change="${e => console.log(e.detail.page)}">
-  </ucd-theme-pagination>
-`)}
-
-
-
-
-
-
-
-
-
 
 `;}

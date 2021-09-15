@@ -1,7 +1,10 @@
 import { html, css } from 'lit';
 
+import "../../elements/ucdlib/ucdlib-icon/ucdlib-icon";
+
 import normalizeCss from "@ucd-lib/theme-sass/normalize.css.js";
-import factoidCss from "@ucd-lib/theme-sass/main_site/factoid/_factoid.css.js"
+import factoidCss from "@ucd-lib/theme-sass/main_site/factoid/_factoid.css.js";
+import layoutCss from "@ucd-lib/theme-sass/5_layout/_index.css.js";
 
 export function styles() {
   const elementStyles = css`
@@ -15,7 +18,7 @@ export function styles() {
     }
   `;
 
-  return [elementStyles,factoidCss,normalizeCss];
+  return [elementStyles,factoidCss,normalizeCss,layoutCss];
 }
 
 export function render() {
@@ -64,24 +67,32 @@ rendered from the content of the component, typically an icon or svg file.</p>
 
 
 ${this.examplePanel(html`
-  <div style="
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
-">
+  <style>
+      .import-icon{
+        margin:auto;
+        width:135px; 
+        height:135px;
+      }
+  </style>
+  <div class="l-4col layout-columns">
+
     <my-factoid href="http://library.ucdavis.edu" statistic="4,000,000" title="Books">
-					<span class="fas fa-book fa-6x"></span>
+			<span><ucdlib-icon class="import-icon" src="/img/dog.svg" size=24></ucdlib-icon></span>
+    </my-factoid>
+
+    <my-factoid href="http://library.ucdavis.edu" statistic="800" title="Scorpus IDs">
+      <span><ucdlib-icon style="margin:auto;width:135px; height:135px;"  icon="academic:scopus" size=24></ucdlib-icon></span>
     </my-factoid>
 
     <my-factoid href="http://library.ucdavis.edu" statistic="5000" title="Seats">
-    <icon book>
-    <span style="font-size:100px">⑁</span>
+      <span style="font-size:100px;">⑁</span>
     </my-factoid>
 
     <my-factoid href="http://library.ucdavis.edu" statistic="40" title="Cats">
-					<span class="fas fa-cat fa-6x"></span>
+			<span class="fas fa-cat fa-6x"></span>
     </my-factoid>
-    </div>
+
+  </div>
 `)}
 
 `;}

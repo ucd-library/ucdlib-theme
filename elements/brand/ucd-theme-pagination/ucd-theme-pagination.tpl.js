@@ -10,11 +10,12 @@ export function styles() {
       display: block;
     }
     .default {
-      display: flex;
+      display: inherit;
     }
     .xs-screen {
-      display: none;
+      display:none;
     }
+
     @media (min-width: 991px) {
       .pager__item--next {
         display: flex;
@@ -29,7 +30,7 @@ export function styles() {
       .xs-screen {
         display: flex;
         justify-content: center;
-        align-items: center
+        align-items: center;
       }
     }
   `;
@@ -41,35 +42,52 @@ export function render() {
 return html`
 
   <ul class="pager">
-    <div class="xs-screen">
-      ${this._renderLink(
-        this.currentPage-1, 
-        {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
-      )}
+    ${this.xs_screen ? 
+      html`
+        <div class="xs-screen">
+          ${this._renderLink(
+            this.currentPage-1, 
+            {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
+          )}
 
-      ${this._renderLink(this.currentPage)}
-      <span>of ${this.maxPages}</span>  
+          ${this._renderLink(this.currentPage)}
+          <span>of ${this.maxPages}</span>  
+            ${this._renderLink(
+              this.currentPage+1, 
+              {label: 'Next', class: 'pager__item--next', noHighlight: false}
+            )} 
+        </div>
+
+        <div class="default">
+          ${this._renderLink(
+            this.currentPage-1, 
+            {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
+          )}
+        
+          ${this._pages.map(page => this._renderLink(page))}
+
+          ${this._renderLink(
+            this.currentPage+1, 
+            {label: 'Next', class: 'pager__item--next', noHighlight: false}
+          )} 
+        </div>
+      `
+      :html`
+        ${this._renderLink(
+          this.currentPage-1, 
+          {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
+        )}
+        
+        ${this._pages.map(page => this._renderLink(page))}
+
         ${this._renderLink(
           this.currentPage+1, 
-          {label: 'Next', class: 'pager__item--next', noHighlight: false}
-        )} 
-    </div>
-
-    <div class="default">
-      ${this._renderLink(
-        this.currentPage-1, 
-        {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
-      )}
-    
-      ${this._pages.map(page => this._renderLink(page))}
-
-      ${this.xs_screen ? html`<span class="xs-screen" style="display: flex;justify-content: center;align-items: center;">of ${this.maxPages}</span>`:``}
-
-      ${this._renderLink(
-        this.currentPage+1, 
         {label: 'Next', class: 'pager__item--next', noHighlight: false}
       )} 
-    </div>
+    `    
+    }
   </ul>
+
+      
 
 `;}

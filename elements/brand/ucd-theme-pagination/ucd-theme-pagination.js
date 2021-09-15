@@ -101,7 +101,8 @@ export default class UcdThemePagination extends Mixin(LitElement)
     this.xs_screen = false;
     this.size = '';
 
-    if (window.innerWidth <= this._mobileBreakPoint) this.xs_screen = true;
+    this.screen_check = (window.innerWidth <= this._mobileBreakPoint)  ? true : false;
+    console.log(this.screen_check);
 
     this.render = render.bind(this);
   }
@@ -113,7 +114,7 @@ export default class UcdThemePagination extends Mixin(LitElement)
   updated(props3) {
     if( props3.has('currentPage') ) {
       
-      if(this.xs_screen) {
+      if(this.xs_screen && this.screen_check) {
         let pages = [this.currentPage];
         this._pages = pages;  // Mobile Pagination
       }else{
