@@ -14,6 +14,7 @@ export function render() {
 return html`
 
   ${this.pageTitle('Site Header')}
+  ${this.importPanel("brand/ucd-theme-header/ucd-theme-header.js")}
 
   <p>This element controls the desktop/mobile display of the header components:
     <ul class="list--arrow">

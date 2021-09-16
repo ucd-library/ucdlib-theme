@@ -14,7 +14,7 @@ export function render() {
 return html`
 
 ${this.pageTitle("Pagination")}
-
+${this.importPanel("brand/ucd-theme-pagination/ucd-theme-pagination.js")}
 
 <h2>Basic Use </h2>
 <p>Use <code>current-page</code> and <code>max-pages</code> to set the page state.</p>

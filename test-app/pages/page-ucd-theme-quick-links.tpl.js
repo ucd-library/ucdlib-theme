@@ -13,6 +13,7 @@ export function styles() {
 export function render() { 
 return html`
   ${this.pageTitle('Quick Links')}
+  ${this.importPanel("brand/ucd-theme-quick-links/ucd-theme-quick-links.js")}
 
   <h2>Basic Usage</h2>
   <p>Pass through <code>a</code> tags as children to add items to a quick links element.</p>

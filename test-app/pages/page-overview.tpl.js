@@ -14,30 +14,49 @@ export function render() {
 return html`
 
   ${this.pageTitle("Brand Overview")}
-  <p>UC Davis uses a common set of styles across many websites, which can be viewed in <a href="http://dev.webstyleguide.ucdavis.edu/redesign/">this Patternlab site.</a>
+  <p>UC Davis uses a common set of styles across many websites, which can be viewed on <a href="http://dev.webstyleguide.ucdavis.edu/redesign/">this Patternlab site.</a>
   At the UC Davis Library, we try to stay within this box where possible.
   </p>
 
 
-  <p>By using a combination of the following packages, you can quickly build a branded website:
+  <p>By using a combination of the following npm packages, you can quickly build a branded website:
     <ul class="list--arrow">
       <li>
-        <a href="https://github.com/ucd-library/ucdlib-theme">ucdlib-theme</a>
+        <a href="https://github.com/ucd-library/ucdlib-theme/tree/main/elements">@ucd-lib/theme-elements</a>
         <br>Prepackaged webcomponents that simplify introducing branded elements that require JS into your site.
       </li>
       <li>
-        <a href="https://github.com/ucd-library/ucdlib-theme-sass">ucdlib-theme-sass</a>
+        <a href="https://github.com/ucd-library/ucdlib-theme-sass/tree/main/source/sass">@ucd-lib/theme-sass</a>
         <br>UC Davis styles that can be imported as global CSS or directly into Lit-based webcomponents.
       </li>
       <li>
-        <a href="https://github.com/UCDavisLibrary/cork-app-build">cork-app-build</a>
+        <a href="https://github.com/UCDavisLibrary/cork-app-build">@ucd-lib/cork-app-build</a>
         <br>Webpack + Babel configurations to simplify the JS/CSS build process.
       </li>
     </ul>
   </p>
 
-  <h2>How to use this site</h2>
-  <p>TODO</p>
+  <h2>About this site</h2>
+  <p>This site is divided into three sections:
+  <ul class="list--arrow">
+      <li>
+        <strong>Brand Web Components</strong>
+        <br>Web component implementations of <a href="http://dev.webstyleguide.ucdavis.edu/redesign/">UC Davis elements</a> that require javascript.
+        <br>Components can be imported into your application using the <code>@ucd-lib/theme-elements</code> npm package.
+      </li>
+      <li>
+        <strong>Library Web Components</strong>
+        <br>Web components that are not official UC Davis elements, but are either branded or helpful utilities.
+        <br>Components can be imported into your application using the <code>@ucd-lib/theme-elements</code> npm package.
+      </li>
+      <li>
+        <strong>Brand Guides</strong>
+        <br>Documentation and recipes for using UC Davis brand HTML and CSS classes.
+        <br>Classes can be imported into your application using the <code>@ucd-lib/theme-sass</code> npm package.
+      </li>
+    </ul>   
+
+  </p>
 
   <h2>Cookbook</h2>
   <p>TODO</p>

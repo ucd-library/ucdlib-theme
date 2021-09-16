@@ -13,6 +13,7 @@ export function styles() {
 export function render() { 
 return html`
   ${this.pageTitle("Pages")}
+  ${this.importPanel("ucdlib/ucdlib-pages/ucdlib-pages.js")}
   <p>The <code>ucdlib-pages</code> element is used to select one of its children to show. 
     In a typical library application, it is used by the "application element" to display defined routes/pages. 
   </p>

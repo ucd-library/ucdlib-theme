@@ -13,6 +13,7 @@ export function styles() {
 export function render() { 
 return html`
   ${this.pageTitle('Search Popup')}
+  ${this.importPanel("brand/ucd-theme-search-popup/ucd-theme-search-popup.js")}
 
   <p>This element controls the visibility of a search form. 
     Either pass through <a href="#ucd-theme-search-form">ucd-theme-search-form</a> as a child:

@@ -15,6 +15,7 @@ return html`
 
 
 ${this.pageTitle('Primary Nav')}
+${this.importPanel("brand/ucd-theme-primary-nav/ucd-theme-primary-nav.js")}
 
 <h2>Simple Nav</h2>
 <p>Pass through <code>a</code> tags as children to make a simple nav. By default, the element does not have a background color, so make sure it is within a blue parent</p>

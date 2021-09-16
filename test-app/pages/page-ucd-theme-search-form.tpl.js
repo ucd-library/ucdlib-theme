@@ -14,6 +14,7 @@ export function render() {
 return html`
 
   ${this.pageTitle('Search Form')}
+  ${this.importPanel("brand/ucd-theme-search-form/ucd-theme-search-form.js")}
 
   <p>Search will post to a url in the <code>form-action</code> attribute:</p>
   ${this.examplePanel(html`

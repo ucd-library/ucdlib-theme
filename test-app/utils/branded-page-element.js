@@ -31,6 +31,21 @@ const BrandedPageElement = (superClass) => class extends superClass {
     `;
   }
 
+  importPanel(path, title="Import Component"){
+    return html`
+    <div class="quick-summary">
+      <h2 class="quick-summary__title">${title}</h2>
+      <div class="quick-summary__body">
+        <pre class="u-space-my--flush" style="background-color:white;">
+          <code class="language-javascript">
+            <span class="token keyword">import </span><span class="token string">'@ucd-lib/theme-elements/${path}'</span>
+          </code>
+        </pre>
+      </div>
+    </div>
+    `;
+  }
+
   /**
    * @method examplePanel
    * @description Renders code with code snippet
