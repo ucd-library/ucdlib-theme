@@ -61,7 +61,7 @@ return html`
         <div class="snippet">
           <pre>
             <code class="language-javascript">
-            <span class="token keyword">import</span> <span class="token string">'@ucd-lib/theme/elements/ucdlib/ucdlib-icons/${d.path ? d.path : d.id}'</span>
+            <span class="token keyword">import</span> <span class="token string">'@ucd-lib/theme-elements/ucdlib/ucdlib-icons/${d.path ? d.path : d.id}'</span>
             </code>
           </pre>
         </div>

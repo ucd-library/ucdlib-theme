@@ -1,6 +1,6 @@
 {
-  "name": "@ucd-lib/brand-elements",
-  "version": "0.0.1",
+  "name": "@ucd-lib/theme-elements",
+  "version": "0.0.2",
   "description": "Custom elements for the UCD brand theme",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@ucd-lib/theme-sass": "^5.0.10",
+    "lit": "^2.0.0-rc.4",
     "photoswipe": "^4.1.3"
   }
 }
