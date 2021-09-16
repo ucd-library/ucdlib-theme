@@ -46,7 +46,7 @@ module.exports = async function createBrowser(opts) {
 function generateCss() {
   const ROOT_DIR = path.resolve(__dirname, '..', '..');
   let fonts = path.resolve(ROOT_DIR, 'test-app', 'fonts.css');
-  let styles = path.resolve(ROOT_DIR, 'elements', 'brand', 'node_modules/@ucd-lib/theme-sass/style.css');
+  let styles = path.resolve(ROOT_DIR, 'elements', 'node_modules/@ucd-lib/theme-sass/style.css');
   
   let css = fs.readFileSync(fonts, 'utf-8')+'\n';
   css += fs.readFileSync(styles, 'utf-8');

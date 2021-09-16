@@ -27,7 +27,7 @@ module.exports = function generateSrc(elements) {
         path : '/'
       },
       resolve: {
-        modules: ["node_modules", path.resolve(ROOT_DIR, 'elements', 'brand', 'node_modules')]
+        modules: ["node_modules", path.resolve(ROOT_DIR, 'elements', 'node_modules')]
       }
     });
 
