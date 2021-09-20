@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-quick-links.tpl.js";
 
-import { Mixin, BreakPoints } from "../../utils/index.js";
+import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
 
 /**
  * @class UcdThemeQuickLinks
@@ -18,7 +18,7 @@ import { Mixin, BreakPoints } from "../../utils/index.js";
  * @property {Number} animationDuration - Length of animation when opening/closing menu
  */
 export default class UcdThemeQuickLinks extends Mixin(LitElement)
-  .with(BreakPoints) {
+  .with(MutationObserverElement, BreakPoints) {
 
   static get properties() {
     return {

@@ -57,16 +57,8 @@ return html`
   <ucdlib-pages .selected=${this.selectedSet}>
     ${this.iconSets.map(d => html`
       <div>
-      <div class="quick-summary u-space-mb--flush">
-        <div class="snippet">
-          <pre>
-            <code class="language-javascript">
-            <span class="token keyword">import</span> <span class="token string">'@ucd-lib/theme-elements/ucdlib/ucdlib-icons/${d.path ? d.path : d.id}'</span>
-            </code>
-          </pre>
-        </div>
-      </div>
-        <div class="icons-demo panel o-box o-box--large">
+        ${this.importPanel(`ucdlib/ucdlib-icons/${d.path ? d.path : d.id}`)}
+        <div class="icons-demo panel o-box o-box--large u-space-pt--flush">
           ${d.iconNames ? html`
             ${d.iconNames.map(name => html`
               <div class="icon-wrapper">

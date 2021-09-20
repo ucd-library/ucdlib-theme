@@ -16,13 +16,13 @@ return html`
   ${this.pageTitle('Site Header')}
   ${this.importPanel("brand/ucd-theme-header/ucd-theme-header.js")}
 
-  <p>This element controls the desktop/mobile display of the header components:
+  <p>This element controls the desktop/mobile display of the header components:</p>
     <ul class="list--arrow">
       <li><a href="#ucd-theme-primary-nav">primary-nav</a></li>
       <li><a href="#ucd-theme-quick-links">quick-links</a></li>
       <li><a href="#ucd-theme-search-popup">search-popup</a></li>
     </ul>
-
+  <p>
     Pass through these elements as children to construct the site header. 
     Only <code>ucd-theme-primary-nav</code> is required.
   </p>

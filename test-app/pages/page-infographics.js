@@ -2,14 +2,14 @@ import { html, LitElement } from 'lit';
 import {render, styles} from "./page-infographics.tpl.js";
 
 import {Mixin, MainDomElement} from '../../elements/utils/index.js';
-import {BrandedPageElement, MdElement} from "../utils/index.js";
+import {BrandedPageElement} from "../utils/index.js";
 
 import "../../elements/ucdlib/ucdlib-iconset/ucdlib-iconset";
 import "../../elements/ucdlib/ucdlib-icon/ucdlib-icon";
 
 
 export default class PageInfographics extends Mixin(LitElement)
-  .with(MainDomElement, BrandedPageElement, MdElement) {
+  .with(MainDomElement, BrandedPageElement) {
 
   static get properties() {
     return {
@@ -50,13 +50,6 @@ export class MyFactoid extends LitElement {
     this.statistic='xxxx';
     this.title = 'Statistic';
     
-  }
-
-  firstUpdated(){
-    const iconsets = this.renderRoot.querySelectorAll('ucdlib-iconset');
-    Array.from(iconsets).forEach(iconset => {
-      document.head.appendChild(iconset);
-    });
   }
 
   render() {
