@@ -50,7 +50,7 @@ return html`
 
       <ucd-theme-primary-nav>
         <ul link-text="Brand Web Components">
-          <ul link-text="Header">
+          <ul link-text="Header" href="#ucd-theme-header">
             <li><a href="#ucd-theme-header">Controller</a></li>
             <li><a href="#ucd-theme-primary-nav">Primary Nav</a></li>
             <li><a href="#ucd-theme-search-popup">Search Popup</a></li>

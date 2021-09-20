@@ -56,7 +56,7 @@ return html`
   </ul>   
 
   <h2>Use in Web Application</h2>
-  <p>TODO. Basically a rehash of this <a href="https://docs.google.com/document/d/1u288xsd539qGXWzOQITg6sig-FIAIJR695nNjC4TfBI/edit#bookmark=id.fodypvmcwssy">Google Doc section</a>,
+  <p>TODO. Basically a rehash of this <a href="https://docs.google.com/document/d/1u288xsd539qGXWzOQITg6sig-FIAIJR695nNjC4TfBI/edit#bookmark=id.4ya1ygt45oo4">Google Doc section</a>,
    but with more example code for setting up the imports.
   </p>
 
