@@ -59,6 +59,7 @@ return html`
           </ul>
           <ul link-text="Other Navigation">
             <li><a href="#ucd-theme-pagination">Pagination</a></li>
+            <li><a href="#ucd-theme-subnav">Subnav</a></li>
           </ul>
           <ul link-text="Collapsible Content">
             <li><a href="#ucd-theme-collapse">Collapse</a></li>

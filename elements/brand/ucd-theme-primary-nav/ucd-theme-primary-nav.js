@@ -4,7 +4,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
+import { Mixin, MutationObserverElement, BreakPoints, NavElement } from "../../utils/index.js";
 
 /**
  * @class UcdThemePrimaryNav
@@ -33,7 +33,7 @@ import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.j
  *  </ucd-theme-primary-nav>
  */
 export default class UcdThemePrimaryNav extends Mixin(LitElement)
-  .with(MutationObserverElement, BreakPoints) {
+  .with(NavElement, MutationObserverElement, BreakPoints) {
 
   static get properties() {
     return {
@@ -58,8 +58,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     this.styleModifiers = "";
     this.hoverDelay = 300;
     this.animationDuration = 300;
-    this.navItems = [];
-    this.maxDepth = 2;
 
     this._classPrefix = "primary-nav";
     this._acceptedNavTypes = ['superfish', 'mega'];
@@ -108,14 +106,14 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       navItem.isTransitioning = true;
 
       // Get expanded height
-      navItem.mobileStyles.display = "block";
-      navItem.mobileStyles.height = 0 + "px";
+      navItem.inlineStyles.display = "block";
+      navItem.inlineStyles.height = 0 + "px";
       this.requestUpdate();
       await this.updateComplete;
       const expandedHeight = ul.scrollHeight + "px";
 
       // Set expanded height
-      navItem.mobileStyles.height = expandedHeight;
+      navItem.inlineStyles.height = expandedHeight;
       this.requestUpdate();
       await this.updateComplete;
 
@@ -131,7 +129,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
         return;
       }
 
-      this.clearMobileAnimationStyles(navItem);
+      this.clearItemInlineStyles(navItem);
       if ( navItem.isClosing ) {
         navItem.isClosing = false;
         this.requestUpdate();
@@ -171,15 +169,15 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       navItem.isTransitioning = true;
 
       // Set expanded height
-      navItem.mobileStyles.height = ul.scrollHeight + "px";
-      navItem.mobileStyles.display = "block";
+      navItem.inlineStyles.height = ul.scrollHeight + "px";
+      navItem.inlineStyles.display = "block";
       this.requestUpdate();
       await this.updateComplete;
 
       // Set height to 0 by requesting all of the animation frames :-(
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          navItem.mobileStyles.height = "0px";
+          navItem.inlineStyles.height = "0px";
           this.requestUpdate();
   
           requestAnimationFrame(() => {
@@ -200,7 +198,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       }
 
 
-      this.clearMobileAnimationStyles(navItem);
+      this.clearItemInlineStyles(navItem);
       if ( navItem.timeout ) clearTimeout(navItem.timeout);
       if ( !navItem.isOpen ) return;
   
@@ -235,22 +233,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
-   * @method clearMobileAnimationStyles
-   * @description Removes inline styles on a nav element (used for mobile transition animation)
-   * @param {Object} navItem - Member of the this.navItems array
-   */
-  clearMobileAnimationStyles(navItem){
-    if (
-      navItem &&
-      navItem.mobileStyles && 
-      Object.keys(navItem.mobileStyles).length > 0 
-    ) {
-      navItem.mobileStyles = {};
-      this.requestUpdate();
-    }
-  }
-
-  /**
    * @method isMegaMenu
    * @description Does this element use the mega menu?
    * @returns {Boolean}
@@ -258,20 +240,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   isMegaMenu(){
     if ( this.navType.toLowerCase().trim() === 'mega') return true;
     return false;
-  }
-
-  /**
-   * @method getNavItem
-   * @description Retrieves an item from the navItems array.
-   * @param {Array} location - Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4].
-   * @returns {Object}
-   */
-  getNavItem(location){
-    let accessor = "this.navItems";
-    if ( location && location.length > 0) {
-      accessor += "[" + location.join("].subItems[") + "]";
-    }
-    return eval(accessor);
   }
 
   /**
@@ -299,40 +267,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    *  Sets the 'navItems' property.
    */
   _onChildListMutation(){
-    const children = Array.from(this.children);
-    let navItems = children.map((child) => this._makeNavItemTree(child)).filter(navItem => navItem.linkText);
+    let navItems = this.parseNavChildren();
     if ( navItems.length ) this.navItems = navItems;
-  }
-
-  /**
-   * @method _makeNavItemTree
-   * @private
-   * @description Extracts menu item data from DOM Element
-   * @param {Element} ele - Element
-   * @returns {Object} Formatted object describing the menu item and its children
-   */
-  _makeNavItemTree(ele){
-    let linkText, href, subItems = [], isOpen=false, mobileStyles={};
-    if ( ele.tagName === 'LI' && ele.children.length > 0) ele = ele.children[0];
-
-    if ( ele.tagName === 'A' ) {
-      linkText = ele.innerText;
-      href = ele.href;
-    } else if ( ele.tagName === 'LI' ) {
-      linkText = ele.innerText;
-    } else if ( ele.tagName === 'OL' || ele.tagName === 'UL' ) {
-      linkText = ele.getAttribute('link-text');
-      href = ele.getAttribute('href');
-
-      for (const child of Array.from(ele.children)) {
-        let childItem = this._makeNavItemTree(child);
-        if ( childItem.linkText ) subItems.push(childItem);
-      }
-    }
-
-    if ( linkText ) linkText = linkText.trim();
-    return {linkText, href, subItems, isOpen, mobileStyles};
-
   }
 
   /**
@@ -347,7 +283,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     const depth = location.length - 1;
 
     // Render item and its subnav
-    if ( this._hasSubNav(navItem) && depth < this.maxDepth) {
+    if ( this.itemHasSubNav(navItem) && depth < this.maxDepth) {
       return html`
       <li 
         id="nav--${location.join("-")}"
@@ -561,7 +497,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    */
   _completeMobileTransition(navItem){
     navItem.timeout = setTimeout(() => {
-      navItem.mobileStyles = {};
+      navItem.inlineStyles = {};
       navItem.isOpen = !navItem.isOpen;
       navItem.isTransitioning = false;
       this.requestUpdate();
@@ -631,18 +567,6 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   }
 
   /**
-   * @method _hasSubNav
-   * @private
-   * @description Utility function for determining if a menu has subitems
-   * @param {Object} navItem - A member of the navItems array.
-   * @returns {Boolean}
-   */
-  _hasSubNav(navItem){
-    if ( navItem && navItem.subItems && navItem.subItems.length) return true;
-    return false;
-  }
-
-  /**
    * @method _getItemMobileStyles
    * @private
    * @description Returns inline styles on a nav element (used for mobile transition animation)
@@ -652,8 +576,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   _getItemMobileStyles(location) {
     if ( this.isDesktop() ) return {};
     let navItem = this.getNavItem(location);
-    if ( !navItem.mobileStyles ) return {};
-    return navItem.mobileStyles;
+    if ( !navItem.inlineStyles ) return {};
+    return navItem.inlineStyles;
   }
 
 }

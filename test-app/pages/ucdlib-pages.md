@@ -30,16 +30,19 @@ selected is not a number.</p>
 
 ### UcdlibPages
 **Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| selected | <code>String</code> | Denotes which child is currently displayed.  If numeric, refers to index of child. Else, refers to child id.  If attrForSelected is used, refers to the value of that attribute instead of id. |
+| attrForSelected | <code>String</code> | Use a custom attribute instead of id for matching 'selected' |
+| selectedAttribute | <code>String</code> | Will assign attribute to selected child. <ucdlib-pages selected="page2" attr-for-selected="id">   <div id="page1">Test 1</div>   <div id="page2">Test 2</div> </ucdlib-pages> |
+
 <a name="new_UcdlibPages_new"></a>
 
 #### new UcdlibPages()
 similar to the old iron-pages element, allows you to control which element is visible
 based on child index or tag attribute
-
-<ucdlib-pages selected="page2" attr-for-selected="id">
-  <div id="page1">Test 1</div>
-  <div id="page2">Test 2</div>
-</ucdlib-pages>
 
 <a name="createRenderRoot"></a>
 
