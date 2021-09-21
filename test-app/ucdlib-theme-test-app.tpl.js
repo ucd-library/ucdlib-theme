@@ -72,6 +72,7 @@ return html`
             <li><a href="#ucdlib-iconset">Icon Set</a></li>
           </ul>
           <li><a href="#ucdlib-pages">Pages</a></li>
+          <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
         </ul>
 
         <ul link-text="Brand Guides">
