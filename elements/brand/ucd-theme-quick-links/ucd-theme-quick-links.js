@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-quick-links.tpl.js";
 
-import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
+import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/index.js";
 
 /**
  * @class UcdThemeQuickLinks
@@ -18,7 +18,7 @@ import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.j
  * @property {Number} animationDuration - Length of animation when opening/closing menu
  */
 export default class UcdThemeQuickLinks extends Mixin(LitElement)
-  .with(MutationObserverElement, BreakPoints) {
+  .with(MutationObserverElement, BreakPoints, Wait) {
 
   static get properties() {
     return {
@@ -67,7 +67,7 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
     await this.updateComplete;
 
-    await this._waitForAnimation();
+    await this.waitForAnimation();
     this._transitioning = false;
     this.opened = true;
     return true;
@@ -84,11 +84,11 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
 
     this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
     await this.updateComplete;
-    await this._waitForFrames(2);
+    await this.waitForFrames(2);
     this._openedHeight = 0;
     await this.updateComplete;
 
-    await this._waitForAnimation();
+    await this.waitForAnimation();
 
     this._transitioning = false;
     this.opened = false;
@@ -261,33 +261,6 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     }
     return html``;
   }
-
-  /**
-   * @method _waitForAnimation
-   * @private
-   * @description Wait for time designated for open/close animation
-   * @returns {Promise}
-   */
-  async _waitForAnimation() {
-    return new Promise(resolve => {
-      setTimeout(resolve, this.animationDuration);
-    });
-  }
-
-  /**
-   * @method _waitForFrames
-   * @private
-   * @description Wait for specified number of animation frames
-   * @param {Number} ct Number of frames
-   */
-  async _waitForFrames(ct=1) {
-    for (let i = 0; i < ct; i++) {
-      await new Promise(resolve => {
-        requestAnimationFrame(resolve);
-      });
-    }
-  }
-  
 
 }
 

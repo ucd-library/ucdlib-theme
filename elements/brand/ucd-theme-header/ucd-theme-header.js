@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-header.tpl.js";
 
-import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.js";
+import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/index.js";
 
 /**
  * @class UcdThemeHeader
@@ -36,7 +36,7 @@ import { Mixin, MutationObserverElement, BreakPoints } from "../../utils/index.j
  * 
  */
 export default class UcdThemeHeader extends Mixin(LitElement)
-  .with(MutationObserverElement, BreakPoints) {
+  .with(MutationObserverElement, BreakPoints, Wait) {
 
   static get properties() {
     return {
@@ -105,7 +105,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
     this.opened = true;
     this._transitioning = true;
-    await this._waitForAnimation();
+    await this.waitForAnimation();
     this._transitioning = false;
     return true;
 
@@ -121,7 +121,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
     this.opened = false;
     this._transitioning = true;
-    await this._waitForAnimation();
+    await this.waitForAnimation();
     this._transitioning = false;
     return true;
 
@@ -213,18 +213,6 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     } else {
       this._hasSearch = false;
     }
-  }
-
-  /**
-   * @method _waitForAnimation
-   * @private
-   * @description Wait for time designated for open/close animation
-   * @returns {Promise}
-   */
-  async _waitForAnimation() {
-    return new Promise(resolve => {
-      setTimeout(resolve, this._animationDuration);
-    });
   }
 
 }

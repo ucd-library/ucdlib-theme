@@ -29,14 +29,8 @@
 <dt><a href="#closeAllSubNavs">closeAllSubNavs(navItems, requestUpdate)</a></dt>
 <dd><p>Recursively closes all nav submenus within specified menu.</p>
 </dd>
-<dt><a href="#clearMobileAnimationStyles">clearMobileAnimationStyles(navItem)</a></dt>
-<dd><p>Removes inline styles on a nav element (used for mobile transition animation)</p>
-</dd>
 <dt><a href="#isMegaMenu">isMegaMenu()</a> ⇒ <code>Boolean</code></dt>
 <dd><p>Does this element use the mega menu?</p>
-</dd>
-<dt><a href="#getNavItem">getNavItem(location)</a> ⇒ <code>Object</code></dt>
-<dd><p>Retrieves an item from the navItems array.</p>
 </dd>
 </dl>
 
@@ -106,31 +100,9 @@ Recursively closes all nav submenus within specified menu.
 | navItems | <code>Array</code> | The subItems property of any object within the 'navItems' element property. |
 | requestUpdate | <code>Boolean</code> | Should an update be requested after each subnav closing? |
 
-<a name="clearMobileAnimationStyles"></a>
-
-### clearMobileAnimationStyles(navItem)
-Removes inline styles on a nav element (used for mobile transition animation)
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| navItem | <code>Object</code> | Member of the this.navItems array |
-
 <a name="isMegaMenu"></a>
 
 ### isMegaMenu() ⇒ <code>Boolean</code>
 Does this element use the mega menu?
 
 **Kind**: global function  
-<a name="getNavItem"></a>
-
-### getNavItem(location) ⇒ <code>Object</code>
-Retrieves an item from the navItems array.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| location | <code>Array</code> | Coordinates of the item in the 'navItems' array. i.e. [0, 1, 4]. |
-
