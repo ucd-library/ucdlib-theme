@@ -16,6 +16,7 @@ import "./pages/page-ucd-theme-search-form";
 import "./pages/page-ucd-theme-search-popup";
 import './pages/page-ucd-theme-collapse';
 import './pages/page-ucd-theme-subnav';
+import "./pages/page-ucd-theme-slim-select";
 
 // ucdlib components
 import "./pages/page-ucdlib-icon";

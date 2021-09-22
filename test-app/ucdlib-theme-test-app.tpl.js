@@ -64,6 +64,10 @@ return html`
           <ul link-text="Collapsible Content">
             <li><a href="#ucd-theme-collapse">Collapse</a></li>
           </ul>
+          <ul link-text="Forms">
+            <li><a href="#ucd-theme-slim-select">Slim Select</a></li>
+            <li><a href="#ucd-theme-search-form">Search Form</a></li>
+          </ul>
         </ul>
 
         <ul link-text="Library Web Components">
