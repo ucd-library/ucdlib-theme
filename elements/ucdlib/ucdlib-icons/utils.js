@@ -1,7 +1,7 @@
 import "../ucdlib-iconset/ucdlib-iconset";
 import "../ucdlib-icon/ucdlib-icon";
 
-import { html, render } from "lit";
+import { html, render } from "lit-html";
 
 /**
  * @description Creates iconset and moves to document head
