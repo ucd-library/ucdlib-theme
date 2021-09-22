@@ -88,8 +88,8 @@ ${this.examplePanel(html`
       <span style="font-size:100px;">⑁</span>
     </my-factoid>
 
-    <my-factoid href="http://library.ucdavis.edu" statistic="40" title="Cats">
-			<span class="fas fa-cat fa-6x"></span>
+    <my-factoid href="http://library.ucdavis.edu" statistic="40" title="Donations">
+			<span><ucdlib-icon style="margin:auto;width:135px; height:135px;"  icon="ucdlib:hand-holding-usd"></ucdlib-icon></span>
     </my-factoid>
 
   </div>
