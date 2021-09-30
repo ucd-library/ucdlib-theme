@@ -15,8 +15,20 @@ export default class UcdlibSilsPermalink extends LitElement {
   static get properties() {
     return {
       href:{type:String},
-      cite:{type: String,
-            state: "title"}
+      cite:{type: String, state: "title"},
+      filter : {
+        type: String,
+      },
+      results : {type: Array},
+      basePath : {
+        type : String,
+        attribute : 'base-path'
+      },
+      resultsPerPage : {
+        type: Number,
+        reflect : true,
+        attribute : 'results-per-page'
+      }
     };
   }
 
@@ -26,7 +38,58 @@ export default class UcdlibSilsPermalink extends LitElement {
 
   constructor() {
     super();
+    this.results = {
+      results : []
+    };
+    this.resultsPerPage = 9999;
+    this.page = 1;
+    console.log(this.results);
     this.render=render.bind(this);
+  }
+
+  updated(props) {
+    if( props.has('resultsPerPage') || props.has('page') ) {
+      this._request();
+    }
+  }
+
+  async _request(){
+
+    let body = {
+      offset: (this.page-1)*this.resultsPerPage,
+      limit: this.resultsPerPage,
+      facets: {}
+    };
+
+    let resp = await fetch(
+      'https://search.library.ucdavis.edu/primaws/rest/pub?_wadl',
+      {
+        method : 'POST',
+        headers : {
+          'content-type' : 'application/json'
+        },
+        body : JSON.stringify(body)
+      }
+    );
+
+    let results = await resp.json();
+
+    console.log("Results:", results);
+  }
+
+  _getHref(item) {
+    if( !this.renderLink ) {
+      return (AGGIE_EXPERTS_LOADER.host || '') + item['@id'].replace(/^ucdrp:/, '/');
+    }
+    return this.renderLink(item);
+  }
+
+  _appendFilter(filters, key, value) {
+    filters[key] = {
+      type : 'keyword',
+      op: 'and',
+      value : [value]
+    };
   }
 }
 
