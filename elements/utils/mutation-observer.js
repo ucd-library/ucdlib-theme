@@ -42,6 +42,10 @@ const MutationObserverElement = (superClass) => class extends superClass {
     this._childListObserver.disconnect();
     super.disconnectedCallback();
   }
+
+  _onChildListMutation(){
+    console.warn("You must create a '_onChildListMutation' method in your element to use the MutationObserverElement mixin");
+  }
 };
 
 export {MutationObserverElement};

@@ -66,17 +66,31 @@ return html`
     It should not be used otherwise.
   </div>
 
-  <p>The branding bar can be completely overwritten with your own styles by using the <code>branding-bar</code> slot:</p>
+  <h3>Customizing the Branding Bar</h3>
+  <p>You can quickly apply Library styles by using the <a href="#ucdlib-branding-bar">ucdlib-branding-bar component</a>:</p>
+  ${this.examplePanel(html`
+    <ucd-theme-header is-demo>
+      <ucdlib-branding-bar>
+        <a href="#">My Account</a>
+        <a href="#">Access VPN</a>
+        <a href="#">Give</a>
+      </ucdlib-branding-bar>
+
+      <ucd-theme-primary-nav>
+        <a href="#">Books</a>
+        <a href=#>Magazines</a>
+        <a href="#">Journals</a>
+      </ucd-theme-primary-nav>
+
+    </ucd-theme-header>
+  `)}
+
+  <p>The branding bar can also be completely overwritten with your own styles by using the <code>branding-bar</code> slot:</p>
   
   ${this.examplePanel(html`
     <ucd-theme-header is-demo>
       <div slot="branding-bar" class="custom-branding">
-        <img src="/img/logo.svg" class="site-logo">
-        <ol class="breadcrumbs">
-          <li><a href="#">VPN</a></li>
-          <li><a href="#">Help</a></li>
-          <li><a href="#">Give</a></li>
-        </ol>
+        <p>No power in the 'verse can stop me</p>
       </div>
       <ucd-theme-primary-nav>
         <a href="#">Books</a>
@@ -90,10 +104,11 @@ return html`
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        background-color: black;
       }
-      .custom-branding img {
-        max-width: 15rem;
+      .custom-branding p {
+        color: yellow;
       }
     </style>
   `)}

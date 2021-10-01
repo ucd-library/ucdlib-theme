@@ -23,3 +23,4 @@ import "./pages/page-ucdlib-icon";
 import "./pages/page-ucdlib-icons";
 import "./pages/page-ucdlib-iconset";
 import "./pages/page-ucdlib-pages";
+import "./pages/page-ucdlib-branding-bar";

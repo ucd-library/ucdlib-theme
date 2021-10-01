@@ -56,6 +56,7 @@ return html`
             <li><a href="#ucd-theme-search-popup">Search Popup</a></li>
             <li><a href="#ucd-theme-search-form">Search Form</a></li>
             <li><a href="#ucd-theme-quick-links">Quick Links</a></li>
+            <li><a href="#ucdlib-branding-bar">UC Davis Library Branding Bar</a></li>
           </ul>
           <ul link-text="Other Navigation">
             <li><a href="#ucd-theme-pagination">Pagination</a></li>
