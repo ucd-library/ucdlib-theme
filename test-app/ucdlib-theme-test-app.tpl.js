@@ -43,10 +43,12 @@ return html`
 
 
   <div class="page">
-    <ucd-theme-header
-      site-name="UC Davis Library Digital Brand"
-      slogan="Using the UC Davis brand in Library applications"
-      figure-src="/img/book-logo.png">
+    <ucd-theme-header>
+
+      <ucdlib-branding-bar
+        site-name="UC Davis Library Digital Brand"
+        slogan="Using the UC Davis brand in Library applications">
+      </ucdlib-branding-bar>
 
       <ucd-theme-primary-nav>
         <ul link-text="Brand Web Components">
