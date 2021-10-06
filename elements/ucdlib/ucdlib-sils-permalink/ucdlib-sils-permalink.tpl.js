@@ -17,22 +17,20 @@ export function render() {
   return html`
   <article class="vm-teaser   ">
   <div class="vm-teaser__figure category">
-    <a href="#"><img src="https://syndetics.com/index.php?client=primo&isbn=0-8093-3392-9/sc.jpg" alt="Thumbnail" class="" width="135" loading="lazy" />
+    <a href="${this.image}"><img src="${this.image}" alt="Thumbnail" class="" width="135" loading="lazy" />
     </a>
   </div>
   <div class="vm-teaser__body">
-    <h3 class="vm-teaser__title"><a href="#">Engineering victory : the Union siege of Vicksburg</a></h3>
+    <h3 class="vm-teaser__title"><a href="${this.authorID["id"]}">${this.title}</a></h3>
     <ul class="vm-teaser__byline">
-      <li><span class="byline">by Solonick, Justin S.</span>
+      <li><span class="byline">by ${this.authorLast},${this.authorFirst}.</span>
       </li>
-      <li>2015</li>
+      <li>${this.year}</li>
     </ul>
     <ul class="vm-teaser__categories">
-      <li class="vm-teaser__cat-marker tahoe"><a href="">Military engineers -- United States -- History -- 19th century</a></li>
-      <li class="vm-teaser__cat-marker california"><a href="">Vicksburg (Miss.) -- History -- Siege, 1863</a></li>
-      <li class="vm-teaser__cat-marker quad"><a href="">United States -- History -- Civil War, 1861-1865 -- Engineering and construction</a></li>
+      ${this.tags.map(tag => html`<li class="vm-teaser__cat-marker ${this.elemClass[Math.floor(Math.random() * this.elemClass.length)]}"><a href="${tag['id']}">${tag['subject']}</a></li><br/>`)}
     </ul>
-    <div class="vm-teaser__summary">Introduction: with a spade in one hand and a gun in the other -- The engineer's art -- America's early sieges -- Preparing to dig them out -- Earthworks rose as by magic -- More roads to Rome than one -- The school of the sap -- The body snatchers -- Turning loose the dogs of war -- Toiling day and night -- The key to Vicksburg -- Conclusion: Vicksburg is ours!</div>
+    <div class="vm-teaser__summary">${this.summary}</div>
   </div>
 </article>
 `;

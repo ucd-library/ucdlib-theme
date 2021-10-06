@@ -102,7 +102,6 @@ export default class UcdThemePagination extends Mixin(LitElement)
     this.size = '';
 
     this.screen_check = (window.innerWidth <= this._mobileBreakPoint)  ? true : false;
-    console.log(this.screen_check);
 
     this.render = render.bind(this);
   }
