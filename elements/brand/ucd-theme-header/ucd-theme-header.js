@@ -77,25 +77,6 @@ export default class UcdThemeHeader extends Mixin(LitElement)
   }
 
   /**
-   * @method updated
-   * @description Lit lifecycle method called after element has updated.
-   * @param {Map} props - Properties updated in cycle
-   * @private
-   */
-  updated( props ){
-
-    // Check if we're using the default branding div
-    const brandProps = ['siteName', 'slogan', 'figureSrc'];
-    if ( brandProps.map(p => props.has(p)).filter(Boolean).length ) {
-      if ( brandProps.map(p => this[p]).filter(Boolean).length ) {
-        this._hasSlottedBranding = false;
-      } else {
-        this._hasSlottedBranding = true;
-      }
-    }
-  }
-
-  /**
    * @method open
    * @description Opens header menu in mobile
    * @returns {Promise}
@@ -212,6 +193,16 @@ export default class UcdThemeHeader extends Mixin(LitElement)
       this._hasSearch = true;
     } else {
       this._hasSearch = false;
+    }
+
+    let UcdlibBrandingBar = this.querySelector('ucdlib-branding-bar');
+    if ( UcdlibBrandingBar ) {
+      UcdlibBrandingBar.setAttribute('slot', 'branding-bar');
+      this._hasSlottedBranding = true;
+    } else if ( this.querySelector("*[slot='branding-bar']") ){
+      this._hasSlottedBranding = true;
+    } else {
+      this._hasSlottedBranding = false;
     }
   }
 

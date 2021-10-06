@@ -34,7 +34,7 @@ const NavElement = (superClass) => class extends superClass {
    * @returns {Object} Formatted object describing the menu item and its children
    */
   _makeNavItemTree(ele){
-    let linkText, href, subItems = [], isOpen=false, inlineStyles={};
+    let linkText, href, subItems = [], isOpen=false, inlineStyles={}, newTab=false;
     if ( ele.tagName === 'LI' && ele.children.length > 0) ele = ele.children[0];
 
     if ( ele.tagName === 'A' ) {
@@ -51,9 +51,10 @@ const NavElement = (superClass) => class extends superClass {
         if ( childItem.linkText ) subItems.push(childItem);
       }
     }
+    if (ele.getAttribute('target') == '_blank') newTab = true;
 
     if ( linkText ) linkText = linkText.trim();
-    return {linkText, href, subItems, isOpen, inlineStyles};
+    return {linkText, href, subItems, isOpen, inlineStyles, newTab};
   }
 
   /**

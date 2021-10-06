@@ -20,6 +20,9 @@ export function styles() {
     button {
       cursor: pointer;
     }
+    ::slotted(ucdlib-branding-bar){
+      width: 100%;
+    }
   `;
 
   return [
