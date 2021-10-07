@@ -1,7 +1,8 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-header.tpl.js";
 
-import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/index.js";
+import { Mixin, BreakPoints } from "../../utils/index.js";
+import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeHeader
@@ -36,7 +37,10 @@ import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/i
  * 
  */
 export default class UcdThemeHeader extends Mixin(LitElement)
-  .with(MutationObserverElement, BreakPoints, Wait) {
+  .with(BreakPoints) {
+  
+  mutationObserver = new MutationObserverController(this);
+  wait = new WaitController(this);
 
   static get properties() {
     return {
@@ -86,7 +90,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
     this.opened = true;
     this._transitioning = true;
-    await this.waitForAnimation();
+    await this.wait.wait(this._animationDuration);
     this._transitioning = false;
     return true;
 
@@ -102,7 +106,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
     this.opened = false;
     this._transitioning = true;
-    await this.waitForAnimation();
+    await this.wait.wait(this._animationDuration);
     this._transitioning = false;
     return true;
 

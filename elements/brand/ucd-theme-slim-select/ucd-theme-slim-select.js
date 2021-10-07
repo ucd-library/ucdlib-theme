@@ -3,7 +3,7 @@ import {render, styles} from "./ucd-theme-slim-select.tpl.js";
 
 import SlimSelect from 'slim-select';
 
-import { Mixin, MutationObserverElement } from "../../utils/index.js";
+import { MutationObserverController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeSlimSelect
@@ -12,8 +12,12 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  * Patternlab URL:
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-select-menu
  */
-export default class UcdThemeSlimSelect extends Mixin(LitElement)
-  .with(MutationObserverElement) {
+export default class UcdThemeSlimSelect extends LitElement {
+  mutationObserver = new MutationObserverController(
+    this, 
+    {subtree: true, childList: true, attributes: true, characterData: true},
+    "_onLightDomMutation"
+  );
 
   static get properties() {
     return {
@@ -29,23 +33,13 @@ export default class UcdThemeSlimSelect extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
   }
-  /**
-   * @method connectedCallback
-   * @private
-   * @description Native lifecycle method called when element is connected
-   */
-  connectedCallback(){
-    super.connectedCallback();
-    this._childListObserver.disconnect();
-    this._childListObserver.observe(this, {subtree: true, childList: true, attributes: true, characterData: true});
-  }
 
   /**
-   * @method _onChildListMutation
+   * @method _onLightDomMutation
    * @private
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   * @description Fires when light dom child list changes. Called by MutationObserverController.
    */
-  _onChildListMutation(){
+  _onLightDomMutation(){
     const children = Array.from(this.children);
     if (children.length == 0 || children[0].tagName != "SELECT") return;
     const select = children[0].cloneNode(true);

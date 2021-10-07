@@ -4,7 +4,8 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { Mixin, MutationObserverElement, BreakPoints, NavElement } from "../../utils/index.js";
+import { Mixin, BreakPoints, NavElement } from "../../utils/index.js";
+import { MutationObserverController } from '../../utils/controllers';
 
 /**
  * @class UcdThemePrimaryNav
@@ -33,7 +34,9 @@ import { Mixin, MutationObserverElement, BreakPoints, NavElement } from "../../u
  *  </ucd-theme-primary-nav>
  */
 export default class UcdThemePrimaryNav extends Mixin(LitElement)
-  .with(NavElement, MutationObserverElement, BreakPoints) {
+  .with(NavElement, BreakPoints) {
+
+  mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
 
   static get properties() {
     return {
@@ -263,7 +266,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   /**
    * @method _onChildListMutation
    * @private
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   * @description Fires when light dom child list changes. Injected by MutationObserverController.
    *  Sets the 'navItems' property.
    */
   _onChildListMutation(){

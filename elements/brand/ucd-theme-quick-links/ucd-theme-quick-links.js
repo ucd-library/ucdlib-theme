@@ -1,7 +1,8 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-quick-links.tpl.js";
 
-import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/index.js";
+import { Mixin, BreakPoints } from "../../utils/index.js";
+import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeQuickLinks
@@ -18,7 +19,10 @@ import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/i
  * @property {Number} animationDuration - Length of animation when opening/closing menu
  */
 export default class UcdThemeQuickLinks extends Mixin(LitElement)
-  .with(MutationObserverElement, BreakPoints, Wait) {
+  .with(BreakPoints) {
+
+  mutationObserver = new MutationObserverController(this);
+  wait = new WaitController(this);
 
   static get properties() {
     return {
@@ -67,7 +71,7 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
     this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
     await this.updateComplete;
 
-    await this.waitForAnimation();
+    await this.wait.wait(this.animationDuration);
     this._transitioning = false;
     this.opened = true;
     return true;
@@ -84,11 +88,11 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
 
     this._openedHeight = this.renderRoot.getElementById('menu').scrollHeight + "px";
     await this.updateComplete;
-    await this.waitForFrames(2);
+    await this.wait.waitForFrames(2);
     this._openedHeight = 0;
     await this.updateComplete;
 
-    await this.waitForAnimation();
+    await this.wait.wait(this.animationDuration);
 
     this._transitioning = false;
     this.opened = false;
@@ -229,7 +233,7 @@ export default class UcdThemeQuickLinks extends Mixin(LitElement)
    * @method _onChildListMutation
    * @param {Array} mutationsList - List of mutation records
    * @private
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   * @description Fires when light dom child list changes. Injected by MutationObserverController.
    *  Sets the '_links' property.
    */
   _onChildListMutation(mutationsList){

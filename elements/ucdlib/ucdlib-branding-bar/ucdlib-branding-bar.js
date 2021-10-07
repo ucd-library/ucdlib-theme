@@ -1,7 +1,8 @@
 import { LitElement, svg } from 'lit';
 import {render, styles} from "./ucdlib-branding-bar.tpl.js";
 
-import {Mixin, MutationObserverElement, NavElement} from "../../utils";
+import {Mixin, NavElement} from "../../utils";
+import { MutationObserverController } from '../../utils/controllers';
 import logo from "./logo.js";
 import bookLogo from "./book.js";
 
@@ -22,7 +23,12 @@ import bookLogo from "./book.js";
  *  </ucdlib-branding-bar>
  */
 export default class UcdlibBrandingBar extends Mixin(LitElement)
-  .with(NavElement, MutationObserverElement) {
+  .with(NavElement) {
+
+  mutationObserver = new MutationObserverController(
+    this,
+    {childList: true, characterData: true, attributes: true}
+  );
 
   static get properties() {
     return {
@@ -82,7 +88,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
   /**
    * @method _onChildListMutation
    * @private
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   * @description Fires when light dom child list changes. Called by MutationObserverController.
    *  Sets the 'navItems' property.
    */
   _onChildListMutation(){
