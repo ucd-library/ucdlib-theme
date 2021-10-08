@@ -4,8 +4,8 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { Mixin, BreakPoints, NavElement } from "../../utils/index.js";
-import { MutationObserverController } from '../../utils/controllers';
+import { Mixin, NavElement } from "../../utils/mixins";
+import { MutationObserverController, BreakPointsController } from '../../utils/controllers';
 
 /**
  * @class UcdThemePrimaryNav
@@ -34,9 +34,10 @@ import { MutationObserverController } from '../../utils/controllers';
  *  </ucd-theme-primary-nav>
  */
 export default class UcdThemePrimaryNav extends Mixin(LitElement)
-  .with(NavElement, BreakPoints) {
+  .with(NavElement) {
 
   mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
+  breakPoints = new BreakPointsController(this);
 
   static get properties() {
     return {
@@ -100,7 +101,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( !navItem ) return;
 
     // Open on mobile
-    if ( this.isMobile() ) {
+    if ( this.breakPoints.isMobile() ) {
       let nav = this.renderRoot.getElementById(`nav--${navLocation.join("-")}`);
       if ( !nav ) return;
       let ul = nav.querySelector('ul');
@@ -163,7 +164,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     if ( !navItem ) return;
 
     // close on mobile
-    if ( this.isMobile() ) {
+    if ( this.breakPoints.isMobile() ) {
       let nav = this.renderRoot.getElementById(`nav--${navLocation.join("-")}`);
       if ( !nav ) return;
       let ul = nav.querySelector('ul');
@@ -348,7 +349,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       this.isMegaMenu() && 
       depth > 0 && 
       !this._megaIsOpen &&
-      this.isDesktop()
+      this.breakPoints.isDesktop()
     ) i = -1;
 
     return i;
@@ -378,7 +379,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Array} navLocation - Array coordinates of corresponding nav item
    */
   async _toggleMobileMenu(navLocation){
-    if ( this.isDesktop() ) return;
+    if ( this.breakPoints.isDesktop() ) return;
     let navItem = this.getNavItem(navLocation);
     if ( navItem.isOpen ) {
       this.closeSubNav(navLocation);
@@ -394,7 +395,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    */
   _onNavMouseenter(){
     if ( 
-      this.isMobile() || 
+      this.breakPoints.isMobile() || 
       !this.isMegaMenu() ) 
       return;
 
@@ -411,7 +412,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    */
   _onNavMouseleave(){
     if ( 
-      this.isMobile() || 
+      this.breakPoints.isMobile() || 
       !this.isMegaMenu() ) 
       return;
 
@@ -429,7 +430,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    */
   _onNavFocusin(){
     if ( 
-      this.isMobile() || 
+      this.breakPoints.isMobile() || 
       !this.isMegaMenu() ) 
       return;
     
@@ -450,7 +451,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemMouseenter(e){
-    if ( this.isMobile() ) return;
+    if ( this.breakPoints.isMobile() ) return;
     this.openSubNav(e.target.key);
   }
 
@@ -461,7 +462,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemFocus(e){
-    if ( this.isMobile() ) return;
+    if ( this.breakPoints.isMobile() ) return;
     const LI = e.target.parentElement.parentElement;
 
     if (LI.hasnav) {
@@ -514,7 +515,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @param {Event} e 
    */
   _onItemMouseleave(e){
-    if ( this.isMobile() || this.isMegaMenu() ) return;
+    if ( this.breakPoints.isMobile() || this.isMegaMenu() ) return;
     this.closeSubNav(e.target.key);
   }
 
@@ -524,7 +525,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @description Attached to the top-level nav element. Closes subnav if it doesn't contain focused link.
    */
   _onNavFocusout(){
-    if ( this.isMobile() ) return;
+    if ( this.breakPoints.isMobile() ) return;
     if ( this.isMegaMenu() ) {
       if ( this._megaTimeout ) clearTimeout(this._megaTimeout);
       requestAnimationFrame(() => {
@@ -577,7 +578,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
    * @returns {Object} - Style map
    */
   _getItemMobileStyles(location) {
-    if ( this.isDesktop() ) return {};
+    if ( this.breakPoints.isDesktop() ) return {};
     let navItem = this.getNavItem(location);
     if ( !navItem.inlineStyles ) return {};
     return navItem.inlineStyles;

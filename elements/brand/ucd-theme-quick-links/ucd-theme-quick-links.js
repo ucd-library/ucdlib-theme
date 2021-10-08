@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import {render, styles} from "./ucd-theme-quick-links.tpl.js";
 
-import { Mixin, BreakPoints } from "../../utils/index.js";
 import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
@@ -18,8 +17,7 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  * @property {Boolean} opened - Menu is open
  * @property {Number} animationDuration - Length of animation when opening/closing menu
  */
-export default class UcdThemeQuickLinks extends Mixin(LitElement)
-  .with(BreakPoints) {
+export default class UcdThemeQuickLinks extends LitElement {
 
   mutationObserver = new MutationObserverController(this);
   wait = new WaitController(this);

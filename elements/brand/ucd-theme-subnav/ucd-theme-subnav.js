@@ -4,7 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { styleMap } from 'lit/directives/style-map.js';
 
-import {Mixin, NavElement} from "../../utils";
+import {Mixin, NavElement} from "../../utils/mixins";
 import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**

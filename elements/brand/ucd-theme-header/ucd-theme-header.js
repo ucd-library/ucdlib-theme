@@ -1,7 +1,6 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-header.tpl.js";
 
-import { Mixin, BreakPoints } from "../../utils/index.js";
 import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
@@ -36,8 +35,7 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  *  </ucd-theme-header>
  * 
  */
-export default class UcdThemeHeader extends Mixin(LitElement)
-  .with(BreakPoints) {
+export default class UcdThemeHeader extends LitElement {
   
   mutationObserver = new MutationObserverController(this);
   wait = new WaitController(this);

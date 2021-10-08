@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { Mixin, MainDomElement} from "../../utils";
+import { Mixin, MainDomElement} from "../../utils/mixins";
 import { MutationObserverController } from '../../utils/controllers';
 
 

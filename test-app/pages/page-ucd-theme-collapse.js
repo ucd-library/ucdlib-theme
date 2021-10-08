@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 import { render, styles } from './page-ucd-theme-collapse.tpl.js';
-import { Mixin, MainDomElement } from '../../elements/utils/index.js';
+import { Mixin, MainDomElement } from '../../elements/utils/mixins';
 import { BrandedPageElement, MdElement } from '../utils/index.js';
 
 import '../../elements/brand/ucd-theme-collapse/ucd-theme-collapse.js';

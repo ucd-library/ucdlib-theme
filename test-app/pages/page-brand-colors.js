@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./page-brand-colors.tpl.js";
 
-import {Mixin, MainDomElement} from '../../elements/utils/index.js';
+import {Mixin, MainDomElement} from '../../elements/utils/mixins';
 import {BrandedPageElement } from "../utils/index.js";
 
 

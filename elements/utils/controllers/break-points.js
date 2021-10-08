@@ -1,8 +1,9 @@
-const BreakPoints = (superClass) => class extends superClass {
+export class BreakPointsController{
 
-  constructor() {
-    super();
-    this._mobileBreakPoint = 992;
+  mobileBreakPoint = 992;
+  
+  constructor(host){
+    (this.host = host).addController(this);
   }
 
   /**
@@ -10,8 +11,8 @@ const BreakPoints = (superClass) => class extends superClass {
   * @description Is the desktop view currently active?
   * @returns {Boolean}
   */
-  isDesktop(){
-    return window.innerWidth >= this._mobileBreakPoint;
+   isDesktop(){
+    return window.innerWidth >= this.mobileBreakPoint;
   }
 
   /**
@@ -22,6 +23,4 @@ const BreakPoints = (superClass) => class extends superClass {
   isMobile(){
     return !this.isDesktop();
   }  
-};
-
-export {BreakPoints};
+}

@@ -1,7 +1,7 @@
 import { LitElement, svg } from 'lit';
 import {render, styles} from "./ucdlib-branding-bar.tpl.js";
 
-import {Mixin, NavElement} from "../../utils";
+import {Mixin, NavElement} from "../../utils/mixins";
 import { MutationObserverController } from '../../utils/controllers';
 import logo from "./logo.js";
 import bookLogo from "./book.js";
