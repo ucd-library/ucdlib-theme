@@ -1,7 +1,8 @@
 import { LitElement, html } from 'lit';
 //import { Page } from 'puppeteer';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
-import { Mixin, BreakPoints } from "../../utils/index.js";
+
+import { BreakPointsController } from '../../utils/controllers';
 
 /**
  * @class UcdThemePagination
@@ -33,8 +34,8 @@ import { Mixin, BreakPoints } from "../../utils/index.js";
  * </ucd-theme-pagination>
  * 
  */
-export default class UcdThemePagination extends Mixin(LitElement)
-  .with(BreakPoints) {
+export default class UcdThemePagination extends LitElement {
+  breakPoints = new BreakPointsController(this);
 
   static get properties() {
     return {
@@ -101,8 +102,7 @@ export default class UcdThemePagination extends Mixin(LitElement)
     this.xs_screen = false;
     this.size = '';
 
-    this.screen_check = (window.innerWidth <= this._mobileBreakPoint)  ? true : false;
-    console.log(this.screen_check);
+    this.screen_check = (window.innerWidth <= this.breakPoints.mobileBreakPoint)  ? true : false;
 
     this.render = render.bind(this);
   }

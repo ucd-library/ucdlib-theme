@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./page-ucdlib-pages.tpl.js";
 
-import {Mixin, MainDomElement} from '../../elements/utils/index.js';
+import {Mixin, MainDomElement} from '../../elements/utils/mixins';
 import {BrandedPageElement, MdElement} from "../utils/index.js";
 
 import "../../elements/ucdlib/ucdlib-pages/ucdlib-pages";

@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-theme-test-app.tpl.js";
-import {Mixin, MainDomElement} from '../elements/utils/index.js';
+import {Mixin, MainDomElement} from '../elements/utils/mixins';
 
 import "../elements/ucdlib/ucdlib-pages/ucdlib-pages.js";
 import "../elements/brand/ucd-theme-header/ucd-theme-header";

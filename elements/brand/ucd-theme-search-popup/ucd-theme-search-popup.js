@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-search-popup.tpl.js";
 
-import { Mixin, MutationObserverElement } from "../../utils/index.js";
+import { MutationObserverController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeSearchPopup
@@ -24,8 +24,8 @@ import { Mixin, MutationObserverElement } from "../../utils/index.js";
  *   <input placeholder="A custom search element">
  * </ucd-theme-search-popup>
  */
-export default class UcdThemeSearchPopup extends Mixin(LitElement)
-  .with(MutationObserverElement) {
+export default class UcdThemeSearchPopup extends LitElement {
+  mutationObserver = new MutationObserverController(this);
 
   static get properties() {
     return {

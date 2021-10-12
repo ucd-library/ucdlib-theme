@@ -4,7 +4,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { styleMap } from 'lit/directives/style-map.js';
 
-import {Mixin, MutationObserverElement, NavElement, Wait} from "../../utils";
+import {Mixin, NavElement} from "../../utils/mixins";
+import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeSubnav
@@ -29,7 +30,10 @@ import {Mixin, MutationObserverElement, NavElement, Wait} from "../../utils";
  *  </ucd-theme-subnav>
  */
 export default class UcdThemeSubnav extends Mixin(LitElement)
-  .with(NavElement, MutationObserverElement, Wait) {
+  .with(NavElement) {
+  
+  mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
+  wait = new WaitController(this);
 
   static get properties() {
     return {
@@ -72,15 +76,15 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
     // Get expanded height
     navItem.inlineStyles.display = "block";
     navItem.inlineStyles.height = "0px";
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
     const expandedHeight = navUL.scrollHeight + "px";   
     
     // Set expanded height
     navItem.inlineStyles.height = expandedHeight;
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
 
     // Complete animation
-    await this.waitForAnimation();
+    await this.wait.wait(this.animationDuration);
     navItem.inlineStyles = {};
     navItem.isOpen = true;
     navItem.isTransitioning = false;
@@ -108,15 +112,15 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
     // Set expanded height
     navItem.inlineStyles.height = navUL.scrollHeight + "px";
     navItem.inlineStyles.display = "block";
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
 
     // Set height to zero
-    await this.waitForFrames(2);
+    await this.wait.waitForFrames(2);
     navItem.inlineStyles.height = "0px";
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
 
     // Complete animation
-    await this.waitForAnimation();
+    await this.wait.wait(this.animationDuration);
     navItem.inlineStyles = {};
     navItem.isOpen = false;
     navItem.isTransitioning = false;
@@ -129,7 +133,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
   /**
    * @method _onChildListMutation
    * @private
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   * @description Fires when light dom child list changes. Injected by MutationObserverController.
    *  Sets the 'navItems' property.
    */
   _onChildListMutation(){

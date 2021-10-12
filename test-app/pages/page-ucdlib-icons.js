@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./page-ucdlib-icons.tpl.js";
-import {Mixin, MainDomElement} from '../../elements/utils/index.js';
+import {Mixin, MainDomElement} from '../../elements/utils/mixins';
 import {BrandedPageElement} from "../utils/index.js";
 
 import "../../elements/ucdlib/ucdlib-icon/ucdlib-icon";

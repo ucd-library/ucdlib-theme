@@ -82,7 +82,7 @@ return html`
           <li><a href="#ucdlib-pages">Pages</a></li>
         </ul>
 
-        <ul link-text="Brand Guides">
+        <ul link-text="Brand Guides" href="#overview">
           <li><a href="#overview">Overview</a></li>
           <li><a href="#brand-colors">Colors</a></li>
           <li><a href="#infographics">Infographics</a></li>

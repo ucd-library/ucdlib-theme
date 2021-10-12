@@ -1,5 +1,7 @@
 import { LitElement } from 'lit';
-import { Mixin, MutationObserverElement, MainDomElement} from "../../utils";
+import { Mixin, MainDomElement} from "../../utils/mixins";
+import { MutationObserverController } from '../../utils/controllers';
+
 
 /**
  * @class UcdlibIconset
@@ -18,7 +20,8 @@ import { Mixin, MutationObserverElement, MainDomElement} from "../../utils";
   </ucdlib-iconset>
  */
 export default class UcdlibIconset extends Mixin(LitElement)
-  .with(MutationObserverElement, MainDomElement) {
+  .with(MainDomElement) {
+  mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
 
   static get properties() {
     return {

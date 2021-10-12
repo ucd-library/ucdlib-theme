@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./page-ucd-theme-slim-select.tpl.js";
 
-import {Mixin, MainDomElement} from '../../elements/utils/index.js';
+import {Mixin, MainDomElement} from '../../elements/utils/mixins';
 import {BrandedPageElement, MdElement} from "../utils/index.js";
 
 import "../../elements/brand/ucd-theme-slim-select/ucd-theme-slim-select";
