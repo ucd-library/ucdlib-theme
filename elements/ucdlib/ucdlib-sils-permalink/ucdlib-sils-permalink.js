@@ -62,6 +62,7 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.randomClass = '';
     this.elemClass = [];
     this.image = '';
+    this.errorMessage = 'Href is not a permalink.';
     this.render=render.bind(this);
 
 
@@ -76,24 +77,18 @@ export default class UcdlibSilsPermalink extends LitElement {
   }
 
   loadJSON(path, success, error) {
+    console.log("This is the path:", path);
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          success(JSON.parse(xhr.responseText));
-        }
-        else {
-          error(xhr);
-        }
-      }
-    };
     xhr.open('GET', path, true);
     xhr.responseType = 'text';
+    console.log(xhr);
     return new Promise(function (resolve, reject) {
 
       xhr.onload = function () {
         if (xhr.readyState === xhr.DONE) {
           if (xhr.status === 200) {
+            console.log(xhr);
+
             resolve(xhr.response);
             // 
             // json = output;
@@ -112,18 +107,29 @@ export default class UcdlibSilsPermalink extends LitElement {
   
   myData(Data)
   { 
-    // Output only the details on the first post
     console.log("Title:", Data.title);
+  }
 
+  validationLink(url){
+    let match = url.match(/([^\/]+)([a-z0-9]+)$/g);
+
+    let id = url.includes("/9fle3i/") ? 'L' : url.includes("/1hjlc2p/") ? 'PC' : 'Error';
+    if(url.match(/https:\/\/search.library.ucdavis.edu\/permalink\/01UCD_INST\/([^\/]+)\/([a-zA-Z0-9_]*)/g)){
+      url = 'https://search.library.ucdavis.edu/primaws/rest/pub/pnxs/' + id + '/' + match[0] +'?vid=01UCD_INST:UCD&lang=en&search_scope=DN_and_CI';
+      return url;
+    }
+    console.error(this.errorMessage);
+    
   }
 
   async _request(){
-
     let url = this.permalink;
+    let validate = this.validationLink(url);
+    let output = await this.loadJSON(validate, this.myData,'jsonp');
 
+    url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126';
 
-
-    let output = await this.loadJSON(url, this.myData,'jsonp');
+    output = await this.loadJSON(url, this.myData,'jsonp');
     this.results = JSON.parse(output);
     this.teaserType = this.results["@type"];
 
