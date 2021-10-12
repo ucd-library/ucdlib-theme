@@ -124,12 +124,12 @@ export default class UcdlibSilsPermalink extends LitElement {
 
   async _request(){
     let url = this.permalink;
-    let validate = this.validationLink(url);
-    let output = await this.loadJSON(validate, this.myData,'jsonp');
+    //let validate = this.validationLink(url);
+    //let output = await this.loadJSON(validate, this.myData,'jsonp');
 
     url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126';
 
-    output = await this.loadJSON(url, this.myData,'jsonp');
+    let output = await this.loadJSON(url, this.myData,'jsonp');
     this.results = JSON.parse(output);
     this.teaserType = this.results["@type"];
 
