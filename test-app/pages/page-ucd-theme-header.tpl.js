@@ -32,6 +32,7 @@ return html`
       site-name="UC Davis Library"
       slogan="Books!"
       figure-src="/img/book-logo.png" 
+      prevent-fixed
       is-demo>
 
       <ucd-theme-primary-nav>
@@ -69,7 +70,7 @@ return html`
   <h3>Customizing the Branding Bar</h3>
   <p>You can quickly apply Library styles by using the <a href="#ucdlib-branding-bar">ucdlib-branding-bar component</a>:</p>
   ${this.examplePanel(html`
-    <ucd-theme-header is-demo>
+    <ucd-theme-header is-demo prevent-fixed>
       <ucdlib-branding-bar>
         <a href="#">My Account</a>
         <a href="#">Access VPN</a>
@@ -88,7 +89,7 @@ return html`
   <p>The branding bar can also be completely overwritten with your own styles by using the <code>branding-bar</code> slot:</p>
   
   ${this.examplePanel(html`
-    <ucd-theme-header is-demo>
+    <ucd-theme-header is-demo prevent-fixed>
       <div slot="branding-bar" class="custom-branding">
         <p>No power in the 'verse can stop me</p>
       </div>

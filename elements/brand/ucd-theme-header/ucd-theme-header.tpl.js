@@ -23,6 +23,31 @@ export function styles() {
     ::slotted(ucdlib-branding-bar){
       width: 100%;
     }
+
+    @media (max-width: 991px) {
+      .fixed-mobile .mobile-bar {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+      }
+      .fixed-mobile .off-canvas {
+        position: fixed;
+        overflow: auto;
+        z-index: 1000;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .fixed-desktop .l-navbar {
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+      }
+    }
+
   `;
 
   return [
@@ -44,7 +69,7 @@ ${this.isDemo ? html`
     .l-navbar { top: auto !important}
   </style>
 ` : html``}
-<header class="l-header header">
+<header class=${classMap(this._getHeaderClasses())}>
   <div class="mobile-bar">
     <div class="mobile-bar__nav-toggle">
       <button 
@@ -64,32 +89,34 @@ ${this.isDemo ? html`
     </div>
   </div>
 
-  <div class="header__bar">
-      <div class="header__university">
-        <a href="https://www.ucdavis.edu/">
-          <img class="ucd-logo" src='data:image/svg+xml;utf8,${this._ucdLogo()}'>
-        </a>
-      </div>
-  </div>
-  <div class="l-header__branding">
-    ${this._hasSlottedBranding ? html`
-      <slot name="branding-bar"></slot>
-    ` : html`
-      <div class="site-branding">
-        <div class="site-branding__figure" ?hidden=${!this.figureSrc}>
-          <a href="${this.siteUrl}" class=""><img src=${this.figureSrc} class="site-logo" alt="Site Logo" /></a>
+  <div id="branding-bar-container">
+    <div class="header__bar">
+        <div class="header__university">
+          <a href="https://www.ucdavis.edu/">
+            <img class="ucd-logo" src='data:image/svg+xml;utf8,${this._ucdLogo()}'>
+          </a>
         </div>
-        <div class="site-branding__body">
-        <h1 class="site-branding__site-name" ?hidden=${!this.siteName}>
-          <a href=${this.siteUrl}>${this.siteName}</a>
-        </h1>
-        <div class="site-branding__slogan" ?hidden=${!this.slogan}>${this.slogan}</div>
+    </div>
+    <div class="l-header__branding">
+      ${this._hasSlottedBranding ? html`
+        <slot name="branding-bar"></slot>
+      ` : html`
+        <div class="site-branding">
+          <div class="site-branding__figure" ?hidden=${!this.figureSrc}>
+            <a href="${this.siteUrl}" class=""><img src=${this.figureSrc} class="site-logo" alt="Site Logo" /></a>
+          </div>
+          <div class="site-branding__body">
+          <h1 class="site-branding__site-name" ?hidden=${!this.siteName}>
+            <a href=${this.siteUrl}>${this.siteName}</a>
+          </h1>
+          <div class="site-branding__slogan" ?hidden=${!this.slogan}>${this.slogan}</div>
+          </div>
         </div>
-      </div>
-    `}
+      `}
+    </div>
   </div>
 
-  <div class="${classMap(this._getNavbarClasses())}">
+  <div class="${classMap(this._getNavbarClasses())}" id="nav-bar">
     <div class="l-container--navigation off-canvas off-canvas--left">
       <div class="off-canvas__container l-nav-horizontal">
         ${this._hasSearch ? html`
