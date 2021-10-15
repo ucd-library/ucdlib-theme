@@ -83,8 +83,6 @@ export default class UcdThemeHeader extends LitElement {
     this._animationDuration = 500;
     this._brandingBarInView = false;
 
-    
-
   }
 
   connectedCallback(){

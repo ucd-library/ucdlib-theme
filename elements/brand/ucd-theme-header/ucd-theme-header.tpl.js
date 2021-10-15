@@ -29,11 +29,16 @@ export function styles() {
         position: fixed;
         width: 100%;
         z-index: 1000;
+        top: 0;
       }
       .fixed-mobile .off-canvas {
         position: fixed;
         overflow: auto;
         z-index: 1000;
+        top: 55px;
+      }
+      .fixed-mobile .l-header__branding {
+        margin-top: 55px;
       }
     }
 
