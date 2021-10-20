@@ -3,8 +3,15 @@
  * @classdesc Lit controller that attaches a MutationObserver to an element
  * 
  * @property {LitElement} host - 'this' from a Lit element
- * @property {Object} options - MutationObserver.observe options
- * @property {String} callback - Name of element method called on mutation
+ * @property {Object} options - MutationObserver.observe options. Default: {childList: true}
+ * @property {String} callback - Name of element method called on mutation. Default: '_onChildListMutation'
+ * 
+ * @examples
+ * // For a basic childlist observer, instantiate this class in your element:
+ *  mutationObserver = new MutationObserverController(this);
+ * 
+ * // or customize the options/callback:
+ *  mutationObserver = new MutationObserverController(this, {childList: true, attributes: true}, 'aDifferentCallbackMethod');
  */
 export class MutationObserverController {
   host;

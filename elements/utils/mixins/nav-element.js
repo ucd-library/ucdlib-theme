@@ -45,6 +45,7 @@ const NavElement = (superClass) => class extends superClass {
     } else if ( ele.tagName === 'OL' || ele.tagName === 'UL' ) {
       linkText = ele.getAttribute('link-text');
       href = ele.getAttribute('href');
+      isOpen = ele.hasAttribute('is-open');
 
       for (const child of Array.from(ele.children)) {
         let childItem = this._makeNavItemTree(child);

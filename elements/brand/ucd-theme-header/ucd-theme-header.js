@@ -1,7 +1,10 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-header.tpl.js";
 
-import { MutationObserverController, WaitController } from '../../utils/controllers';
+import { 
+  IntersectionObserverController,
+  MutationObserverController, 
+  WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeHeader
@@ -15,6 +18,7 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  * @property {String} figureSrc - Site logo/icon to display next to site name
  * @property {String} siteUrl - Url to use for links around site name and figure
  * @property {Boolean} opened - Whether header is open in the mobile view
+ * @property {Boolean} preventFixed - Navbar will not be fixed to top of screen in desktop view
  * 
  * @example
  *  <ucd-theme-header site-name="A UC Davis Website">
@@ -47,11 +51,13 @@ export default class UcdThemeHeader extends LitElement {
       figureSrc: {type: String, attribute: "figure-src"},
       siteUrl: {type: String, attribute: "site-url"},
       opened: {type: Boolean},
+      preventFixed: {type: Boolean, attribute: "prevent-fixed"},
       isDemo: {type: Boolean, attribute: "is-demo"},
       _transitioning: {type: Boolean, state: true},
       _hasSlottedBranding: {type: Boolean, state: true},
       _hasQuickLinks: {type: Boolean, state: true},
-      _hasSearch: {type: Boolean, state: true}
+      _hasSearch: {type: Boolean, state: true},
+      _brandingBarInView: {type: Boolean, state: true}
     };
   }
 
@@ -75,7 +81,38 @@ export default class UcdThemeHeader extends LitElement {
     this._hasQuickLinks = false;
     this._hasSearch = false;
     this._animationDuration = 500;
+    this._brandingBarInView = false;
 
+  }
+
+  connectedCallback(){
+    super.connectedCallback();
+    if ( !this.preventFixed ) {
+      this.intersectionObserver = new IntersectionObserverController(this, {}, "_onBrandingBarIntersection", false);
+    }
+  }
+
+  firstUpdated(){
+    if ( !this.preventFixed ) {
+      let aboveNav = this.renderRoot.getElementById('branding-bar-container');
+      this.intersectionObserver.observer.observe(aboveNav);
+    }
+  }
+
+  _onBrandingBarIntersection(entries){
+    let offSetValue = 0;
+    try {
+      offSetValue = this.renderRoot.getElementById('nav-bar').getBoundingClientRect().height;
+    } catch (error) {}
+    if ( offSetValue > 150 ) offSetValue = 0;
+    entries.forEach(entry => {
+      this._brandingBarInView = entry.isIntersecting;
+      if (this._brandingBarInView) {
+        this.style.marginBottom = '0px';
+      } else {
+        this.style.marginBottom = offSetValue + "px";
+      }
+    })
   }
 
   /**
@@ -148,6 +185,24 @@ export default class UcdThemeHeader extends LitElement {
       classes['menu--closed'] = true;
     }
 
+    return classes;
+  }
+
+  /**
+   * @method _getHeaderClasses
+   * @description Get classes to be assigned to the header element
+   * @private
+   * @returns {Object}
+   */
+  _getHeaderClasses(){
+    let classes = {
+      "l-header": true,
+      "header": true
+    };
+
+    classes['fixed-mobile'] = !this.preventFixed;
+    classes['fixed-desktop'] = !this.preventFixed && !this._brandingBarInView;
+    
     return classes;
   }
 

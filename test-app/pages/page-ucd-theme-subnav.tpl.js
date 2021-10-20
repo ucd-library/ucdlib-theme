@@ -35,7 +35,7 @@ return html`
       <a href="#">Link 1</a>
       <a href="#">Link 2</a>
       <a href="#">Link 3</a>
-      <ul href="#" link-text="Parent with Children">
+      <ul href="#" link-text="Parent with Children" is-open>
         <li><a href="#">Child 1</a></li>
         <li><a href="#">Child 2</a></li>
         <li><a href="#">Child 3</a></li>

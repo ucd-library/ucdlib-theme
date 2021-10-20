@@ -43,7 +43,11 @@ export default class UcdThemeSlimSelect extends LitElement {
     const children = Array.from(this.children);
     if (children.length == 0 || children[0].tagName != "SELECT") return;
     const select = children[0].cloneNode(true);
-    this.renderRoot.innerHTML= "";
+    if ( this.slimSelect ){
+      this.slimSelect.destroy();
+      this.renderRoot.querySelector('.ss-main').remove();
+      this.renderRoot.querySelector('select').remove();
+    }
     this.renderRoot.appendChild(select);
 
     this.slimSelect = new SlimSelect({
