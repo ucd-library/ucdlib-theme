@@ -1,43 +1,33 @@
 import { html, css } from 'lit';
-
-import headingStyles from '@ucd-lib/theme-sass/1_base_html/_headings.css.js';
-import messageStyles from '@ucd-lib/theme-sass/4_component/_message-area.css.js';
-import formStyles from "@ucd-lib/theme-sass/1_base_html/_forms.css.js";
+import { styleMap } from 'lit/directives/style-map.js';
+import { classMap } from 'lit/directives/class-map.js';
+import buttonStyles from "@ucd-lib/theme-sass/2_base_class/_buttons.css.js";
 
 export function styles(){
   let customStyles = css`
     :host {
       display: block;
     }
-    .message-area--closed {
-      height: s0;
-    }
   `;
   return [
-    headingStyles,
-    formStyles,
-    messageStyles,
-    customStyles
+    customStyles,
+    buttonStyles
   ]
 }
 
 export function render() { 
   return html`
-    <div class="message-area ${this.collapsed ? 'message-area--closed': ''}">
-      <div class="message-area__content" data-cy="content" id="content" aria-labelledby="button">
-        <h2 class="message-area__title">${this.title}</h2>
-        <div class="message-area__body">
-          <slot></slot>
-        </div>
-      </div>
-      <button 
-        id="button"
-        class="message-area__button" 
-        data-cy="button"
-        aria-controls="content"
-        aria-expanded="${!this.collapsed}"
-        title="${this.buttonText}" 
-        @click="${this._onBtnClicked}">${this.buttonText}</button>
-    </div>
+  ${this.input ? html`    
+    <p>
+      <input type="submit" class="btn ${classMap(this.constructClasses())}" value="<input> Button">
+    </p>`
+    : html`
+    <p>
+      <a href="${this.href}" class="btn ${classMap(this.constructClasses())}">
+        <slot></slot>
+      </a>
+    </p>`
+  }
+
   `;
 }
