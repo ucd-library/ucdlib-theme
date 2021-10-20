@@ -8,6 +8,7 @@ import "../elements/brand/ucd-theme-header/ucd-theme-header";
 // Import all of our iconsets:
 import "../elements/ucdlib/ucdlib-icons/ucdlib-icons";
 import "../elements/ucdlib/ucdlib-icons/academic";
+import "../elements/ucdlib/ucdlib-icons/sitefarm";
 
 export default class UcdlibThemeTestApp extends Mixin(LitElement)
   .with(MainDomElement) {

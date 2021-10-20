@@ -1,5 +1,5 @@
-import "../ucdlib-iconset/ucdlib-iconset";
-import "../ucdlib-icon/ucdlib-icon";
+import "@ucd-lib/theme-elements/ucdlib/ucdlib-iconset/ucdlib-iconset";
+import "@ucd-lib/theme-elements/ucdlib/ucdlib-icon/ucdlib-icon";
 
 import { html, render } from "lit-html";
 

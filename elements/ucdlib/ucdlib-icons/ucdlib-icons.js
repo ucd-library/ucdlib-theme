@@ -7,7 +7,7 @@
  */
 
 import { html } from "lit";
-import { renderIconSet } from "./utils";
+import { renderIconSet } from "@ucd-lib/theme-elements/ucdlib/ucdlib-icons/utils.js";
 
 const template = html`
   <svg>
