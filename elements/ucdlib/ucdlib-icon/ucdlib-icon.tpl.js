@@ -9,6 +9,8 @@ export function styles() {
       stroke: var(--ucdlib-icon-stroke-color, none);
       width: var(--ucdlib-icon-width, 24px);
       height: var(--ucdlib-icon-height, 24px);
+      min-width: var(--ucdlib-icon-width, 24px);
+      min-height: var(--ucdlib-icon-height, 24px);
     }
   `;
 
