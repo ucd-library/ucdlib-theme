@@ -59,7 +59,6 @@ return html`
             <li><a href="#ucd-theme-search-form">Search Form</a></li>
             <li><a href="#ucd-theme-quick-links">Quick Links</a></li>
             <li><a href="#ucdlib-branding-bar">UC Davis Library Branding Bar</a></li>
-            <li><a href="#ucdlib-theme-buttons">Buttons</a></li>
           </ul>
           <ul link-text="Other Navigation">
             <li><a href="#ucd-theme-pagination">Pagination</a></li>
@@ -87,6 +86,8 @@ return html`
           <li><a href="#overview">Overview</a></li>
           <li><a href="#brand-colors">Colors</a></li>
           <li><a href="#infographics">Infographics</a></li>
+          <li><a href="#brand-buttons">Buttons</a></li>
+
         </ul>
       </ucd-theme-primary-nav>
 
