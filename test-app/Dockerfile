@@ -11,6 +11,7 @@ COPY server.js .
 COPY fonts.css .
 COPY fonts fonts
 COPY index.html .
+COPY user-testing user-testing
 
 COPY js js
 COPY pages pages
