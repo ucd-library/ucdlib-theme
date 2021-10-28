@@ -12,7 +12,7 @@
 <dd><p>override createRenderRoot, no need for shadowdom</p>
 </dd>
 <dt><a href="#_onChildListMutation">_onChildListMutation()</a></dt>
-<dd><p>called when children change via MutationObserverElement</p>
+<dd><p>called when children change via MutationObserverController</p>
 </dd>
 <dt><a href="#_onChange">_onChange()</a></dt>
 <dd><p>update visibility</p>
@@ -53,7 +53,7 @@ override createRenderRoot, no need for shadowdom
 <a name="_onChildListMutation"></a>
 
 ### \_onChildListMutation()
-called when children change via MutationObserverElement
+called when children change via MutationObserverController
 
 **Kind**: global function  
 <a name="_onChange"></a>

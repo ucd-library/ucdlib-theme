@@ -14,4 +14,6 @@ Pattern Lab Url:
 | value | <code>String</code> | The search string |
 | placeholder | <code>String</code> | The input placeholder |
 | formAction | <code>String</code> | The action to be taken on form submit (optional) |
+| formMethod | <code>String</code> | The http method used on submit (default=POST) |
+| queryParam | <code>String</code> | The URL query parameter to use (default=searchterm) |
 

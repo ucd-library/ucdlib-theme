@@ -39,6 +39,7 @@ Component class for displaying the site header
 | figureSrc | <code>String</code> | Site logo/icon to display next to site name |
 | siteUrl | <code>String</code> | Url to use for links around site name and figure |
 | opened | <code>Boolean</code> | Whether header is open in the mobile view |
+| preventFixed | <code>Boolean</code> | Navbar will not be fixed to top of screen in desktop view |
 
 <a name="open"></a>
 

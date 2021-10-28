@@ -23,6 +23,17 @@ return html`
     </ucd-theme-search-form>
   `)}
 
+  <p>You can change the http method with the <code>form-method</code> attribute,
+  and assign the search phrase to a custom url query parameter with the <code>query-param</code> attribute
+  </p>
+  ${this.examplePanel(html`
+    <ucd-theme-search-form
+      form-action="/"
+      form-method='GET'
+      query-param="q">
+    </ucd-theme-search-form>
+  `)}
+
   <p>Otherwise it will trigger a <code>search</code> custom event:</p>
   ${this.examplePanel(html`
     <ucd-theme-search-form
