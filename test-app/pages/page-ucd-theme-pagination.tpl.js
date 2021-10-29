@@ -120,6 +120,15 @@ ${this.examplePanel(html`
   </ucd-theme-pagination>
 `)}
 
+<p>The <code>query-params</code> attribute will append a query string to the anchor tag: </p>
+${this.examplePanel(html`
+  <ucd-theme-pagination
+    current-page="33"
+    max-pages="33"
+    query-params="s=search+term"
+    base-path="/foo/bar/">
+  </ucd-theme-pagination>
+`)}
 
 
 <p>Otherwise a <code>page-change</code> custom event will be fired</p>
