@@ -1,5 +1,6 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-sils-permalink.tpl.js";
+import {Task} from '@lit-labs/task';
 
 /**
  * @class UcdlibSilsPermalink
@@ -77,7 +78,6 @@ export default class UcdlibSilsPermalink extends LitElement {
   }
 
   loadJSON(path, success, error) {
-    console.log("This is the path:", path);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', path, true);
     xhr.responseType = 'text';
@@ -102,6 +102,8 @@ export default class UcdlibSilsPermalink extends LitElement {
       xhr.send();
     });
 
+
+
   }
   
   
@@ -121,6 +123,7 @@ export default class UcdlibSilsPermalink extends LitElement {
     console.error(this.errorMessage);
     
   }
+ 
 
   async _request(){
     let url = this.permalink;
@@ -130,6 +133,14 @@ export default class UcdlibSilsPermalink extends LitElement {
     url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126';
 
     let output = await this.loadJSON(url, this.myData,'jsonp');
+    this._apiTask = new Task(
+      this,
+      (url) =>
+        fetch(url)
+          .then(response => response.json()),
+      () => [this.response]
+    );
+    console.log(this._apiTask);
     this.results = JSON.parse(output);
     this.teaserType = this.results["@type"];
 
