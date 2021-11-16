@@ -8,6 +8,8 @@ export function styles() {
     :host {
       display: block;
     }
+
+
   `;
 
   return [elementStyles,baseStyles,teaserStyles,normalizeCss];
@@ -15,9 +17,21 @@ export function styles() {
 
 export function render() {
   return html`
+  <style>
+    .vm-teaser__figure.category{
+      background-color:red;
+    }
+  </style>
+${this.perma.render({
+      complete: (result) => this.format(result),
+      initial: () => console.log("Initialization"),
+      pending: () => this._onLoad(),
+      error: (e) => console.log("Error:", e)
+    })}
+
   <article class="vm-teaser   ">
   <div class="vm-teaser__figure category">
-    <a href="${this.image}"><img src="${this.image}" alt="Thumbnail" class="" width="135" loading="lazy" />
+    <a href="${this.image}"><img src="${this.image}" alt="" class="" width="135" loading="eager" />
     </a>
   </div>
   <div class="vm-teaser__body">
@@ -33,5 +47,10 @@ export function render() {
     <div class="vm-teaser__summary">${this.summary}</div>
   </div>
 </article>
+
+
+
+
+
 `;
 }

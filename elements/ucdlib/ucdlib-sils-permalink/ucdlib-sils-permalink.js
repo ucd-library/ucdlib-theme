@@ -1,6 +1,8 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-sils-permalink.tpl.js";
 import {Task} from '@lit-labs/task';
+import {PermalinkController} from './ucdlib-sils-permalink-controller.js';
+
 
 /**
  * @class UcdlibSilsPermalink
@@ -33,6 +35,7 @@ export default class UcdlibSilsPermalink extends LitElement {
       language: {type: String, attribute:false},
       randomClass: {type: String, attribute:false},
       elemClass: {type: Array, attribute:false},
+      url: {type: String, attribute:false}
 
     };
   }
@@ -63,54 +66,55 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.randomClass = '';
     this.elemClass = [];
     this.image = '';
+    this.url = this._requestUrl();
     this.errorMessage = 'Href is not a permalink.';
     this.render=render.bind(this);
-
-
+    this.perma = new PermalinkController(this, this.url);
+    this.requestUpdate();
   }
 
   updated(props) {
 
     if( props.has('permalink') ) {
-      this._request();
+      this._requestUrl();
       
     }
   }
 
-  loadJSON(path, success, error) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', path, true);
-    xhr.responseType = 'text';
-    console.log(xhr);
-    return new Promise(function (resolve, reject) {
+  // loadJSON(path, success, error) {
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open('GET', path, true);
+  //   xhr.responseType = 'text';
+  //   console.log(xhr);
+  //   return new Promise(function (resolve, reject) {
 
-      xhr.onload = function () {
-        if (xhr.readyState === xhr.DONE) {
-          if (xhr.status === 200) {
-            console.log(xhr);
+  //     xhr.onload = function () {
+  //       if (xhr.readyState === xhr.DONE) {
+  //         if (xhr.status === 200) {
+  //           console.log(xhr);
 
-            resolve(xhr.response);
-            // 
-            // json = output;
-          }
-          else {
-            reject(status);
-          }
+  //           resolve(xhr.response);
+  //           // 
+  //           // json = output;
+  //         }
+  //         else {
+  //           reject(status);
+  //         }
 
-        }
-      };
-      xhr.send();
-    });
+  //       }
+  //     };
+  //     xhr.send();
+  //   });
 
 
 
-  }
+  // }
   
   
-  myData(Data)
-  { 
-    console.log("Title:", Data.title);
-  }
+  // myData(Data)
+  // { 
+  //   console.log("Title:", Data.title);
+  // }
 
   validationLink(url){
     let match = url.match(/([^\/]+)([a-z0-9]+)$/g);
@@ -123,35 +127,19 @@ export default class UcdlibSilsPermalink extends LitElement {
     console.error(this.errorMessage);
     
   }
- 
 
-  async _request(){
-    let url = this.permalink;
-    //let validate = this.validationLink(url);
-    //let output = await this.loadJSON(validate, this.myData,'jsonp');
 
-    url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126';
-
-    let output = await this.loadJSON(url, this.myData,'jsonp');
-    this._apiTask = new Task(
-      this,
-      (url) =>
-        fetch(url)
-          .then(response => response.json()),
-      () => [this.response]
-    );
-    console.log(this._apiTask);
-    this.results = JSON.parse(output);
-    this.teaserType = this.results["@type"];
-
+  format(results){
 
     /* Note:
     ISBN has multiple options so later address which items to pick and whether
     to use default thumbnail
     */ 
 
-    let img = []; 
+    this.results = results;
 
+    this.teaserType = this.results["@type"];
+    let img = []; 
     for(let i = 0; i < this.results.identifier.length; i++){
       if(this.results.identifier[i]['@type']){
         if(this.results.identifier[i]['@type'].includes('bibo:isbn'))
@@ -187,10 +175,23 @@ export default class UcdlibSilsPermalink extends LitElement {
 
     this.elemClass = ['tahoe', 'california', 'quad'];
 
+  }
 
-    console.log(this.results);
+  _requestUrl(){
+    let url = this.permalink;
+    //let validate = this.validationLink(url);
+    //let output = await this.loadJSON(validate, this.myData,'jsonp');
+
+    url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126'; //validate; 
+    return url;
+  }
+
+  _onLoad(){
+    console.log(this.image);
 
   }
+
+
 }
 
 customElements.define('ucdlib-sils-permalink',UcdlibSilsPermalink);
