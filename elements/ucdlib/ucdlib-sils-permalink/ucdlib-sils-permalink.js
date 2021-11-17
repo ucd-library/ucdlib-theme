@@ -136,7 +136,6 @@ export default class UcdlibSilsPermalink extends LitElement {
     ISBN has multiple options so later address which items to pick and whether
     to use default thumbnail
     */ 
-    debugger;
 
     this.loading = false;
     this.results = results;
