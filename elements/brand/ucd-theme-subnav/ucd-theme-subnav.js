@@ -31,9 +31,6 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  */
 export default class UcdThemeSubnav extends Mixin(LitElement)
   .with(NavElement) {
-  
-  mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
-  wait = new WaitController(this);
 
   static get properties() {
     return {
@@ -51,6 +48,8 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
+    this.wait = new WaitController(this);
 
     this.navTitle = "";
     this.titleHref = "";

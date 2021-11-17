@@ -36,7 +36,6 @@ import { BreakPointsController } from '../../utils/controllers';
  * 
  */
 export default class UcdThemePagination extends LitElement {
-  breakPoints = new BreakPointsController(this);
 
   static get properties() {
     return {
@@ -94,6 +93,8 @@ export default class UcdThemePagination extends LitElement {
 
   constructor() {
     super();
+
+    this.breakPoints = new BreakPointsController(this);
 
     this._pages = [];
     this.useHash = false;

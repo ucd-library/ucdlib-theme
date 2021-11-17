@@ -25,7 +25,6 @@ import { MutationObserverController } from '../../utils/controllers';
  * </ucd-theme-search-popup>
  */
 export default class UcdThemeSearchPopup extends LitElement {
-  mutationObserver = new MutationObserverController(this);
 
   static get properties() {
     return {
@@ -42,6 +41,7 @@ export default class UcdThemeSearchPopup extends LitElement {
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(this);
     this.buttonText = "Toggle Search";
     this.opened = false;
     this._defaultForm = false;

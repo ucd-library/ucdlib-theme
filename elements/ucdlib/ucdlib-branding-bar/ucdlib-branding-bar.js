@@ -25,11 +25,6 @@ import bookLogo from "./book.js";
 export default class UcdlibBrandingBar extends Mixin(LitElement)
   .with(NavElement) {
 
-  mutationObserver = new MutationObserverController(
-    this,
-    {childList: true, characterData: true, attributes: true}
-  );
-
   static get properties() {
     return {
       figure: {type: String},
@@ -47,6 +42,10 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(
+      this,
+      {childList: true, characterData: true, attributes: true}
+    );
 
     this.figure = "book";
     this.siteName = "UC Davis Library";

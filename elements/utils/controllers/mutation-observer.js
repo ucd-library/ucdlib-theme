@@ -14,11 +14,6 @@
  *  mutationObserver = new MutationObserverController(this, {childList: true, attributes: true}, 'aDifferentCallbackMethod');
  */
 export class MutationObserverController {
-  host;
-  options;
-  callback;
-
-  _observer;
 
   constructor(host, options = {childList: true}, callback = "_onChildListMutation"){
     (this.host = host).addController(this);

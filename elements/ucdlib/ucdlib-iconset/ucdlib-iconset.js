@@ -21,7 +21,6 @@ import { MutationObserverController } from '../../utils/controllers';
  */
 export default class UcdlibIconset extends Mixin(LitElement)
   .with(MainDomElement) {
-  mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
 
   static get properties() {
     return {
@@ -33,6 +32,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
 
   constructor() {
     super();
+    this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
 
     this.name = "";
     this.size = 24;

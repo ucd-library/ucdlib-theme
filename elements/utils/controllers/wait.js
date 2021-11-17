@@ -1,5 +1,4 @@
 export class WaitController{
-  host;
 
   constructor(host){
     (this.host = host).addController(this);

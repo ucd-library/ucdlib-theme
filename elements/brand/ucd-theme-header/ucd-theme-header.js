@@ -40,9 +40,6 @@ import {
  * 
  */
 export default class UcdThemeHeader extends LitElement {
-  
-  mutationObserver = new MutationObserverController(this);
-  wait = new WaitController(this);
 
   static get properties() {
     return {
@@ -68,6 +65,9 @@ export default class UcdThemeHeader extends LitElement {
   constructor() {
     super();
     this.render = render.bind(this);
+
+    this.mutationObserver = new MutationObserverController(this);
+    this.wait = new WaitController(this);
 
     this.siteName = "";
     this.siteUrl = "/";

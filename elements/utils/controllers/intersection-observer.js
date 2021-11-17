@@ -20,11 +20,6 @@
  * 
  */
 export class IntersectionObserverController{
-  host;
-  options;
-  callback;
-  observer;
-  observeSelf;
 
   constructor(host, options = {}, callback = "_onIntersection", observeSelf = true){
     (this.host = host).addController(this);

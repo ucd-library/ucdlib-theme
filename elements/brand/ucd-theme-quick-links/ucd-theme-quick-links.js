@@ -19,9 +19,6 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  */
 export default class UcdThemeQuickLinks extends LitElement {
 
-  mutationObserver = new MutationObserverController(this);
-  wait = new WaitController(this);
-
   static get properties() {
     return {
       title: {type: String},
@@ -42,6 +39,8 @@ export default class UcdThemeQuickLinks extends LitElement {
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(this);
+    this.wait = new WaitController(this);
 
     this.title = "Quick Links";
     this.styleModifiers = "";

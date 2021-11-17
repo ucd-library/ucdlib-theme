@@ -17,7 +17,6 @@ import { MutationObserverController } from '../../utils/controllers';
  * </ucdlib-pages>
  */
 export default class UcdlibPages extends LitElement {
-  mutationObserver = new MutationObserverController(this);
 
   static get properties() {
     return {
@@ -35,6 +34,7 @@ export default class UcdlibPages extends LitElement {
 
   constructor() {
     super();
+    this.mutationObserver = new MutationObserverController(this);
   }
 
   /**

@@ -36,9 +36,6 @@ import { MutationObserverController, BreakPointsController } from '../../utils/c
 export default class UcdThemePrimaryNav extends Mixin(LitElement)
   .with(NavElement) {
 
-  mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
-  breakPoints = new BreakPointsController(this);
-
   static get properties() {
     return {
       navType: {type: String, attribute: "nav-type"},
@@ -58,6 +55,9 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
+    this.breakPoints = new BreakPointsController(this);
+
     this.navType = "superfish";
     this.styleModifiers = "";
     this.hoverDelay = 300;

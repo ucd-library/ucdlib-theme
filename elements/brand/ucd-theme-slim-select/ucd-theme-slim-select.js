@@ -13,11 +13,6 @@ import { MutationObserverController } from '../../utils/controllers';
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-select-menu
  */
 export default class UcdThemeSlimSelect extends LitElement {
-  mutationObserver = new MutationObserverController(
-    this, 
-    {subtree: true, childList: true, attributes: true, characterData: true},
-    "_onLightDomMutation"
-  );
 
   static get properties() {
     return {
@@ -32,6 +27,11 @@ export default class UcdThemeSlimSelect extends LitElement {
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(
+      this, 
+      {subtree: true, childList: true, attributes: true, characterData: true},
+      "_onLightDomMutation"
+    );
   }
 
   /**
