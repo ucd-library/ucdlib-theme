@@ -47,6 +47,7 @@ export default class UcdlibSilsPermalink extends LitElement {
   constructor() {
     super();
     this.results = {};
+    this.loading = false;
     this.resultsPerPage = 9999;
     this.page = 1;
     this.permalink = ''; 
@@ -135,7 +136,9 @@ export default class UcdlibSilsPermalink extends LitElement {
     ISBN has multiple options so later address which items to pick and whether
     to use default thumbnail
     */ 
+    debugger;
 
+    this.loading = false;
     this.results = results;
 
     this.teaserType = this.results["@type"];
@@ -186,8 +189,8 @@ export default class UcdlibSilsPermalink extends LitElement {
     return url;
   }
 
-  _onLoad(){
-    console.log(this.image);
+  _onLoading(){
+    this.loading = true;
 
   }
 
