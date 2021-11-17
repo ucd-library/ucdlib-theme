@@ -18,7 +18,7 @@ export function styles() {
 export function render() {
   return html`
   <style>
-    .vm-teaser__figure.category_a{
+    .vm-teaser__figure.category_loading{
       background-color:#dcdcdc;
       height:165px;
       width:135px;
@@ -40,44 +40,42 @@ export function render() {
     }
   </style>
   ${this.perma.render({
-      complete: (result) => this.format(result),
+      complete: (result) => this._onComplete(result),
       initial: () => this._onLoading(),
-      pending: () => console.log("Loading..."),
-      error: (e) => console.log("Error:", e)
+      pending: () => this._onPending(),
+      error: (e) => this._onError(e)
     })}
 
   <article class="vm-teaser   ">
-  ${!this.loading ? html`
-
-  <div class="vm-teaser__figure category">
-      <a href="${this.image}"><img src="${this.image}" alt="" class="" width="135" loading="eager" />
-      </a>
-  </div>
-    `:html`
-    <div class="vm-teaser__figure category_a"></div>
-    `}
-  <div class="vm-teaser__body">
-  ${this.loading ? html`
-    <div class="load_teaser_a"></div>
-    <br/>
-    <div class="load_teaser_b"></div>
-    <br/>
-    <div class="load_teaser_c"></div>
-    <br/>
-    <div class="load_teaser_c"></div>
-  `: html`
+  ${!this.LOADING ? html`
+    <div class="vm-teaser__figure category">
+        <a href="${this.image}"><img src="${this.image}" alt="" class="" width="135" loading="eager" />
+        </a>
+    </div> 
+    <div class="vm-teaser__body">
     <h3 class="vm-teaser__title"><a href="${this.authorID["id"]}">${this.title}</a></h3>
-    <ul class="vm-teaser__byline">
-      <li><span class="byline">by ${this.authorLast},${this.authorFirst}.</span>
-      </li>
-      <li>${this.year}</li>
-    </ul>
-    <ul class="vm-teaser__categories">
-      ${this.tags.map(tag => html`<li class="vm-teaser__cat-marker ${this.elemClass[Math.floor(Math.random() * this.elemClass.length)]}"><a href="${tag['id']}">${tag['subject']}</a></li><br/>`)}
-    </ul>
-    <div class="vm-teaser__summary">${this.summary}</div>
-    `}
-  </div>
+      <ul class="vm-teaser__byline">
+        <li><span class="byline">by ${this.authorLast},${this.authorFirst}.</span>
+        </li>
+        <li>${this.year}</li>
+      </ul>
+      <ul class="vm-teaser__categories">
+        ${this.tags.map(tag => html`<li class="vm-teaser__cat-marker ${this.elemClass[Math.floor(Math.random() * this.elemClass.length)]}"><a href="${tag['id']}">${tag['subject']}</a></li><br/>`)}
+      </ul>
+      <div class="vm-teaser__summary">${this.summary}</div>
+    </div>
+  `:html`
+    <div class="vm-teaser__figure category_loading"></div>
+    <div class="vm-teaser__body">
+      <div class="load_teaser_a"></div>
+      <br/>
+      <div class="load_teaser_b"></div>
+      <br/>
+      <div class="load_teaser_c"></div>
+      <br/>
+      <div class="load_teaser_c"></div>
+    </div>
+  `}
 </article>
 
 

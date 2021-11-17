@@ -46,6 +46,10 @@ export default class UcdlibSilsPermalink extends LitElement {
 
   constructor() {
     super();
+    this.PENDING = false;
+    this.LOADING = false;
+    this.COMPLETE = false;
+    this.ERROR = false;
     this.results = {};
     this.loading = false;
     this.resultsPerPage = 9999;
@@ -82,40 +86,6 @@ export default class UcdlibSilsPermalink extends LitElement {
     }
   }
 
-  // loadJSON(path, success, error) {
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open('GET', path, true);
-  //   xhr.responseType = 'text';
-  //   console.log(xhr);
-  //   return new Promise(function (resolve, reject) {
-
-  //     xhr.onload = function () {
-  //       if (xhr.readyState === xhr.DONE) {
-  //         if (xhr.status === 200) {
-  //           console.log(xhr);
-
-  //           resolve(xhr.response);
-  //           // 
-  //           // json = output;
-  //         }
-  //         else {
-  //           reject(status);
-  //         }
-
-  //       }
-  //     };
-  //     xhr.send();
-  //   });
-
-
-
-  // }
-  
-  
-  // myData(Data)
-  // { 
-  //   console.log("Title:", Data.title);
-  // }
 
   validationLink(url){
     let match = url.match(/([^\/]+)([a-z0-9]+)$/g);
@@ -128,16 +98,25 @@ export default class UcdlibSilsPermalink extends LitElement {
     console.error(this.errorMessage);
     
   }
+  _onPending(){
+    this.PENDING = true;
+  }
+ 
 
+  _onError(e){
+    this.ERROR = true;
+    console.log("Error:", e);
+  }
 
-  format(results){
+  _onComplete(results){
 
     /* Note:
     ISBN has multiple options so later address which items to pick and whether
     to use default thumbnail
     */ 
-
-    this.loading = false;
+    this.COMPLETE = true;
+    this.PENDING = false;
+    this.LOADING = false;
     this.results = results;
 
     this.teaserType = this.results["@type"];
@@ -177,20 +156,21 @@ export default class UcdlibSilsPermalink extends LitElement {
 
     this.elemClass = ['tahoe', 'california', 'quad'];
 
+    console.log("Complete");
+
   }
 
   _requestUrl(){
     let url = this.permalink;
     //let validate = this.validationLink(url);
-    //let output = await this.loadJSON(validate, this.myData,'jsonp');
 
     url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126'; //validate; 
     return url;
   }
 
   _onLoading(){
-    this.loading = true;
-
+    this.LOADING = true;
+    console.log("Loading...");
   }
 
 

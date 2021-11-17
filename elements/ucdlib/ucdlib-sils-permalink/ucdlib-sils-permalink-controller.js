@@ -6,8 +6,8 @@ export class PermalinkController {
 //   kinds = Names.kinds;
 //   task;
   constructor(host, url) {
-    const baseUrl = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126';
-    this.url = url;
+    const baseUrl = url;
+    this.url = baseUrl;
     this.host = host;
     this.task = new Task(
       this.host,
