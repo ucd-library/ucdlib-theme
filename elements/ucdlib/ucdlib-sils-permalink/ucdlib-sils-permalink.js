@@ -71,33 +71,45 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.randomClass = '';
     this.elemClass = [];
     this.image = '';
-    this.url = this._requestUrl();
+    this.url = '';
     this.errorMessage = 'Href is not a permalink.';
     this.render=render.bind(this);
-    this.perma = new PermalinkController(this, this.url);
-    this.requestUpdate();
+
+
+
   }
 
-  updated(props) {
-
-    if( props.has('permalink') ) {
-      this._requestUrl();
-      
+  firstUpdated(changedProperties){
+    if(this.permalink != ''){
+       this.perma = new PermalinkController(this, this._requestUrl());
+       this.requestUpdate();
     }
   }
+
+  // async updated(props) {
+  //   if( props.has('permalink') ) {
+  //     this._requestUrl();
+  //   }
+  // }
 
 
   validationLink(url){
-    let match = url.match(/([^\/]+)([a-z0-9]+)$/g);
+    // let match = url.match(/([^\/]+)([a-z0-9]+)$/g);
 
-    let id = url.includes("/9fle3i/") ? 'L' : url.includes("/1hjlc2p/") ? 'PC' : 'Error';
-    if(url.match(/https:\/\/search.library.ucdavis.edu\/permalink\/01UCD_INST\/([^\/]+)\/([a-zA-Z0-9_]*)/g)){
-      url = 'https://search.library.ucdavis.edu/primaws/rest/pub/pnxs/' + id + '/' + match[0] +'?vid=01UCD_INST:UCD&lang=en&search_scope=DN_and_CI';
-      return url;
-    }
-    console.error(this.errorMessage);
+    // let id = url.includes("/9fle3i/") ? 'L' : url.includes("/1hjlc2p/") ? 'PC' : 'Error';
+    // if(url.match(/https:\/\/search.library.ucdavis.edu\/permalink\/01UCD_INST\/([^\/]+)\/([a-zA-Z0-9_]*)/g)){
+    //   url = 'https://search.library.ucdavis.edu/primaws/rest/pub/pnxs/' + id + '/' + match[0] +'?vid=01UCD_INST:UCD&lang=en&search_scope=DN_and_CI';
+    //   return url;
+    // }
+    let id;
+    if(url != "") id = url.split("/alma")[1];
+
+    url = "https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/" + id;
+
     
+    return url;
   }
+
   _onPending(){
     this.PENDING = true;
   }
@@ -118,7 +130,7 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.PENDING = false;
     this.LOADING = false;
     this.results = results;
-
+    console.log(results);
     this.teaserType = this.results["@type"];
     let img = []; 
     for(let i = 0; i < this.results.identifier.length; i++){
@@ -140,7 +152,10 @@ export default class UcdlibSilsPermalink extends LitElement {
     }
     this.year = this.results.date;
     this.title = this.results.title.substring(0, this.results.title.lastIndexOf("/"));
-    this.authorFull = this.results.creator["label"].split(',');    
+    this.authorFull = this.results.creator["label"].split(',');   
+    //console.log("Poets Laureate Collection (Library of Congress)".split(",")[1]); 
+
+    this.results.creator.map((k,v) => console.log("Keys:", k));
     this.authorID = this.authorID.concat({"id": this.results.creator["@id"], "sameAs": this.results.creator["sameAs"]}[0]);
     this.authorLast = this.authorFull[0];
     this.authorFirst = this.authorFull[1];
@@ -161,10 +176,13 @@ export default class UcdlibSilsPermalink extends LitElement {
   }
 
   _requestUrl(){
-    let url = this.permalink;
-    //let validate = this.validationLink(url);
+    let url =this.permalink;
+    let validate = this.validationLink(url);
+    if(validate == this.errorMessage)  console.error(url);
+    this.requestUpdate();
 
-    url = 'https://open-na.hosted.exlibrisgroup.com/alma/01UCD_INST/bibs/9981249369903126'; //validate; 
+    
+    url = validate; 
     return url;
   }
 

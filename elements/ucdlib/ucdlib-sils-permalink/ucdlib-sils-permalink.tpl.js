@@ -39,12 +39,14 @@ export function render() {
       height:18px;
     }
   </style>
-  ${this.perma.render({
-      complete: (result) => this._onComplete(result),
-      initial: () => this._onLoading(),
-      pending: () => this._onPending(),
-      error: (e) => this._onError(e)
-    })}
+    ${this.perma ? html`
+      ${this.perma.render({
+        complete: (result) => this._onComplete(result),
+        initial: () => this._onLoading(),
+        pending: () => this._onPending(),
+        error: (e) => this._onError(e)
+        })
+      }`:html``}
 
   <article class="vm-teaser   ">
   ${!this.LOADING ? html`
