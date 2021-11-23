@@ -56,8 +56,14 @@ export function render() {
     </div> 
     <div class="vm-teaser__body">
     <h3 class="vm-teaser__title"><a href="${this.authorID["id"]}">${this.title}</a></h3>
+
       <ul class="vm-teaser__byline">
-        <li><span class="byline">by ${this.authorLast},${this.authorFirst}.</span>
+        <li>
+        by
+        ${this.authorFull ? html`${this.authorFull.map(author => 
+           html`<span class="byline"> ${author['label'].split(",")[1] ? html`${author['label'].split(",")[1]},`: html``}${author['label'].split(",")[0]}.</span>--`)}
+          `:html``
+        }
         </li>
         <li>${this.year}</li>
       </ul>

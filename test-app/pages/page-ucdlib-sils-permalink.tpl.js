@@ -25,15 +25,15 @@ to be used as more complete callouts to a particular link.  The <a href="http://
 <p>Using the <a
 href="https://search.library.ucdavis.edu/primaws/rest/pub/pnxs/undefined/alma9916924606106531?vid=01UCD_INST:UCD&lang=en">JSON</a>
 representation, we can fill in a teaser similar to that shown below.</p>
-
-  ${this.examplePanel(html`
-  <ucdlib-sils-permalink permalink='https://search.library.ucdavis.edu/permalink/01UCD_INST/9fle3i/alma9981249369903126'></ucdlib-sils-permalink>
+  ${this.sampleList.map(permalink =>
+    html`
+      ${this.examplePanel(html`
+      <ucdlib-sils-permalink permalink='${permalink}'></ucdlib-sils-permalink>
+    `)}
   `)}
 
-  ${this.examplePanel(html`
-  <ucdlib-sils-permalink permalink='https://search.library.ucdavis.edu/permalink/01UCD_INST/1birqoj/alma990028384910403126
-'></ucdlib-sils-permalink>
-  `)}
+<p>Using the Fill in Method of article teaser</p>
+
   ${this.examplePanel(html`
   <article class="vm-teaser   ">
   <div class="vm-teaser__figure category">

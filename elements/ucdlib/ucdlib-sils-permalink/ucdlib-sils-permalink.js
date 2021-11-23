@@ -130,7 +130,6 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.PENDING = false;
     this.LOADING = false;
     this.results = results;
-    console.log(results);
     this.teaserType = this.results["@type"];
     let img = []; 
     for(let i = 0; i < this.results.identifier.length; i++){
@@ -152,10 +151,9 @@ export default class UcdlibSilsPermalink extends LitElement {
     }
     this.year = this.results.date;
     this.title = this.results.title.substring(0, this.results.title.lastIndexOf("/"));
-    this.authorFull = this.results.creator["label"].split(',');   
-    //console.log("Poets Laureate Collection (Library of Congress)".split(",")[1]); 
+    this.authorFull = !Array.isArray(this.results.creator) ? [this.results.creator] : this.results.creator;
 
-    this.results.creator.map((k,v) => console.log("Keys:", k));
+
     this.authorID = this.authorID.concat({"id": this.results.creator["@id"], "sameAs": this.results.creator["sameAs"]}[0]);
     this.authorLast = this.authorFull[0];
     this.authorFirst = this.authorFull[1];
