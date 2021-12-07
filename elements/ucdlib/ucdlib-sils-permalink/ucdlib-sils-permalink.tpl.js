@@ -55,7 +55,7 @@ export function render() {
         </a>
     </div> 
     <div class="vm-teaser__body">
-    <h3 class="vm-teaser__title"><a href="${this.authorID["id"]}">${this.title}</a></h3>
+    <h3 class="vm-teaser__title"><a href="${this.permalink}">${this.title}</a></h3>
 
       <ul class="vm-teaser__byline">
         <li>

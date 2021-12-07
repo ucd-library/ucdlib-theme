@@ -132,6 +132,7 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.results = results;
     this.teaserType = this.results["@type"];
     let img = []; 
+    console.log(this.results);
     for(let i = 0; i < this.results.identifier.length; i++){
       if(this.results.identifier[i]['@type']){
         if(this.results.identifier[i]['@type'].includes('bibo:isbn'))
@@ -143,12 +144,16 @@ export default class UcdlibSilsPermalink extends LitElement {
         
     }
     let identifer = img[0];
+
     if(this.teaserType == 'Video' || this.teaserType == 'Music'){
       this.image = 'https://syndetics.com/index.php?client=primo&isbn='+ identifer + '/sc.gif';
     }
     else{
       this.image = 'https://syndetics.com/index.php?client=primo&isbn='+ identifer + '/sc.jpg';
     }
+    console.log(this.image);
+
+
     this.year = this.results.date;
     this.title = this.results.title.substring(0, this.results.title.lastIndexOf("/"));
     this.authorFull = !Array.isArray(this.results.creator) ? [this.results.creator] : this.results.creator;
