@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/theme-elements",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Custom elements for the UCD brand theme",
   "main": "index.js",
   "scripts": {
