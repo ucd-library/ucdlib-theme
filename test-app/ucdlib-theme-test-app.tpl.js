@@ -87,6 +87,8 @@ return html`
           <li><a href="#brand-colors">Colors</a></li>
           <li><a href="#infographics">Infographics</a></li>
           <li><a href="#brand-buttons">Buttons</a></li>
+          <li><a href="#brand-selectors">Selectors</a></li>
+
 
         </ul>
       </ucd-theme-primary-nav>
