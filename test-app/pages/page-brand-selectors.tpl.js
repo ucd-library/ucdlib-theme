@@ -1,6 +1,4 @@
 import { html, css } from 'lit';
-import { baseClass} from "@ucd-lib/theme-sass/2_base_class/_index.css";
-import { baseHTML} from "@ucd-lib/theme-sass/1_base_html/_index.css";
 
 export function styles() {
   const elementStyles = css`
@@ -9,7 +7,7 @@ export function styles() {
     }
   `;
 
-  return [elementStyles, baseClass, baseHTML];
+  return [elementStyles];
 }
 
 export function render() {
