@@ -6,7 +6,9 @@ import './ucdlib-theme-test-app.js';
 import "./pages/page-overview.js";
 import "./pages/page-brand-colors";
 import "./pages/page-infographics.js";
+import "./pages/page-fonts.js";
 import "./pages/page-brand-buttons.js";
+import "./pages/page-brand-selectors.js";
 
 // brand components
 import "./pages/page-ucd-theme-primary-nav.js";
@@ -25,3 +27,4 @@ import "./pages/page-ucdlib-icons";
 import "./pages/page-ucdlib-iconset";
 import "./pages/page-ucdlib-pages";
 import "./pages/page-ucdlib-branding-bar";
+import "./pages/page-ucdlib-sils-search-redirect";

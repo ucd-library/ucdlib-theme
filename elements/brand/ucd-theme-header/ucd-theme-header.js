@@ -4,6 +4,7 @@ import {render, styles} from "./ucd-theme-header.tpl.js";
 import { 
   IntersectionObserverController,
   MutationObserverController, 
+  PopStateObserverController,
   WaitController } from '../../utils/controllers';
 
 /**
@@ -51,10 +52,12 @@ export default class UcdThemeHeader extends LitElement {
       preventFixed: {type: Boolean, attribute: "prevent-fixed"},
       isDemo: {type: Boolean, attribute: "is-demo"},
       _transitioning: {type: Boolean, state: true},
+      _hasPrimaryNav: {type: Boolean, state: true},
       _hasSlottedBranding: {type: Boolean, state: true},
       _hasQuickLinks: {type: Boolean, state: true},
       _hasSearch: {type: Boolean, state: true},
-      _brandingBarInView: {type: Boolean, state: true}
+      _brandingBarInView: {type: Boolean, state: true},
+      _components: {type: Object, state: true}
     };
   }
 
@@ -68,6 +71,7 @@ export default class UcdThemeHeader extends LitElement {
 
     this.mutationObserver = new MutationObserverController(this);
     this.wait = new WaitController(this);
+    new PopStateObserverController(this, "_onLocationChange");
 
     this.siteName = "";
     this.siteUrl = "/";
@@ -77,14 +81,21 @@ export default class UcdThemeHeader extends LitElement {
     this.isDemo = false;
 
     this._transitioning = false;
+    this._hasPrimaryNav = false;
     this._hasSlottedBranding = false;
     this._hasQuickLinks = false;
     this._hasSearch = false;
     this._animationDuration = 500;
     this._brandingBarInView = false;
+    this._slottedComponents = {};
 
   }
 
+  /**
+   * @method connectedCallback
+   * @private
+   * @description Custom element lifecycle method
+   */
   connectedCallback(){
     super.connectedCallback();
     if ( !this.preventFixed ) {
@@ -92,6 +103,11 @@ export default class UcdThemeHeader extends LitElement {
     }
   }
 
+  /**
+   * @method firstUpdated
+   * @private
+   * @description Lit lifecycle hook
+   */
   firstUpdated(){
     if ( !this.preventFixed ) {
       let aboveNav = this.renderRoot.getElementById('branding-bar-container');
@@ -99,11 +115,33 @@ export default class UcdThemeHeader extends LitElement {
     }
   }
 
+  /**
+   * @method _onLocationChange
+   * @description Called when url changes by popstate controller
+   */
+  _onLocationChange(){
+    this.close();
+    if ( this._hasQuickLinks ){
+      this._slottedComponents.quickLinks.close();
+    }
+    if ( this._hasSearch ){
+      this._slottedComponents.search.close();
+    }
+  }
+
+  /**
+   * @method _onBrandingBarIntersection
+   * @private
+   * @description Called by intersection observer when branding bar enters/exits screen
+   * @param {*} entries 
+   */
   _onBrandingBarIntersection(entries){
     let offSetValue = 0;
     try {
       offSetValue = this.renderRoot.getElementById('nav-bar').getBoundingClientRect().height;
-    } catch (error) {}
+    } catch (error) {
+      //
+    }
     if ( offSetValue > 150 ) offSetValue = 0;
     entries.forEach(entry => {
       this._brandingBarInView = entry.isIntersecting;
@@ -112,7 +150,7 @@ export default class UcdThemeHeader extends LitElement {
       } else {
         this.style.marginBottom = offSetValue + "px";
       }
-    })
+    });
   }
 
   /**
@@ -232,14 +270,18 @@ export default class UcdThemeHeader extends LitElement {
     let primaryNav = this.querySelector('ucd-theme-primary-nav');
     if ( primaryNav ) {
       primaryNav.setAttribute('slot', 'primary-nav');
+      this._hasPrimaryNav = true;
+      this._slottedComponents.primaryNav = primaryNav;
     } else {
       console.warn("No 'ucd-theme-primary-nav' child element found!");
+      this._hasPrimaryNav = false;
     }
 
     let quickLinks = this.querySelector('ucd-theme-quick-links');
     if ( quickLinks ) {
       quickLinks.setAttribute('slot', 'quick-links');
       this._hasQuickLinks = true;
+      this._slottedComponents.quickLinks = quickLinks;
     } else {
       this._hasQuickLinks = false;
     }
@@ -248,6 +290,7 @@ export default class UcdThemeHeader extends LitElement {
     if ( search ) {
       search.setAttribute('slot', 'search');
       this._hasSearch = true;
+      this._slottedComponents.search = search;
     } else {
       this._hasSearch = false;
     }
@@ -256,6 +299,7 @@ export default class UcdThemeHeader extends LitElement {
     if ( UcdlibBrandingBar ) {
       UcdlibBrandingBar.setAttribute('slot', 'branding-bar');
       this._hasSlottedBranding = true;
+      this._slottedComponents.brandingBar = UcdlibBrandingBar;
     } else if ( this.querySelector("*[slot='branding-bar']") ){
       this._hasSlottedBranding = true;
     } else {

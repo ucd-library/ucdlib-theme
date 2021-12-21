@@ -80,13 +80,19 @@ return html`
             <li><a href="#ucdlib-iconset">Icon Set</a></li>
           </ul>
           <li><a href="#ucdlib-pages">Pages</a></li>
+          <ul link-text="SILS">
+            <li><a href="#ucdlib-sils-search-redirect">Search Redirect</a></li>
+          </ul>
         </ul>
 
         <ul link-text="Brand Guides" href="#overview">
           <li><a href="#overview">Overview</a></li>
           <li><a href="#brand-colors">Colors</a></li>
           <li><a href="#infographics">Infographics</a></li>
+          <li><a href="#fonts">Fonts</a></li>
           <li><a href="#brand-buttons">Buttons</a></li>
+          <li><a href="#brand-selectors">Selectors</a></li>
+
 
         </ul>
       </ucd-theme-primary-nav>

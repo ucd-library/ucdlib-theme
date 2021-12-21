@@ -9,6 +9,7 @@ import { MutationObserverController } from '../../utils/controllers';
  * 
  * @property {String} name - Name of the icon set. Usage: <ucdlib-icon icon="{thisProperty}:{icon}"></ucdlib-icon>
  * @property {Number} size - The size of an individual icon. Note that icons must be square. 
+ * @property {String} label - Optional friendly label for iconset.
  * @example
  * <ucdlib-iconset name="arrows">
     <svg>
@@ -26,6 +27,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
     return {
       name: {type: String},
       size: {type: Number},
+      label: {type: String},
       _iconMap: {type: Object, state: true}
     };
   }
@@ -35,6 +37,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
     this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
 
     this.name = "";
+    this.label = "";
     this.size = 24;
     this._iconMap = {};
     this.style.display = "none";
@@ -61,6 +64,17 @@ export default class UcdlibIconset extends Mixin(LitElement)
    */
   getIconNames(){
     return Object.keys(this._iconMap);
+  }
+
+  /**
+   * @method getLabel
+   * @description Returns a friendly label of iconset
+   * @returns {String}
+   */
+  getLabel(){
+    if ( this.label ) return this.label;
+
+    return this.name.replace(/-/g, " ");
   }
 
   /**

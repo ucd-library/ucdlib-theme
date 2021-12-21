@@ -8,8 +8,9 @@ import { html, render } from "lit-html";
  * @param {TemplateResult} icons - SVG html string of icons
  * @param {String} name - name of iconset. 
  * @param {Number} size  - size of icons
+ * @param {String} label - Friendly name of iconset 
  */
-function renderIconSet(icons, name, size=24){
+function renderIconSet(icons, name, size=24, label=""){
   const containerId = `ucdlib-icons--${name}`;
   let container = document.getElementById(containerId);
   if ( !container ){
@@ -19,7 +20,7 @@ function renderIconSet(icons, name, size=24){
     document.head.appendChild(container); 
   } 
   const template = html`
-    <ucdlib-iconset name=${name} size=${size}>
+    <ucdlib-iconset name=${name} size=${size} label=${label}>
       ${icons}
     </ucdlib-iconset>
   `;
