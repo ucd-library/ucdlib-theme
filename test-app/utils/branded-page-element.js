@@ -60,7 +60,10 @@ const BrandedPageElement = (superClass) => class extends superClass {
       if ( i===0 ) {
         return s;
       }
-      return "${" + code.values[i-1] + "}" + s;
+      //SB - Below seems to return incorrect $ value not sure on fix just commenting out
+      //return "${" + code.values[i-1] + "}" + s;
+
+      return code.values[i-1] + s;
     });
 
     codeString = nw.normalize(codeString.join(""));
