@@ -3,16 +3,44 @@ import { html, css } from 'lit';
 import normalizeCss from "@ucd-lib/theme-sass/normalize.css.js";
 import teaserStyles from "@ucd-lib/theme-sass/4_component/_index.css.js";
 import baseStyles from "@ucd-lib/theme-sass/1_base_html/_index.css.js";
+import buttons from "@ucd-lib/theme-sass/2_base_class/_index.css.js";
 export function styles() {
   const elementStyles = css`
     :host {
       display: block;
     }
+    form {
+      width:100%;
+    }
+    #tag {
+      width:75%;
+      display: inline-block;
+    }
+    #tag-color {
+      width:24%;
+      display: inline-block;    
+    }
+    #delete {
+      width:24%;
+      display: inline-block;    
+    }
+    #permalink-author {
+      width:75%;
+      display: inline-block;
+    }
+    #permalink-tags {
+      width:75%;
+      display: inline-block;  
+    }
+    #permalink-tags-url {
+      width:75%;
+      display: inline-block;  
+    }
 
 
   `;
 
-  return [elementStyles,baseStyles,teaserStyles,normalizeCss];
+  return [elementStyles,baseStyles,teaserStyles,normalizeCss, buttons];
 }
 
 export function render() {
@@ -84,6 +112,7 @@ export function render() {
       <div class="load_teaser_c"></div>
     </div>
   `}
+  <button class="btn--primary" @click="${this.handleEdit}">Edit Permalink</button>
 </article>
 
 
