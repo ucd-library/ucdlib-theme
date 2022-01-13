@@ -34,7 +34,8 @@ export default class UcdlibSilsPermalink extends LitElement {
       language: {type: String, attribute:false},
       randomClass: {type: String, attribute:false},
       elemClass: {type: Array, attribute:false},
-      url: {type: String, attribute:false}
+      url: {type: String, attribute:false},
+      form: {type: Boolean, attribute:false}
 
     };
   }
@@ -71,16 +72,22 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.elemClass = [];
     this.image = '';
     this.url = '';
+    this.form = false;
     this.tagEntryField = [{url: '', label: '', color: ''}];
     this.authorEntryField = [{value: '', default: true}];
     this.errorMessage = 'Href is not a permalink.';
     this.render=render.bind(this);
 
-
-
   }
   
-
+    /**
+   * @method firstUpdated
+   * 
+   * @description updated when the page first renders
+   * 
+   * @param {Object} changedProperties 
+   * 
+   */  
   firstUpdated(changedProperties){
     if(this.permalink != ''){
        this.perma = new PermalinkController(this, this._requestUrl());
@@ -88,11 +95,6 @@ export default class UcdlibSilsPermalink extends LitElement {
     }
   }
 
-  // async updated(props) {
-  //   if( props.has('permalink') ) {
-  //     this._requestUrl();
-  //   }
-  // }
     /**
    * @method _addTag
    * 
@@ -107,34 +109,6 @@ export default class UcdlibSilsPermalink extends LitElement {
       this.requestUpdate();
     }
   
-  /**
-     * @method _addAuthor
-     * 
-     * @description Bound to click event of add email button.
-     * adds another iteration of the element to the DOM and List
-     * 
-     * @param {Object} element 
-     * 
-     */  
-  _addAuthor(){
-    console.log("G");
-    this.authorEntryField.push({value: '', default: false});
-    this.requestUpdate();
-  }
-
-  /**
-    * @method _delete
-    * 
-    * @description deletes specifically sent iteration of the element from the DOM and List
-    * 
-    * @param {Array} Array 
-    * @param {Number} index 
-    * 
-    * */ 
-  _delete(arr, index){
-    arr.splice(index, 1);
-    this.requestUpdate();
-  }  
 
   validationLink(url){
     // let match = url.match(/([^\/]+)([a-z0-9]+)$/g);
@@ -163,82 +137,74 @@ export default class UcdlibSilsPermalink extends LitElement {
     console.log("Error:", e);
   }
 
-
   handleEdit(e) {
-    e.srcElement.parentNode.innerHTML = 
-    `
-    <form method="post" action="#" >
-      <fieldset>
-        <div class="field-container">
-          <label for="permalink-title">Title</label>
-          <input id="permalink-title" type="text" placeholder="Enter Your Title" />
-        </div>
+    this.form = true;
+    console.log("This:",e.target);
 
-        <div class="author">
-        ${this.authorEntryField.map((item, index) =>                
-    `<div class="field-container">
-            <label for="permalink-author no-${index}">Author</label>
-            <input id="permalink-author no-${index}" type="author" .value=${item.value} placeholder="Enter the Authors of the Work" />
-          </div>
-          <button type="button" class="btn--alt2 btn--sm"> Delete </button>
-          `
-  )}
-        <a class="btn--alt3 btn--sm" href="#" onclick="${this._addAuthor}" >Add Author Field</a>
-        </div>
+    this.requestUpdate();
+
+  }
 
 
-        <div class="field-container">
-          <label for="permalink-date">Date</label>
-          <input id="permalink-date" type="date" placeholder="Date of Publication" />
-        </div>
 
+  /**
+     * @method _addAuthor
+     * 
+     * @description Bound to click event of add email button.
+     * adds another iteration of the element to the DOM and List
+     * 
+     * @param {Object} element 
+     * 
+     */  
+  _addAuthor(){
+    this.authorEntryField.push({value: '', default: false});
+    this.requestUpdate();
+  }
 
-        ${this.tagEntryField.map((item, index) =>                
-    `     <div class="tag">
-            <div id="tag" class="field-container">
-              <label for="permalink-tags no-${index}">Tag</label>
-              <input id="permalink-tags no-${index}" type="url" .value=${item.label} placeholder="Name Your Permalink Tag" />
-            </div>
-            <div id="tag-color" class="field-container views-filters__select-field">
-              <label for="select no-${index}">Select</label>
-              <select .value=${item.color} id="select no-${index}">
-                <optgroup label="Option Group">
-                  <option>tahoe</option>
-                  <option>california</option>
-                  <option>quad</option>
-                </optgroup>
-              </select>
-            </div>
-            <label for="permalink-tags-url no-${index}">URL</label>
-            <input id="permalink-tags-url no-${index}" .value=${item.url} type="url" placeholder="URL of Permalink Tag" />
+  /**
+     * @method _sendValues
+     * 
+     * @description Get the values from the form that is given.
+     * 
+     * @param {Object} element 
+     * 
+     */  
+  _sendValues(){
+    let formData = {};
+    let authors = [];
+    let tagtitle = [];
+    let url = [];
+    let color = [];
 
-          </div>`
-  )}
+    formData.title = this.shadowRoot.getElementById("permalink-title").value;
+    formData.year = this.shadowRoot.getElementById("permalink-date").value;
+    formData.summary = this.shadowRoot.getElementById("permalink-summary").value;
 
-        <br />
-        <a @click="${this._addTag}"  class="btn--alt3 btn--sm">Add Tag Field</a>
-
-        <br />
-        <div class="field-container">
-          <label for="permalink-summary">Summary</label>
-          <textarea id="permalink-summary" rows="5" placeholder="Write Summary Here"></textarea>
-        </div>
-      </fieldset>
-      <div class="field-container--small views-filters__submit-field">
-        <a href="#" class="btn--primary">Apply</a>
-        <a onClick="window.location.reload();" class="btn--alt">Cancel</a>
-      </div>
-    </form>
+    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-author']").values())
+      authors.push(i.value);
+    formData.author = authors;
     
-    `;
-    let event = new CustomEvent('my-event', {
+    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-tags-url']").values())
+      url.push(i.value);
+    formData.url = url;
+
+    for(let i of this.shadowRoot.querySelectorAll("[id^='select']").values())
+      color.push(i.value);
+    formData.color = color;
+
+    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-tags ']").values())
+      tagtitle.push(i.value);
+    formData.tagtitle = tagtitle;
+
+    let event = new CustomEvent('sendData', {
       detail: {
-        message: 'Something important happened'
+        form: formData
       }
     });
     console.log(event);
 
-    this.dispatchEvent(event);
+    // this.dispatchEvent(event);
+
   }
 
 
@@ -299,6 +265,7 @@ export default class UcdlibSilsPermalink extends LitElement {
     console.log("Complete");
 
   }
+
 
   _requestUrl(){
     let url =this.permalink;
