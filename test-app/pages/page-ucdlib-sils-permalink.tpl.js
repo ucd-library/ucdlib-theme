@@ -32,6 +32,28 @@ representation, we can fill in a teaser similar to that shown below.</p>
     `)}
   `)}
 
+  ${this.new_permalinks ? 
+    this.new_permalinks.map(formData => html`
+      ${this.examplePanel(html`
+      <ucdlib-sils-permalink image="${formData.image}" 
+                             title="${formData.title}"
+                             host_url=${formData.permalink}
+                             authorFull="${JSON.stringify(formData.author)}"
+                             year="${formData.year}"
+                             tags="${JSON.stringify(formData.tags)}"
+                             summary="${formData.summary}">
+      </ucdlib-sils-permalink>      `)}
+    `)
+  : html``}
+
+
+<!-- <ucdlib-sils-permalink image="https://syndetics.com/index.php?client=primo&isbn=1-4129-5690-0/sc.jpg"
+                       title="The rhetoric of social intervention an introduction "
+                       authorFull="${JSON.stringify([{"label":"Opt, Susan K."},{"label":"Newer"}])}"
+                       year="c2009."
+                       tags="${JSON.stringify([{"id":"http://id.loc.gov/authorities/subjects/sh85123988","subject":"Social problems."},{"id":"http://id.loc.gov/authorities/subjects/sh85123918","subject":"Social change."},{"id":"http://id.loc.gov/authorities/subjects/sh85113628","subject":"Rhetoric."},{"id":"http://id.loc.gov/authorities/subjects/sh85123988","subject":"Social problems."},{"id":"http://id.loc.gov/authorities/subjects/sh85123918","subject":"Social change."},{"id":"http://id.loc.gov/authorities/subjects/sh85113628","subject":"Rhetoric."},{"id":"","subject":""},{"id":"http://id.loc.gov/authorities/subjects/sh85123988","subject":"Social problems."},{"id":"http://id.loc.gov/authorities/subjects/sh85123918","subject":"Social change."},{"id":"http://id.loc.gov/authorities/subjects/sh85113628","subject":"Rhetoric."},{"id":"http://id.loc.gov/authorities/subjects/sh85123988","subject":"Social problems."},{"id":"http://id.loc.gov/authorities/subjects/sh85123918","subject":"Social change."},{"id":"http://id.loc.gov/authorities/subjects/sh85113628","subject":"Rhetoric."},{"id":"","subject":""}])}"
+                       summary="Sample Summary">
+</ucdlib-sils-permalink> -->
 <p>Using the Fill in Method of article teaser</p>
 
   ${this.examplePanel(html`

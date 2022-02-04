@@ -16,6 +16,7 @@ export default class PageUcdlibSilsPermalinks extends Mixin(LitElement)
 
   constructor() {
     super();
+    this.new_permalinks = [];
     this.sampleList = [
       'https://search.library.ucdavis.edu/permalink/01UCD_INST/9fle3i/alma9981249369903126',
       'https://search.library.ucdavis.edu/permalink/01UCD_INST/1birqoj/alma990028384910403126',
@@ -24,7 +25,17 @@ export default class PageUcdlibSilsPermalinks extends Mixin(LitElement)
       'https://search.library.ucdavis.edu/permalink/01UCD_INST/13iosf5/alma9980951153503126',
       'https://search.library.ucdavis.edu/permalink/01UCD_INST/13iosf5/alma990016788810403126'
     ];
+
+    if(sessionStorage.getItem("newPermalink")){
+      this.new_permalinks = JSON.parse(sessionStorage.getItem("newPermalink"));
+      this.new_permalinks.forEach(function(item, index) {
+        item["index"] = index;
+      });
+    }
+
+
     this.render = render.bind(this);
+
   }
 
 }

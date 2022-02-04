@@ -1,7 +1,6 @@
-import { LitElement } from 'lit';
+import { LitElement} from 'lit';
 import {render, styles} from "./ucdlib-sils-permalink.tpl.js";
 import {PermalinkController} from './ucdlib-sils-permalink-controller.js';
-
 
 /**
  * @class UcdlibSilsPermalink
@@ -18,15 +17,16 @@ export default class UcdlibSilsPermalink extends LitElement {
     return {
       results : {type: Object, attribute:false},
       permalink : {type: String},
-      image : {type: String, attribute:false},
-      title : {type: String, attribute:false},
-      authorFull : {type: String, attribute:false},
+      image : {type: String},
+      title : {type: String},
+      authorFull : {type: String},
       authorLast : {type: String, attribute:false},
       authorFirst: {type: String, attribute:false},
       authorID: {type: Array, attribute:false},
-      year : { type: String, attribute:false},
-      summary : {type: String, attribute:false},
-      tags : {type: Array, attribute:false},
+      year : { type: String},
+      summary : {type: String},
+      tags : {type: Array},
+      host_url : {type: String},
       teaserType : {type: String, attribute:false},
       publisher : {type: String, attribute:false},
       placePublication : {type: String, attribute:false},
@@ -35,7 +35,10 @@ export default class UcdlibSilsPermalink extends LitElement {
       randomClass: {type: String, attribute:false},
       elemClass: {type: Array, attribute:false},
       url: {type: String, attribute:false},
-      form: {type: Boolean, attribute:false}
+      form: {type: Boolean, attribute:false},
+      newPermalink: {type: Array, hasChanged(newVal, oldVal) {
+        return newVal !== oldVal;
+      }, attribute:false},
 
     };
   }
@@ -61,6 +64,7 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.title = '';
     this.year = '';
     this.summary= '';
+    this.host_url= '';
     this.tags = [];
     this.authorID = [];
     this.teaserType = '';
@@ -69,11 +73,12 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.notes = [];
     this.language = '';
     this.randomClass = '';
-    this.elemClass = [];
+    this.elemClass = ['tahoe', 'california', 'quad'];
     this.image = '';
     this.url = '';
+    this.newPermalink = [];
     this.form = false;
-    this.tagEntryField = [{url: '', label: '', color: ''}];
+    this.tagEntryField = [{url: '', label: '', default: true}];
     this.authorEntryField = [{value: '', default: true}];
     this.errorMessage = 'Href is not a permalink.';
     this.render=render.bind(this);
@@ -95,19 +100,8 @@ export default class UcdlibSilsPermalink extends LitElement {
     }
   }
 
-    /**
-   * @method _addTag
-   * 
-   * @description Bound to click event on website add button.  adds another 
-   * iteration of the element to the DOM and List
-   * 
-   * @param {Object} element 
-   * 
-   */  
-     _addTag(){
-      this.tagEntryField.push({url: '', label: '', color: ''});
-      this.requestUpdate();
-    }
+
+
   
 
   validationLink(url){
@@ -137,15 +131,27 @@ export default class UcdlibSilsPermalink extends LitElement {
     console.log("Error:", e);
   }
 
-  handleEdit(e) {
+  handleEdit() {
     this.form = true;
-    console.log("This:",e.target);
 
     this.requestUpdate();
 
   }
 
 
+    /**
+   * @method _addTag
+   * 
+   * @description Bound to click event on website add button.  adds another 
+   * iteration of the element to the DOM and List
+   * 
+   * @param {Object} element 
+   * 
+   */  
+     _addTag(){
+      this.tagEntryField.push({url: '', label: '', default: false});
+      this.requestUpdate();
+    }
 
   /**
      * @method _addAuthor
@@ -169,42 +175,59 @@ export default class UcdlibSilsPermalink extends LitElement {
      * @param {Object} element 
      * 
      */  
-  _sendValues(){
+   _sendValues(){
     let formData = {};
-    let authors = [];
+    let authorList = [];
     let tagtitle = [];
     let url = [];
-    let color = [];
+    let image = [];
+    let tags = [];
 
     formData.title = this.shadowRoot.getElementById("permalink-title").value;
     formData.year = this.shadowRoot.getElementById("permalink-date").value;
     formData.summary = this.shadowRoot.getElementById("permalink-summary").value;
+    formData.image = this.shadowRoot.getElementById("permalink-image").value;
+    formData.permalink = this.shadowRoot.getElementById("permalink-permalink").value;
 
-    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-author']").values())
-      authors.push(i.value);
-    formData.author = authors;
+
+    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-author']").values()){
+      authorList.push({"label" : i.value});
+    }
+    formData.author = authorList;
     
-    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-tags-url']").values())
-      url.push(i.value);
-    formData.url = url;
 
-    for(let i of this.shadowRoot.querySelectorAll("[id^='select']").values())
-      color.push(i.value);
-    formData.color = color;
+    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-image']").values())
+      image.push(i.value);
+    formData.image = image[0];
 
     for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-tags ']").values())
       tagtitle.push(i.value);
-    formData.tagtitle = tagtitle;
 
-    let event = new CustomEvent('sendData', {
-      detail: {
-        form: formData
-      }
-    });
-    console.log(event);
+    for(let i of this.shadowRoot.querySelectorAll("[id^='permalink-tags-url']").values())
+      url.push(i.value);
 
-    // this.dispatchEvent(event);
+    for(let i in tagtitle)
+      tags[i] = {"@id": url[i], "label": tagtitle[i]};
+    formData.tags = tags;
 
+    if(sessionStorage.getItem("newPermalink"))
+      this.newPermalink = JSON.parse(sessionStorage.getItem("newPermalink"));
+
+    this.newPermalink.push(formData);
+    
+    this.form = false;
+
+    this.requestUpdate;
+    sessionStorage.setItem("newPermalink", JSON.stringify(this.newPermalink));
+    location.reload();
+
+
+  }
+
+  getCreatedPermalink(){
+    super.requestUpdate();
+
+    return this.newPermalink;
   }
 
 
@@ -214,13 +237,13 @@ export default class UcdlibSilsPermalink extends LitElement {
     ISBN has multiple options so later address which items to pick and whether
     to use default thumbnail
     */ 
+
     this.COMPLETE = true;
     this.PENDING = false;
     this.LOADING = false;
     this.results = results;
     this.teaserType = this.results["@type"];
     let img = []; 
-    console.log(this.results);
     for(let i = 0; i < this.results.identifier.length; i++){
       if(this.results.identifier[i]['@type']){
         if(this.results.identifier[i]['@type'].includes('bibo:isbn'))
@@ -239,15 +262,11 @@ export default class UcdlibSilsPermalink extends LitElement {
     else{
       this.image = 'https://syndetics.com/index.php?client=primo&isbn='+ identifer + '/sc.jpg';
     }
-    console.log(this.image);
-
 
     this.year = this.results.date;
     this.title = this.results.title.substring(0, this.results.title.lastIndexOf("/"));
     this.authorFull = !Array.isArray(this.results.creator) ? [this.results.creator] : this.results.creator;
 
-
-    this.authorID = this.authorID.concat({"id": this.results.creator["@id"], "sameAs": this.results.creator["sameAs"]}[0]);
     this.authorLast = this.authorFull[0];
     this.authorFirst = this.authorFull[1];
     this.summary = this.results.description;
@@ -258,11 +277,9 @@ export default class UcdlibSilsPermalink extends LitElement {
     for (let i = 0; i < Object.keys(this.results.subject).length; i++){
       this.tags = this.tags.concat({"id": this.results.subject[i]["@id"], "subject": this.results.subject[i]["label"]});
     }
+    this.tags = this.results.subject;
+
     this.notes = this.results.note;
-
-    this.elemClass = ['tahoe', 'california', 'quad'];
-
-    console.log("Complete");
 
   }
 
@@ -280,7 +297,6 @@ export default class UcdlibSilsPermalink extends LitElement {
 
   _onLoading(){
     this.LOADING = true;
-    console.log("Loading...");
   }
 
 
