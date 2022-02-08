@@ -115,8 +115,8 @@ export function render() {
           <ul class="vm-teaser__categories">
             ${this.tags ? 
                 typeof this.tags === 'string' || this.tags instanceof String ? 
-                  JSON.parse(this.tags).map(tag => html`<li class="vm-teaser__cat-marker tahoe"><a href="${tag['@id']}">${tag['label']}</a></li><br/>`)
-                  :this.tags.map(tag => tag["label"] != "" ? html`<li class="vm-teaser__cat-marker ${this.elemClass[Math.floor(Math.random() * this.elemClass.length)]}"><a href="${tag['@id']}">${tag['label']}</a></li><br/>`:html``)
+                  JSON.parse(this.tags).map(tag => html`<li class="vm-teaser__cat-marker tahoe"><a href="${tag['@id']}">${tag['label']}</a></li>`)
+                  :this.tags.map(tag => tag["label"] != "" ? html`<li class="vm-teaser__cat-marker ${this.elemClass[Math.floor(Math.random() * this.elemClass.length)]}"><a href="${tag['@id']}">${tag['label']}</a></li>`:html``)
               :html``
             }
           </ul>
