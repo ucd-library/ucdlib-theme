@@ -36,6 +36,8 @@ export default class UcdlibSilsPermalink extends LitElement {
       elemClass: {type: Array, attribute:false},
       url: {type: String, attribute:false},
       form: {type: Boolean, attribute:false},
+      isCustom: {type:Boolean},
+      index: {type:Number},
       newPermalink: {type: Array, hasChanged(newVal, oldVal) {
         return newVal !== oldVal;
       }, attribute:false},
@@ -76,8 +78,10 @@ export default class UcdlibSilsPermalink extends LitElement {
     this.elemClass = ['tahoe', 'california', 'quad'];
     this.image = '';
     this.url = '';
+    this.isCustom = false;
     this.newPermalink = [];
     this.form = false;
+    this.index = 0;
     this.tagEntryField = [{url: '', label: '', default: true}];
     this.authorEntryField = [{value: '', default: true}];
     this.errorMessage = 'Href is not a permalink.';
@@ -136,6 +140,17 @@ export default class UcdlibSilsPermalink extends LitElement {
 
     this.requestUpdate();
 
+  }
+  handleDelete(){
+    let tempDelete = JSON.parse(sessionStorage.getItem("newPermalink"));
+
+    delete tempDelete[this.index];
+    tempDelete = Object.fromEntries(Object.entries(tempDelete).filter(([_, v]) => v != null));
+
+    console.log(tempDelete);
+    this.requestUpdate;
+    sessionStorage.setItem("newPermalink", JSON.stringify(tempDelete));
+    location.reload();
   }
 
 
@@ -210,9 +225,14 @@ export default class UcdlibSilsPermalink extends LitElement {
       tags[i] = {"@id": url[i], "label": tagtitle[i]};
     formData.tags = tags;
 
-    if(sessionStorage.getItem("newPermalink"))
+    if(sessionStorage.getItem("newPermalink")){
       this.newPermalink = JSON.parse(sessionStorage.getItem("newPermalink"));
+      this.newPermalink = Object.values(this.newPermalink);
 
+      console.log(this.newPermalink);
+    }
+
+    console.log(this.newPermalink);
     this.newPermalink.push(formData);
     
     this.form = false;

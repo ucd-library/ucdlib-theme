@@ -122,7 +122,12 @@ export function render() {
           </ul>
           <div class="vm-teaser__summary">${this.summary}</div>
         </div>
-        <button id="edit-permalink" class="btn--primary" @click="${this.handleEdit}">Edit Permalink</button>
+        ${this.isCustom ? html`
+          <button id="delete-permalink" class="btn btn--alt2" @click="${this.handleDelete}">Delete Permalink</button>
+
+        `: html`
+          <button id="edit-permalink" class="btn--primary" @click="${this.handleEdit}">Edit Permalink</button>
+        `}
  
       `:html`     
       <!-- 
