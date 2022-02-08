@@ -28,22 +28,25 @@ export default class PageUcdlibSilsPermalinks extends Mixin(LitElement)
     ];
 
     if(sessionStorage.getItem("newPermalink")){
-      this.hasCustomData = true;
-      this.new_permalinks = JSON.parse(sessionStorage.getItem("newPermalink"));
-      this.new_permalinks = Object.values(this.new_permalinks);
-      for(let k in this.new_permalinks){
-        this.new_permalinks[k]["index"] = parseInt(k);
+      if(sessionStorage.getItem("newPermalink") == "{}"){
+        sessionStorage.removeItem("newPermalink");
+        this.hasCustomData = false;
+      }else{
+        this.hasCustomData = true;
+        this.new_permalinks = JSON.parse(sessionStorage.getItem("newPermalink"));
+        this.new_permalinks = Object.values(this.new_permalinks);
+        for(let k in this.new_permalinks){
+          this.new_permalinks[k]["index"] = parseInt(k);
+        }
       }
     }
 
-    console.log(this.new_permalinks);
     this.render = render.bind(this);
 
   }
 
   reset(){
     if(sessionStorage.getItem("newPermalink")){
-      //console.log(sessionStorage.getItem("newPermalink"));
       sessionStorage.removeItem("newPermalink");
       this.hasCustomData = false;
       location.reload();

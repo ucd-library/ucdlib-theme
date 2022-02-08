@@ -147,7 +147,6 @@ export default class UcdlibSilsPermalink extends LitElement {
     delete tempDelete[this.index];
     tempDelete = Object.fromEntries(Object.entries(tempDelete).filter(([_, v]) => v != null));
 
-    console.log(tempDelete);
     this.requestUpdate;
     sessionStorage.setItem("newPermalink", JSON.stringify(tempDelete));
     location.reload();
@@ -229,10 +228,8 @@ export default class UcdlibSilsPermalink extends LitElement {
       this.newPermalink = JSON.parse(sessionStorage.getItem("newPermalink"));
       this.newPermalink = Object.values(this.newPermalink);
 
-      console.log(this.newPermalink);
     }
 
-    console.log(this.newPermalink);
     this.newPermalink.push(formData);
     
     this.form = false;

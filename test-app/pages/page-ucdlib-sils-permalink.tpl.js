@@ -46,7 +46,6 @@ representation, we can fill in a teaser similar to that shown below.</p>
 
   ${this.new_permalinks ? 
     this.new_permalinks.map(formData => html`
-      ${console.log(formData.index)}
       ${this.examplePanel(html`
       <ucdlib-sils-permalink image="${formData.image}" 
                              title="${formData.title}"
