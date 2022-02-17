@@ -26,7 +26,8 @@ export default class PageUcdlibIcons extends Mixin(LitElement)
     this.iconSets = [
       {id: "ucdlib", label: "Default Set", path: "ucdlib-icons"}, 
       {id: "academic", label: "Academic Icons"},
-      {id: "sitefarm", label: "Sitefarm"}
+      {id: "sitefarm", label: "Sitefarm"},
+      {id: 'editor', label: 'Editor'}
     ];
     this.selectedSet = 0;
   }

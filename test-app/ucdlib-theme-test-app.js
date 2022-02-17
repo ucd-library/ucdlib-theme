@@ -9,6 +9,7 @@ import "../elements/brand/ucd-theme-header/ucd-theme-header";
 import "../elements/ucdlib/ucdlib-icons/ucdlib-icons";
 import "../elements/ucdlib/ucdlib-icons/academic";
 import "../elements/ucdlib/ucdlib-icons/sitefarm";
+import "../elements/ucdlib/ucdlib-icons/editor";
 
 export default class UcdlibThemeTestApp extends Mixin(LitElement)
   .with(MainDomElement) {
