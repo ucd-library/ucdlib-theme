@@ -66,6 +66,7 @@ return html`
           </ul>
           <ul link-text="Collapsible Content">
             <li><a href="#ucd-theme-collapse">Collapse</a></li>
+            <li><a href="#ucd-theme-list-accordion">List Accordion (FAQ)</a></li>
           </ul>
           <ul link-text="Forms">
             <li><a href="#ucd-theme-slim-select">Slim Select</a></li>

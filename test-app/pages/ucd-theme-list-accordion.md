@@ -14,38 +14,11 @@ Pattern Lab Url:</p>
 ### Functions
 
 <dl>
-<dt><a href="#updated">updated(props)</a></dt>
-<dd><p>Lit lifecycle method called after element has updated.</p>
-</dd>
-<dt><a href="#connectedCallback">connectedCallback()</a></dt>
-<dd><p>Native lifecycle method called when element is connected</p>
-</dd>
-<dt><a href="#disconnectedCallback">disconnectedCallback()</a></dt>
-<dd><p>Native lifecycle method called when element is disconnected</p>
-</dd>
 <dt><a href="#toggleItemVisiblity">toggleItemVisiblity(index, isPairIndex, dispatchEvent)</a></dt>
 <dd><p>Expands/collapses an item</p>
 </dd>
 <dt><a href="#itemIsExpanded">itemIsExpanded(index, isPairIndex)</a> ⇒ <code>Boolean</code></dt>
 <dd><p>Returns true if item is expanded</p>
-</dd>
-<dt><a href="#_onTitleClick">_onTitleClick(e)</a></dt>
-<dd><p>Attached to item title</p>
-</dd>
-<dt><a href="#_onTitleKeyUp">_onTitleKeyUp(e)</a></dt>
-<dd><p>Attached to item title</p>
-</dd>
-<dt><a href="#_onChildListMutation">_onChildListMutation()</a></dt>
-<dd><p>Attached to self, responds to changes in children</p>
-</dd>
-<dt><a href="#_dispatchItemToggleEvent">_dispatchItemToggleEvent(index)</a></dt>
-<dd><p>Fires &#39;item-toggle&#39; custom event when user expands/collapses an item</p>
-</dd>
-<dt><a href="#_isTitle">_isTitle(i)</a> ⇒ <code>Boolean</code></dt>
-<dd><p>Item is title or question.</p>
-</dd>
-<dt><a href="#_isContent">_isContent(i)</a> ⇒ <code>Boolean</code></dt>
-<dd><p>Item is content or answer.</p>
 </dd>
 </dl>
 
@@ -64,29 +37,6 @@ Pattern Lab Url:
 | --- | --- | --- |
 | list-style | <code>String</code> | 'accordion' or 'faq' |
 
-<a name="updated"></a>
-
-### updated(props)
-Lit lifecycle method called after element has updated.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| props | <code>Map</code> | properties that have changed |
-
-<a name="connectedCallback"></a>
-
-### connectedCallback()
-Native lifecycle method called when element is connected
-
-**Kind**: global function  
-<a name="disconnectedCallback"></a>
-
-### disconnectedCallback()
-Native lifecycle method called when element is disconnected
-
-**Kind**: global function  
 <a name="toggleItemVisiblity"></a>
 
 ### toggleItemVisiblity(index, isPairIndex, dispatchEvent)
@@ -111,65 +61,4 @@ Returns true if item is expanded
 | --- | --- | --- |
 | index | <code>Nunber</code> | The index of the item |
 | isPairIndex | <code>Boolean</code> | Does the index param refer to Q/A pair or the flattened index? |
-
-<a name="_onTitleClick"></a>
-
-### \_onTitleClick(e)
-Attached to item title
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| e | <code>Event</code> | 
-
-<a name="_onTitleKeyUp"></a>
-
-### \_onTitleKeyUp(e)
-Attached to item title
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| e | <code>Event</code> | 
-
-<a name="_onChildListMutation"></a>
-
-### \_onChildListMutation()
-Attached to self, responds to changes in children
-
-**Kind**: global function  
-<a name="_dispatchItemToggleEvent"></a>
-
-### \_dispatchItemToggleEvent(index)
-Fires 'item-toggle' custom event when user expands/collapses an item
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| index | <code>Number</code> | The index of the item in the _listItems array property |
-
-<a name="_isTitle"></a>
-
-### \_isTitle(i) ⇒ <code>Boolean</code>
-Item is title or question.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| i | <code>Number</code> | Array index. |
-
-<a name="_isContent"></a>
-
-### \_isContent(i) ⇒ <code>Boolean</code>
-Item is content or answer.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| i | <code>Number</code> | Array index. |
 

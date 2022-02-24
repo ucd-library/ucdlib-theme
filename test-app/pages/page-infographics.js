@@ -34,14 +34,14 @@ customElements.define('page-infographics', PageInfographics);
 import factoidCss from "@ucd-lib/theme-sass/main_site/factoid/_factoid.css.js"
 
 export class MyFactoid extends LitElement {
-   static styles = [factoidCss];
+  static get styles() {return [factoidCss];}
 
   static get properties() {
     return {
       href: {type: String},
       statistic: {type: String},
       title: {type:String}
-    }
+    };
   }
 
   constructor() {

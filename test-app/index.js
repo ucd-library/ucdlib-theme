@@ -20,6 +20,7 @@ import "./pages/page-ucd-theme-search-popup";
 import './pages/page-ucd-theme-collapse';
 import './pages/page-ucd-theme-subnav';
 import "./pages/page-ucd-theme-slim-select";
+import "./pages/page-ucd-theme-list-accordion";
 
 // ucdlib components
 import "./pages/page-ucdlib-icon";

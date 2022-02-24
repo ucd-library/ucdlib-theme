@@ -13,6 +13,9 @@
 ### Functions
 
 <dl>
+<dt><a href="#_onLocationChange">_onLocationChange()</a></dt>
+<dd><p>Called when url changes by popstate controller</p>
+</dd>
 <dt><a href="#open">open()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Opens header menu in mobile</p>
 </dd>
@@ -41,6 +44,12 @@ Component class for displaying the site header
 | opened | <code>Boolean</code> | Whether header is open in the mobile view |
 | preventFixed | <code>Boolean</code> | Navbar will not be fixed to top of screen in desktop view |
 
+<a name="_onLocationChange"></a>
+
+### \_onLocationChange()
+Called when url changes by popstate controller
+
+**Kind**: global function  
 <a name="open"></a>
 
 ### open() ⇒ <code>Promise</code>

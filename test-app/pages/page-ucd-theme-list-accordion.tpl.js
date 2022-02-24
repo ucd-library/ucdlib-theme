@@ -20,8 +20,8 @@ export function render() {
       <ucd-theme-list-accordion>
         <li>Click me to expand div below</li>
         <li>I will be toggled when the above item is clicked.</li>
-        <li>The direct children of this element must be divs</li>
-        <li>But you can pass through <a href="#">rich text</a> within.</li>
+        <li>Even children are the "questions"</li>
+        <li>Odd children are "answers", and you can pass through <a href="#">rich text</a>.</li>
       </ucd-theme-list-accordion>
     `)}
   `;
