@@ -17,7 +17,7 @@ export function styles() {
     .brand-textbox--collapsible .brand-textbox__button {
       display: block;
     }
-    ::slotted(*) {
+    ::slotted(*:last-child) {
       margin-bottom: 0 !important;
     }
     ::slotted(blockquote) {
