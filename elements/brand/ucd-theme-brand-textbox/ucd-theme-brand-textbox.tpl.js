@@ -17,6 +17,12 @@ export function styles() {
     .brand-textbox--collapsible .brand-textbox__button {
       display: block;
     }
+    ::slotted(*) {
+      margin-bottom: 0 !important;
+    }
+    ::slotted(blockquote) {
+      --category-brand-contrast-color: #fff !important;
+    }
   `;
 
   return [
