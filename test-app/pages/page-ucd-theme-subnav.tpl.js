@@ -49,6 +49,14 @@ return html`
     </ucd-theme-subnav>
   `)}
 
+  <p>If you don't pass through an <code>a</code> tag or a <code>href</code> attribute, a <code>item-click</code> event will fire</p>
+  ${this.examplePanel(html`
+    <ucd-theme-subnav @item-click="${(e) => console.log(e.detail)}">
+      <li>Link 1</li>
+      <a>Link 2</a>
+    </ucd-theme-subnav>
+  `)}
+
   <p>Give it a title with the <code>nav-title</code> attribute:</p>
   ${this.examplePanel(html`
     <ucd-theme-subnav nav-title="My Links">
@@ -68,5 +76,16 @@ return html`
       <a href="#">Link 4</a>
     </ucd-theme-subnav>
   `)}
+
+  <p>Or if you use the <code>title-click-event</code> attribute, a <code>title-click</code> event will fire:</p>
+  ${this.examplePanel(html`
+    <ucd-theme-subnav nav-title="My Links" title-click-event @title-click="${() => console.log('title was clicked')}">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+      <a href="#">Link 4</a>
+    </ucd-theme-subnav>
+  `)}
+
 
 `;}

@@ -17,6 +17,7 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  * 
  * @property {String} navTitle - Subnav header text
  * @property {String} titleHref - Link for subnav header (optional)
+ * @property {Boolean} titleClickEvent - If navTitle, will fire an event when clicked.
  * 
  * @example
  *  <ucd-theme-subnav nav-title="A subnav">
@@ -36,6 +37,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
     return {
       navTitle: {type: String, attribute: "nav-title"},
       titleHref: {type: String, attribute: "title-href"},
+      titleClickEvent: {type: Boolean, attribute: 'title-click-event'},
       navItems: {type: Array},
       animationDuration: {type: Number, attribute: "animation-duration"}
     };
@@ -53,6 +55,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
 
     this.navTitle = "";
     this.titleHref = "";
+    this.titleClickEvent = false;
     this.animationDuration = 300;
   }
 
@@ -141,6 +144,41 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
   }
 
   /**
+   * @method _dispatchItemClick
+   * @private
+   * @description Fires an 'item-click' event
+   * @param {Object} item - The link item
+   * @param {Array} location - The link location in links array
+   * @returns 
+   */
+  _dispatchItemClick(item, location){
+    if (item.href) return;
+    const options = {
+      detail: {
+        linkText: item.linkText,
+        location
+      },
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent('item-click', options));
+  }
+
+  /**
+   * @method _dispatchTitleClick
+   * @private
+   * @description fires a 'title-click' ecent
+   */
+  _dispatchTitleClick(){
+    if ( !this.titleClickEvent ) return;
+    const options = {
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent('title-click', options));
+  }
+
+  /**
    * @method _renderNavItem
    * @private
    * @description Renders a menu item and all its children to the specified max depth
@@ -155,7 +193,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
       return html`
         <li id="nav--${location.join("-")}">
           <div class="submenu-toggle__wrapper">
-            <a href=${ifDefined(item.href ? item.href : null)}>${item.linkText}</a>
+            <a href=${ifDefined(item.href ? item.href : undefined)} @click=${() => this._dispatchItemClick(item, location)}>${item.linkText}</a>
             <button 
               @click=${() => this._toggleItemMenu(location)}
               class="submenu-toggle ${item.isOpen ? "submenu-toggle--open" : ""}" 
@@ -171,7 +209,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
       `;
     }
     return html`
-      <li id="nav--${location.join("-")}"><a href=${item.href}>${item.linkText}</a></li>
+      <li id="nav--${location.join("-")}"><a href=${ifDefined(item.href ? item.href : undefined)} @click=${() => this._dispatchItemClick(item, location)}>${item.linkText}</a></li>
     `;
   }
 

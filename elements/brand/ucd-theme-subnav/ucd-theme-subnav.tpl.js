@@ -1,4 +1,5 @@
 import { html, css } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import normalizeStyles from "@ucd-lib/theme-sass/normalize.css.js";
 import headerStyles from "@ucd-lib/theme-sass/1_base_html/_headings.css.js";
@@ -25,6 +26,9 @@ export function styles() {
     ul.sub-nav__menu ul.is-open {
       display: block;
     }
+    a {
+      cursor: pointer;
+    }
   `;
 
   return [
@@ -48,8 +52,8 @@ export function render() {
   </style>
   <nav class="sub-nav">
     ${this.navTitle ? html`
-      <h2 class="sub-nav__title${this.titleHref ? "-linked" : ""}">
-        ${this.titleHref ? html`<a href=${this.titleHref}>${this.navTitle}</a>` : this.navTitle}
+      <h2 class="sub-nav__title${this.titleHref || this.titleClickEvent ? "-linked" : ""}">
+        ${this.titleHref || this.titleClickEvent ? html`<a href=${ifDefined(this.titleHref ? this.titleHref : undefined)} @click=${() => this._dispatchTitleClick()}>${this.navTitle}</a>` : this.navTitle}
       </h2>
     ` : html``}
     <ul class="sub-nav__menu">
