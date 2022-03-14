@@ -49,13 +49,20 @@ return html`
     </ucd-theme-subnav>
   `)}
 
+  <h2>Using an Event Listener</h2>
+
   <p>If you don't pass through an <code>a</code> tag or a <code>href</code> attribute, a <code>item-click</code> event will fire</p>
   ${this.examplePanel(html`
     <ucd-theme-subnav @item-click="${(e) => console.log(e.detail)}">
       <li>Link 1</li>
       <a>Link 2</a>
+      <ul link-text="Parent with Children" is-open>
+        <li>Child 1</li>
+      </ul>
     </ucd-theme-subnav>
   `)}
+
+  <h2>Adding a Title</h2>
 
   <p>Give it a title with the <code>nav-title</code> attribute:</p>
   ${this.examplePanel(html`
