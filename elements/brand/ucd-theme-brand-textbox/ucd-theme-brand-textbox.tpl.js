@@ -35,7 +35,7 @@ export function render() {
 return html`
   <section class=${classMap(this._getBaseClasses())}>
     <div class="brand-textbox__content">
-      <slot></slot>
+      <slot @slotchange=${this._onSlotchange}></slot>
     </div>
     <button 
       class="brand-textbox__button" 

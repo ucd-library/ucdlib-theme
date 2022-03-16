@@ -55,6 +55,22 @@ export default class UcdThemeBrandTextbox extends LitElement {
     return out;
   }
 
+  /**
+   * @method _onSlotchange
+   * @param {Event} e
+   * @description fires when a slot value changes. 
+   * assigns category-brand__background class so that slotted children are correct color
+   * @private
+   */
+  _onSlotchange(e){
+    const childNodes = e.target.assignedNodes({flatten: true});
+    childNodes.forEach(child => {
+      if ( child.nodeType === Node.ELEMENT_NODE ){
+        child.classList.add('category-brand__background');
+      }
+    });
+  }
+
 }
 
 customElements.define('ucd-theme-brand-textbox', UcdThemeBrandTextbox);

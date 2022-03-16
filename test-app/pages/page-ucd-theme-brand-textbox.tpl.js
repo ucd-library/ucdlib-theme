@@ -18,7 +18,7 @@ return html`
 
   ${this.examplePanel(html`
     <ucd-theme-brand-textbox collapsible>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci porta non pulvinar neque laoreet. Sit amet mauris commodo quis imperdiet. Adipiscing tristique risus nec feugiat in fermentum posuere urna. Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Ultrices vitae auctor eu augue ut. Pellentesque habitant morbi tristique senectus. Ac auctor augue mauris augue neque gravida in. Pulvinar neque laoreet suspendisse interdum. Risus pretium quam vulputate dignissim suspendisse in. Donec ultrices tincidunt arcu non sodales neque sodales ut.</p>
+      <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci porta non pulvinar neque laoreet. Sit amet mauris commodo quis imperdiet. Adipiscing tristique risus nec feugiat in fermentum posuere urna. Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Ultrices vitae auctor eu augue ut. Pellentesque habitant morbi tristique senectus. Ac auctor augue mauris augue neque gravida in. Pulvinar neque laoreet suspendisse interdum. Risus pretium quam vulputate dignissim suspendisse in. Donec ultrices tincidunt arcu non sodales neque sodales ut.</p>
     </ucd-theme-brand-textbox>
   `)}
 
@@ -41,7 +41,7 @@ return html`
     </ucd-theme-brand-textbox>
 
     <ucd-theme-brand-textbox collapsible brand-color="secondary">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci porta non pulvinar neque laoreet. Sit amet mauris commodo quis imperdiet. Adipiscing tristique risus nec feugiat in fermentum posuere urna. Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Ultrices vitae auctor eu augue ut. Pellentesque habitant morbi tristique senectus. Ac auctor augue mauris augue neque gravida in. Pulvinar neque laoreet suspendisse interdum. Risus pretium quam vulputate dignissim suspendisse in. Donec ultrices tincidunt arcu non sodales neque sodales ut.</p>
+      <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci porta non pulvinar neque laoreet. Sit amet mauris commodo quis imperdiet. Adipiscing tristique risus nec feugiat in fermentum posuere urna. Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Ultrices vitae auctor eu augue ut. Pellentesque habitant morbi tristique senectus. Ac auctor augue mauris augue neque gravida in. Pulvinar neque laoreet suspendisse interdum. Risus pretium quam vulputate dignissim suspendisse in. Donec ultrices tincidunt arcu non sodales neque sodales ut.</p>
     </ucd-theme-brand-textbox>
   `)}
 `;}
