@@ -10,6 +10,7 @@ import { MutationObserverController } from '../../utils/controllers';
  * @property {String} name - Name of the icon set. Usage: <ucdlib-icon icon="{thisProperty}:{icon}"></ucdlib-icon>
  * @property {Number} size - The size of an individual icon. Note that icons must be square. 
  * @property {String} label - Optional friendly label for iconset.
+ * @property {String} suppressWarnings - Suppress any "you're doing it wrong" console warnings
  * @example
  * <ucdlib-iconset name="arrows">
     <svg>
@@ -28,6 +29,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
       name: {type: String},
       size: {type: Number},
       label: {type: String},
+      suppressWarnings: {type: Boolean, attribute: 'suppress-warnings'},
       _iconMap: {type: Object, state: true}
     };
   }
@@ -40,7 +42,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
     this.label = "";
     this.size = 24;
     this._iconMap = {};
-    this.style.display = "none";
+    this.suppressWarnings = false;
   }
 
   /**
@@ -51,10 +53,26 @@ export default class UcdlibIconset extends Mixin(LitElement)
    */
   updated( props ){
     if (props.has('name') && this.name ) {
-      this.dispatchEvent(
-        new CustomEvent('ucdlib-iconset-added', {bubbles: true, composed: true})
-      );
+      this.dispatchLoadEvent();
     }
+  }
+
+  /**
+   * @method firstUpdated
+   * @description Lit lifecycle method when element is first updated
+   */
+  firstUpdated(){
+    this.style.display = "none";
+  }
+
+  /**
+   * @method dispatchLoadEvent
+   * @description fires off a 'ucdlib-iconset-added' event so ucdlib-icon elements can re-render if applicable
+   */
+  dispatchLoadEvent(){
+    this.dispatchEvent(
+      new CustomEvent('ucdlib-iconset-added', {bubbles: true, composed: true})
+    );
   }
 
   /**
@@ -173,7 +191,7 @@ export default class UcdlibIconset extends Mixin(LitElement)
       iconMap[icon.id] = icon;
     });
 
-    if ( !Object.keys(iconMap).length ) {
+    if ( !Object.keys(iconMap).length && !this.suppressWarnings ) {
       console.warn('No g elements with an id attribute found!.');
     }
     this._iconMap = iconMap;
