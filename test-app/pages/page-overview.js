@@ -20,6 +20,7 @@ export default class PageOverview extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+
   }
 
 }

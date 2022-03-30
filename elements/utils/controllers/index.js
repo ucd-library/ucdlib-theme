@@ -4,6 +4,7 @@ import { MutationObserverController } from "./mutation-observer";
 import { PopStateObserverController } from "./popstate-observer";
 import { SilsPrimoController } from "./sils-primo";
 import { WaitController } from "./wait";
+import { IpDetect} from "./ip-check";
 
 
 export {
@@ -13,4 +14,5 @@ export {
   PopStateObserverController,
   SilsPrimoController,
   WaitController,
+  IpDetect,
 };
