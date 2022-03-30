@@ -1,7 +1,5 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-alert.tpl.js";
-import {IpDetect} from '../../utils/controllers';
-
 
 /**
  * @class UcdThemeAlert
@@ -34,8 +32,6 @@ export default class UcdThemeAlert extends LitElement {
     this.render = render.bind(this);
     this.type = '';
     this.styleModifier = '';
-    this.ip = IpDetect();
-    console.log("This IP:", this.ip);
   }
 
   /**
