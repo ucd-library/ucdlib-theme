@@ -13,6 +13,9 @@ export function styles() {
     .item-title ::slotted(*) {
       pointer-events: none;
     }
+    .list--accordion {
+      margin-bottom: 0;
+    }
   `;
   return [
     listCss, 
