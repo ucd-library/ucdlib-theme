@@ -8,24 +8,26 @@ const IPCIDR = require("ip-cidr");
 export class IpDetect {
   constructor(){
     this.ip = '';
-    this.isIP6 = false;
-    this.ipVPNRange = ['128.120.234.0',
-      '128.120.235.0',
-      '128.120.236.0',
-      '128.120.237.0',
-      '128.120.238.0',
-      '128.120.239.0',
-      '128.120.251.0',
-      '169.237.45.0'
+    this.hasIP6 = false;
+    this.ip6 = '';
+    this.ipVPNRange = [
+      {"setIP":"128.120.234.0", "mask":"24"},
+      {"setIP":"128.120.235.0", "mask":"24"},
+      {"setIP":"128.120.236.0", "mask":"24"},
+      {"setIP":"128.120.237.0", "mask":"24"},
+      {"setIP":"128.120.238.0", "mask":"24"},
+      {"setIP":"128.120.239.0", "mask":"24"},
+      {"setIP":"128.120.251.0", "mask":"24"},
+      {"setIP":"169.237.45.0", "mask":"24"},
     ];
 
     this.campusRange = [
-      {"campusIP":"128.120.0.0", "mask":"16"},
-      {"campusIP":"152.79.0.0", "mask":"16"},
-      {"campusIP":"169.237.0.0", "mask":"16"},
-      {"campusIP":"162.251.203.0", "mask":"27"},
-      {"campusIP":"12.235.42.0", "mask":"25"},
-      {"campusIP":"168.150.0.0", "mask":"17"},
+      {"setIP":"128.120.0.0", "mask":"16"},
+      {"setIP":"152.79.0.0", "mask":"16"},
+      {"setIP":"169.237.0.0", "mask":"16"},
+      {"setIP":"162.251.203.0", "mask":"27"},
+      {"setIP":"12.235.42.0", "mask":"25"},
+      {"setIP":"168.150.0.0", "mask":"17"},
 
     ];
     
@@ -38,7 +40,7 @@ export class IpDetect {
    * 
    */
   async runIP(){
-    this.isResult = await this.verifyCidr(this.campusRange);
+    this.isResult = await this.verifyCidr(this.campusRange, this.ipVPNRange);
   }
 
   /**
@@ -54,27 +56,14 @@ export class IpDetect {
     this.ip = ips["ip"];
 
     if (this.ip.includes(":")){
-      this.isIP6 = true;
+      this.hasIP6 = true;
+      this.ip6 = this.ip;
       await fetch('https://api.ipify.org?format=json', )
         .then(response => response.json())
         .then(data => {ips = data; });
       this.ip = ips["ip"];
     } 
-    this.isIP6 = false;
 
-  }
-
-
-  /**
-   * @method isInVPN
-   * @description checks if ip address is in the vpn
-   * 
-   */
-  isInVPN(){
-    for (let ip of this.ipVPNRange) {
-      if (ip == this.ip)
-        this.isVPN = true;
-    }
   }
 
   /**
@@ -85,29 +74,51 @@ export class IpDetect {
    * 
    * @returns {Boolean} 
    */
-  isInRange(range){
+  checkRange(range){
     if (range.includes(this.ip))
       return true;
     return false;
   }
 
   /**
+   * @method cidrCheck
+   * @description cidr check that takes a range
+   * 
+   * @param {Object} identifier 
+   * 
+   * @returns {Array} 
+   */
+  cidrCheck(identifier){
+    let cidr;
+
+    let currentIP = identifier["setIP"].concat('/', identifier["mask"] );
+    cidr = new IPCIDR(currentIP); 
+    let ipRange = cidr.toArray();
+
+    return ipRange;
+
+  }
+
+  /**
    * @method verifyCidr
    * @description verify req ip addressess in cidr array
    * 
-   * @param {String|Array} address 
+   * @param {Array} campusAddress 
+   * @param {Array} vpnaddress 
    * 
    * @returns {Boolean} 
    */
-  async verifyCidr(address) {
-    let cidr;
+  async verifyCidr(campusAddress, vpnaddress) {
     await this.checkIp();
-    this.isInVPN();
-    for (let i of address){
-      let currentIP = i["campusIP"].concat('/', i["mask"] );
-      cidr = new IPCIDR(currentIP); 
-      let campusRange = cidr.toArray();
-      if(this.isInRange(campusRange))
+    for (let i of vpnaddress){
+      let vpn_range = this.cidrCheck(i);
+      if(this.checkRange(vpn_range))
+        this.isVPN = true;
+    }
+
+    for (let i of campusAddress){
+      let campus_range = this.cidrCheck(i);
+      if(this.checkRange(campus_range))
         return this.ip;
     }
     return null;
