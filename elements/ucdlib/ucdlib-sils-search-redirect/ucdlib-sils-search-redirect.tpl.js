@@ -58,6 +58,9 @@ export function styles() {
       padding: 0;
       font-family: inherit;
     }
+    .checkbox label::before {
+      background-color: white;
+    }
     .dark h2 {
       color: ${unsafeCSS(categoryBrands.secondary.hex)}
     }
