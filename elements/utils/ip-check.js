@@ -11,6 +11,7 @@ export class IpDetect {
     this.hasIP6 = false;
     this.ip6 = '';
     this.ipVPNRange = [
+      // VPN
       {"setIP":"128.120.234.0", "mask":"24"},
       {"setIP":"128.120.235.0", "mask":"24"},
       {"setIP":"128.120.236.0", "mask":"24"},
@@ -19,6 +20,10 @@ export class IpDetect {
       {"setIP":"128.120.239.0", "mask":"24"},
       {"setIP":"128.120.251.0", "mask":"24"},
       {"setIP":"169.237.45.0", "mask":"24"},
+      // Staff VPN
+      {"setIP":"169.237.240.2", "mask":"32"},
+      {"setIP":"172.19.19.0", "mask":"24"},
+      {"setIP":"172.19.19.64", "mask":"26"}
     ];
 
     this.campusRange = [
@@ -32,7 +37,6 @@ export class IpDetect {
     ];
     
     this.isVPN = false;
-    this.runIP();
   }
   /**
    * @method runIP
@@ -40,7 +44,7 @@ export class IpDetect {
    * 
    */
   async runIP(){
-    this.isResult = await this.verifyCidr(this.campusRange, this.ipVPNRange);
+    this.isOnCampus = await this.verifyCidr(this.campusRange, this.ipVPNRange);
   }
 
   /**
