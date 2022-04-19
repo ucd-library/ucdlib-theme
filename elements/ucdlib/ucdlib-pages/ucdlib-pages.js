@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import {Mixin, MutationObserverElement} from '../../utils/index.js';
+import { MutationObserverController } from '../../utils/controllers';
 
 /**
  * @class UcdlibPages
@@ -16,8 +16,7 @@ import {Mixin, MutationObserverElement} from '../../utils/index.js';
  *   <div id="page2">Test 2</div>
  * </ucdlib-pages>
  */
-export default class UcdlibPages extends Mixin(LitElement)
-  .with(MutationObserverElement) {
+export default class UcdlibPages extends LitElement {
 
   static get properties() {
     return {
@@ -35,6 +34,7 @@ export default class UcdlibPages extends Mixin(LitElement)
 
   constructor() {
     super();
+    this.mutationObserver = new MutationObserverController(this);
   }
 
   /**
@@ -55,7 +55,7 @@ export default class UcdlibPages extends Mixin(LitElement)
   
   /**
    * @method _onChildListMutation
-   * @description called when children change via MutationObserverElement
+   * @description called when children change via MutationObserverController
    */
   _onChildListMutation() {
     this._onChange();

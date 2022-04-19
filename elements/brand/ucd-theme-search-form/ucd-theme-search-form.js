@@ -11,6 +11,8 @@ import {render, styles } from "./ucd-theme-search-form.tpl.js";
  * @property {String} value - The search string
  * @property {String} placeholder - The input placeholder
  * @property {String} formAction - The action to be taken on form submit (optional)
+ * @property {String} formMethod - The http method used on submit (default=POST)
+ * @property {String} queryParam - The URL query parameter to use (default=searchterm)
  * 
  * @example
  *  <ucd-theme-form-search form-action="/url/to/post/to"></ucd-theme-form-search>
@@ -23,9 +25,11 @@ export default class UcdThemeSearchForm extends LitElement {
       value: {type: String},
       placeholder: {type: String, attribute: "placeholder"},
       formAction: {type: String, attribute: "form-action"},
+      formMethod: {type: String, attribute: "form-method"},
       formClass: {type: String, attribute: "form-class"},
       labelText: {type: String, attribute: "label-text"},
-      inputClass: {type: String, attribute: "input-class"}
+      inputClass: {type: String, attribute: "input-class"},
+      queryParam: {type: String, attribute: "query-param"}
     };
   }
 
@@ -37,11 +41,13 @@ export default class UcdThemeSearchForm extends LitElement {
     super();
     this.render = render.bind(this);
     this.formAction = "";
+    this.formMethod = "POST";
     this.formClass = "";
     this.labelText = "Search";
     this.placeholder = "Search...";
     this.inputClass = "";
     this.value = "";
+    this.queryParam = "searchterm";
   }
 
   /**

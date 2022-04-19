@@ -6,7 +6,7 @@ const ELE_ROOTS = [
   path.join(__dirname, 'elements', 'brand'),
   path.join(__dirname, 'elements', 'ucdlib')
 ];
-const DOC_ROOT = path.join(__dirname, 'test-app', 'pages');
+const DOC_ROOT = path.join(__dirname, 'brand-app', 'pages');
 
 console.log('Generating docs for:');
 ELE_ROOTS.forEach(async function(ELE_ROOT) {

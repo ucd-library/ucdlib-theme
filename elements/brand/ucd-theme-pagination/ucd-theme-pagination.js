@@ -1,7 +1,8 @@
 import { LitElement, html } from 'lit';
 //import { Page } from 'puppeteer';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
-import { Mixin, BreakPoints } from "../../utils/index.js";
+
+import { BreakPointsController } from '../../utils/controllers';
 
 /**
  * @class UcdThemePagination
@@ -11,6 +12,7 @@ import { Mixin, BreakPoints } from "../../utils/index.js";
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-pagination
  * 
  * @property {String} base-path - for anchor tag href
+ * @property {String} queryParams - Append query parameters if constructing an anchor tag
  * @property {String} current-page - Page to show and highlight
  * @property {String} max-pages - Max number of total pages
  * @property {String} visible-link-count - How many page links to show
@@ -33,14 +35,17 @@ import { Mixin, BreakPoints } from "../../utils/index.js";
  * </ucd-theme-pagination>
  * 
  */
-export default class UcdThemePagination extends Mixin(LitElement)
-  .with(BreakPoints) {
+export default class UcdThemePagination extends LitElement {
 
   static get properties() {
     return {
       basePath : {
         type: String, 
         attribute: 'base-path'
+      },
+      queryParams: {
+        type: String,
+        attribute: 'query-params'
       },
       useHash : {
         type: Boolean, 
@@ -89,11 +94,14 @@ export default class UcdThemePagination extends Mixin(LitElement)
   constructor() {
     super();
 
+    this.breakPoints = new BreakPointsController(this);
+
     this._pages = [];
     this.useHash = false;
     this.disableLabel = false;
     this.type = 'virtual';
     this.basePath = '';
+    this.queryParams = '';
     this.visibleLinkCount = 7;
     this.currentPage = 1;
     this.maxPages = 1;
@@ -101,7 +109,7 @@ export default class UcdThemePagination extends Mixin(LitElement)
     this.xs_screen = false;
     this.size = '';
 
-    this.screen_check = (window.innerWidth <= this._mobileBreakPoint)  ? true : false;
+    this.screen_check = (window.innerWidth <= this.breakPoints.mobileBreakPoint)  ? true : false;
 
     this.render = render.bind(this);
   }
@@ -189,7 +197,7 @@ export default class UcdThemePagination extends Mixin(LitElement)
         </li>`;            
     }
 
-    let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page;
+    let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page + (this.queryParams ? '?' + this.queryParams : '');
     return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
           html` <a style="pointer-events: none; cursor: default; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 

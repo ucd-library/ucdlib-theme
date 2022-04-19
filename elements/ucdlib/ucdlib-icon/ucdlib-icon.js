@@ -44,17 +44,19 @@ export default class UcdlibIcon extends LitElement {
    * @private
    */
   disconnectedCallback() {
-    window.removeEventListener('ucdlib-iconset-added', this._onAddedIconset);
+    if ( this._setListener ){
+      window.removeEventListener('ucdlib-iconset-added', this._onAddedIconset);
+    }
     super.disconnectedCallback();
   }
 
   /**
-   * @method updated
-   * @description Lit lifecyle method called after element updates
+   * @method willUpdate
+   * @description Lit lifecyle method called right before element updates
    * @param {Map} props - Updated properties
    * @private
    */
-  updated(props){
+  willUpdate(props){
     if ( props.has('icon') || props.has('src') ){
       if ( this.src ) {
         this._updateIcon();
@@ -85,17 +87,27 @@ export default class UcdlibIcon extends LitElement {
   _updateIcon(){
     // using the icon attribute
     if ( this._usesIconSet() ) {
+      
+      // previously using the src attribute. remove it.
       if ( this._img && this._img.parentNode ) this.renderRoot.removeChild(this._img);
 
+      // empty icon name, remove it
       if ( this._iconName === '') {
         if ( this._iconset ) this._iconset.removeIcon(this);
+      
+      // check if iconset exists, add event listener if it doesn't
       } else if ( this._iconsetName ){
         this._iconset = this._getIconset();
-        if ( this._iconset ) {
+        if ( this._iconset && this._iconset.applyIcon ) {
           this._iconset.applyIcon(this, this._iconName);
-          window.addEventListener('ucdlib-iconset-added', this._onAddedIconset);
+          if ( this._setListener ){
+            window.removeEventListener('ucdlib-iconset-added', this._onAddedIconset);
+            this._setListener = false;
+          }
         } else {
-          window.removeEventListener('ucdlib-iconset-added', this._onAddedIconset);
+          if ( !this._setListener ){
+            this._setListener = window.addEventListener('ucdlib-iconset-added', this._onAddedIconset);
+          }
         }
       }
 

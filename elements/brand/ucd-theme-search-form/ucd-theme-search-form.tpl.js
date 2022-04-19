@@ -14,6 +14,10 @@ export function styles() {
     [hidden] {
       display: none !important;
     }
+    .search-form__submit {
+      line-height: 1.9;
+      text-indent: .2em;
+    }
   `;
   return [
     normalizeCss,
@@ -29,7 +33,7 @@ return html`
 <form 
   @submit="${this._onSubmit}"
   action="${this.formAction}" 
-  method="POST" 
+  method=${this.formMethod} 
   class="search-form ${this.formClass}">
 
   <label for="search" class="u-hidden--visually">${this.labelText}</label>
@@ -38,10 +42,11 @@ return html`
     placeholder="${this.placeholder}" 
     id="search" 
     class="search-form__input ${this.inputClass}" 
-    name="searchterm" 
+    name=${this.queryParam} 
     @input="${this._onInput}"
     value="${this.value}">
-  <input type="submit" class="search-form__submit" name="search" alt="Search" value="&#xf002; Submit">
+  <button type="submit" class="search-form__submit">&#xf002; Submit
+  </button>
 
 </form>
 `;}

@@ -1,5 +1,6 @@
 import { LitElement } from 'lit';
 import { render, styles } from './ucd-theme-list-accordion.tpl.js';
+import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeListAccordion
@@ -27,16 +28,19 @@ export default class UcdThemeListAccordion extends LitElement {
       _listItems: { attribute: false, state: true },
       _availableStyles: { attribute: false, state: true },
       _expandedItems: { attribute: false, state: true },
+      role: {type: String, reflect: true}
     };
   }
 
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(this);
     this._listItems = [];
     this._availableStyles = ['accordion', 'faq'];
     this.listStyle = this._availableStyles[0];
     this._expandedItems = new Set();
+    this.role = 'list';
   }
 
   static get styles() {
@@ -44,37 +48,17 @@ export default class UcdThemeListAccordion extends LitElement {
   }
 
   /**
-   * @method updated
-   * @description Lit lifecycle method called after element has updated.
+   * @method willUpdate
+   * @private
+   * @description Lit lifecycle method called right before an element updates
    * @param {Map} props - properties that have changed
    */
-  updated(props) {
+  willUpdate(props) {
     if (props.has('listStyle')) {
       if (!this._availableStyles.includes(this.listStyle.toLowerCase())) {
         this.listStyle = this._availableStyles[0];
       }
     }
-  }
-
-  /**
-   * @method connectedCallback
-   * @description Native lifecycle method called when element is connected
-   */
-  connectedCallback() {
-    super.connectedCallback();
-    this._childListObserver = new MutationObserver((mutationsList, observer) =>
-      this._onChildListMutation(mutationsList, observer)
-    );
-    this._childListObserver.observe(this, { childList: true });
-  }
-
-  /**
-   * @method disconnectedCallback
-   * @description Native lifecycle method called when element is disconnected
-   */
-  disconnectedCallback() {
-    this._childListObserver.disconnect();
-    super.disconnectedCallback();
   }
 
   /**
@@ -116,6 +100,7 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method _onTitleClick
    * @description Attached to item title
+   * @private
    * @param {Event} e
    */
   _onTitleClick(e) {
@@ -126,6 +111,7 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method _onTitleKeyUp
    * @description Attached to item title
+   * @private
    * @param {Event} e
    */
   _onTitleKeyUp(e) {
@@ -136,12 +122,12 @@ export default class UcdThemeListAccordion extends LitElement {
 
   /**
    * @method _onChildListMutation
+   * @private
    * @description Attached to self, responds to changes in children
    */
   _onChildListMutation() {
     let listItems = [];
     Array.from(this.children).forEach((child, index) => {
-      if (child.tagName !== 'DIV') return;
       child.setAttribute('slot', 'list-item-' + index);
       if (this.listStyle === 'faq') {
         child.style.display = 'inline';
@@ -155,6 +141,7 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method _dispatchItemToggleEvent
    * @description Fires 'item-toggle' custom event when user expands/collapses an item
+   * @private
    * @param {Number} index - The index of the item in the _listItems array property
    */
   _dispatchItemToggleEvent(index) {
@@ -178,6 +165,7 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method _isTitle
    * @description Item is title or question.
+   * @private
    * @param {Number} i - Array index.
    * @returns  {Boolean}
    */
@@ -188,6 +176,7 @@ export default class UcdThemeListAccordion extends LitElement {
   /**
    * @method _isContent
    * @description Item is content or answer.
+   * @private
    * @param {Number} i - Array index.
    * @returns {Boolean}
    */

@@ -42,11 +42,7 @@ steps:
 
   - name: node:14
     entrypoint: "npm"
-    args: ["install"]
-
-  - name: node:14
-    entrypoint: "bash"
-    args: ["-c", "cd elements/brand; npm install" ]
+    args: ["run", "init"]
 
   - name: buildkite/puppeteer:10.0.0
     entrypoint: "npm"
@@ -56,31 +52,31 @@ steps:
 
   - name: node:14
     entrypoint: "bash"
-    args: ["-c", "cd test-app; npm install" ]
+    args: ["-c", "cd brand-app; npm run dist" ]
 
   - name: node:14
     entrypoint: "bash"
-    args: ["-c", "cd test-app; npm run dist" ]
+    args: ["-c", "node docs.js" ]
+
+  - name: gcr.io/cloud-builders/docker
+    entrypoint: "bash"
+    args: ["-c", "docker pull gcr.io/ucdlib-pubreg/ucdlib-theme-app || true"]
 
   - name: gcr.io/cloud-builders/docker
     entrypoint: "docker"
-    args: ["pull", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
-
-  - name: gcr.io/cloud-builders/docker
-    entrypoint: "docker"
-    args: ["build", "test-app", 
-          "-t", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo",
-          "--cache-from", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"
+    args: ["build", "brand-app", 
+          "-t", "gcr.io/ucdlib-pubreg/ucdlib-theme-app",
+          "--cache-from", "gcr.io/ucdlib-pubreg/ucdlib-theme-app"
     ]
 
   - name: gcr.io/cloud-builders/docker
     entrypoint: "docker"
-    args: ["push", "gcr.io/ucdlib-pubreg/ucdlib-theme-demo"]
+    args: ["push", "gcr.io/ucdlib-pubreg/ucdlib-theme-app"]
 
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: "gcloud"
-    args: ["beta", "run", "deploy", "ucdlib-theme-demo", 
-      "--image=gcr.io/ucdlib-pubreg/ucdlib-theme-demo",
+    args: ["beta", "run", "deploy", "ucdlib-theme-app", 
+      "--image=gcr.io/ucdlib-pubreg/ucdlib-theme-app",
       "--platform=managed",
       "--memory=1Gi",
       "--region=us-central1"
@@ -97,7 +93,7 @@ steps:
       - '_GITHUB_PR_USER=$_GITHUB_PR_USER'
       - '_GITHUB_PR_MERGED_BY=$_GITHUB_PR_MERGED_BY'
 
-images: ['gcr.io/ucdlib-pubreg/ucdlib-theme-demo']
+images: ['gcr.io/ucdlib-pubreg/ucdlib-theme-app']
 
 substitutions:
   _CONFIG_BUCKET: ci-build-config

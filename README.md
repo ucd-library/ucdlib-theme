@@ -4,4 +4,4 @@ Derived from https://bitbucket.org/ietwebdev/sitefarm-pattern-lab-one/src/redesi
 
 Project document: https://docs.google.com/document/d/1u288xsd539qGXWzOQITg6sig-FIAIJR695nNjC4TfBI/
 
-Demo App: https://ucdlib-theme-demo-akwemh35fa-uc.a.run.app
+Brand App: https://brand.library.ucdavis.edu

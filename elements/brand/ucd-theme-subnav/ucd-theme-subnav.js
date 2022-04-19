@@ -4,7 +4,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { styleMap } from 'lit/directives/style-map.js';
 
-import {Mixin, MutationObserverElement, NavElement, Wait} from "../../utils";
+import {Mixin, NavElement} from "../../utils/mixins";
+import { MutationObserverController, WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeSubnav
@@ -16,6 +17,7 @@ import {Mixin, MutationObserverElement, NavElement, Wait} from "../../utils";
  * 
  * @property {String} navTitle - Subnav header text
  * @property {String} titleHref - Link for subnav header (optional)
+ * @property {Boolean} titleClickEvent - If navTitle, will fire an event when clicked.
  * 
  * @example
  *  <ucd-theme-subnav nav-title="A subnav">
@@ -29,12 +31,13 @@ import {Mixin, MutationObserverElement, NavElement, Wait} from "../../utils";
  *  </ucd-theme-subnav>
  */
 export default class UcdThemeSubnav extends Mixin(LitElement)
-  .with(NavElement, MutationObserverElement, Wait) {
+  .with(NavElement) {
 
   static get properties() {
     return {
       navTitle: {type: String, attribute: "nav-title"},
       titleHref: {type: String, attribute: "title-href"},
+      titleClickEvent: {type: Boolean, attribute: 'title-click-event'},
       navItems: {type: Array},
       animationDuration: {type: Number, attribute: "animation-duration"}
     };
@@ -47,9 +50,12 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+    this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
+    this.wait = new WaitController(this);
 
     this.navTitle = "";
     this.titleHref = "";
+    this.titleClickEvent = false;
     this.animationDuration = 300;
   }
 
@@ -72,15 +78,15 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
     // Get expanded height
     navItem.inlineStyles.display = "block";
     navItem.inlineStyles.height = "0px";
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
     const expandedHeight = navUL.scrollHeight + "px";   
     
     // Set expanded height
     navItem.inlineStyles.height = expandedHeight;
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
 
     // Complete animation
-    await this.waitForAnimation();
+    await this.wait.wait(this.animationDuration);
     navItem.inlineStyles = {};
     navItem.isOpen = true;
     navItem.isTransitioning = false;
@@ -108,15 +114,15 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
     // Set expanded height
     navItem.inlineStyles.height = navUL.scrollHeight + "px";
     navItem.inlineStyles.display = "block";
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
 
     // Set height to zero
-    await this.waitForFrames(2);
+    await this.wait.waitForFrames(2);
     navItem.inlineStyles.height = "0px";
-    await this.waitForUpdate();
+    await this.wait.waitForUpdate();
 
     // Complete animation
-    await this.waitForAnimation();
+    await this.wait.wait(this.animationDuration);
     navItem.inlineStyles = {};
     navItem.isOpen = false;
     navItem.isTransitioning = false;
@@ -129,12 +135,46 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
   /**
    * @method _onChildListMutation
    * @private
-   * @description Fires when light dom child list changes. Injected by MutationObserverElement mixin.
+   * @description Fires when light dom child list changes. Injected by MutationObserverController.
    *  Sets the 'navItems' property.
    */
   _onChildListMutation(){
     let navItems = this.parseNavChildren();
     if ( navItems.length ) this.navItems = navItems;
+  }
+
+  /**
+   * @method _dispatchItemClick
+   * @private
+   * @description Fires an 'item-click' event
+   * @param {Object} item - The link item
+   * @param {Array} location - The link location in links array
+   */
+  _dispatchItemClick(item, location){
+    if (item.href) return;
+    const options = {
+      detail: {
+        linkText: item.linkText,
+        location
+      },
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent('item-click', options));
+  }
+
+  /**
+   * @method _dispatchTitleClick
+   * @private
+   * @description fires a 'title-click' ecent
+   */
+  _dispatchTitleClick(){
+    if ( !this.titleClickEvent ) return;
+    const options = {
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent('title-click', options));
   }
 
   /**
@@ -152,7 +192,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
       return html`
         <li id="nav--${location.join("-")}">
           <div class="submenu-toggle__wrapper">
-            <a href=${ifDefined(item.href ? item.href : null)}>${item.linkText}</a>
+            <a href=${ifDefined(item.href ? item.href : undefined)} @click=${() => this._dispatchItemClick(item, location)}>${item.linkText}</a>
             <button 
               @click=${() => this._toggleItemMenu(location)}
               class="submenu-toggle ${item.isOpen ? "submenu-toggle--open" : ""}" 
@@ -168,7 +208,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
       `;
     }
     return html`
-      <li id="nav--${location.join("-")}"><a href=${item.href}>${item.linkText}</a></li>
+      <li id="nav--${location.join("-")}"><a href=${ifDefined(item.href ? item.href : undefined)} @click=${() => this._dispatchItemClick(item, location)}>${item.linkText}</a></li>
     `;
   }
 

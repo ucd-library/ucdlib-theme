@@ -1,7 +1,11 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucd-theme-header.tpl.js";
 
-import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/index.js";
+import { 
+  IntersectionObserverController,
+  MutationObserverController, 
+  PopStateObserverController,
+  WaitController } from '../../utils/controllers';
 
 /**
  * @class UcdThemeHeader
@@ -15,6 +19,7 @@ import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/i
  * @property {String} figureSrc - Site logo/icon to display next to site name
  * @property {String} siteUrl - Url to use for links around site name and figure
  * @property {Boolean} opened - Whether header is open in the mobile view
+ * @property {Boolean} preventFixed - Navbar will not be fixed to top of screen in desktop view
  * 
  * @example
  *  <ucd-theme-header site-name="A UC Davis Website">
@@ -35,8 +40,7 @@ import { Mixin, MutationObserverElement, BreakPoints, Wait } from "../../utils/i
  *  </ucd-theme-header>
  * 
  */
-export default class UcdThemeHeader extends Mixin(LitElement)
-  .with(MutationObserverElement, BreakPoints, Wait) {
+export default class UcdThemeHeader extends LitElement {
 
   static get properties() {
     return {
@@ -45,11 +49,15 @@ export default class UcdThemeHeader extends Mixin(LitElement)
       figureSrc: {type: String, attribute: "figure-src"},
       siteUrl: {type: String, attribute: "site-url"},
       opened: {type: Boolean},
+      preventFixed: {type: Boolean, attribute: "prevent-fixed"},
       isDemo: {type: Boolean, attribute: "is-demo"},
       _transitioning: {type: Boolean, state: true},
+      _hasPrimaryNav: {type: Boolean, state: true},
       _hasSlottedBranding: {type: Boolean, state: true},
       _hasQuickLinks: {type: Boolean, state: true},
-      _hasSearch: {type: Boolean, state: true}
+      _hasSearch: {type: Boolean, state: true},
+      _brandingBarInView: {type: Boolean, state: true},
+      _components: {type: Object, state: true}
     };
   }
 
@@ -61,6 +69,10 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
 
+    this.mutationObserver = new MutationObserverController(this);
+    this.wait = new WaitController(this);
+    new PopStateObserverController(this, "_onLocationChange");
+
     this.siteName = "";
     this.siteUrl = "/";
     this.slogan = "";
@@ -69,30 +81,76 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     this.isDemo = false;
 
     this._transitioning = false;
+    this._hasPrimaryNav = false;
     this._hasSlottedBranding = false;
     this._hasQuickLinks = false;
     this._hasSearch = false;
     this._animationDuration = 500;
+    this._brandingBarInView = false;
+    this._slottedComponents = {};
 
   }
 
   /**
-   * @method updated
-   * @description Lit lifecycle method called after element has updated.
-   * @param {Map} props - Properties updated in cycle
+   * @method connectedCallback
    * @private
+   * @description Custom element lifecycle method
    */
-  updated( props ){
-
-    // Check if we're using the default branding div
-    const brandProps = ['siteName', 'slogan', 'figureSrc'];
-    if ( brandProps.map(p => props.has(p)).filter(Boolean).length ) {
-      if ( brandProps.map(p => this[p]).filter(Boolean).length ) {
-        this._hasSlottedBranding = false;
-      } else {
-        this._hasSlottedBranding = true;
-      }
+  connectedCallback(){
+    super.connectedCallback();
+    if ( !this.preventFixed ) {
+      this.intersectionObserver = new IntersectionObserverController(this, {}, "_onBrandingBarIntersection", false);
     }
+  }
+
+  /**
+   * @method firstUpdated
+   * @private
+   * @description Lit lifecycle hook
+   */
+  firstUpdated(){
+    if ( !this.preventFixed ) {
+      let aboveNav = this.renderRoot.getElementById('branding-bar-container');
+      this.intersectionObserver.observer.observe(aboveNav);
+    }
+  }
+
+  /**
+   * @method _onLocationChange
+   * @description Called when url changes by popstate controller
+   */
+  _onLocationChange(){
+    this.close();
+    if ( this._hasQuickLinks ){
+      this._slottedComponents.quickLinks.close();
+    }
+    if ( this._hasSearch ){
+      this._slottedComponents.search.close();
+    }
+  }
+
+  /**
+   * @method _onBrandingBarIntersection
+   * @private
+   * @description Called by intersection observer when branding bar enters/exits screen
+   * @param {*} entries 
+   */
+  _onBrandingBarIntersection(entries){
+    let offSetValue = 0;
+    try {
+      offSetValue = this.renderRoot.getElementById('nav-bar').getBoundingClientRect().height;
+    } catch (error) {
+      //
+    }
+    if ( offSetValue > 150 ) offSetValue = 0;
+    entries.forEach(entry => {
+      this._brandingBarInView = entry.isIntersecting;
+      if (this._brandingBarInView) {
+        this.style.marginBottom = '0px';
+      } else {
+        this.style.marginBottom = offSetValue + "px";
+      }
+    });
   }
 
   /**
@@ -105,7 +163,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
     this.opened = true;
     this._transitioning = true;
-    await this.waitForAnimation();
+    await this.wait.wait(this._animationDuration);
     this._transitioning = false;
     return true;
 
@@ -121,7 +179,7 @@ export default class UcdThemeHeader extends Mixin(LitElement)
 
     this.opened = false;
     this._transitioning = true;
-    await this.waitForAnimation();
+    await this.wait.wait(this._animationDuration);
     this._transitioning = false;
     return true;
 
@@ -169,6 +227,24 @@ export default class UcdThemeHeader extends Mixin(LitElement)
   }
 
   /**
+   * @method _getHeaderClasses
+   * @description Get classes to be assigned to the header element
+   * @private
+   * @returns {Object}
+   */
+  _getHeaderClasses(){
+    let classes = {
+      "l-header": true,
+      "header": true
+    };
+
+    classes['fixed-mobile'] = !this.preventFixed;
+    classes['fixed-desktop'] = !this.preventFixed && !this._brandingBarInView;
+    
+    return classes;
+  }
+
+  /**
    * @method _ucdLogo
    * @description Returns URI-encoded svg string of UC Davis logo
    * @private
@@ -194,14 +270,18 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     let primaryNav = this.querySelector('ucd-theme-primary-nav');
     if ( primaryNav ) {
       primaryNav.setAttribute('slot', 'primary-nav');
+      this._hasPrimaryNav = true;
+      this._slottedComponents.primaryNav = primaryNav;
     } else {
       console.warn("No 'ucd-theme-primary-nav' child element found!");
+      this._hasPrimaryNav = false;
     }
 
     let quickLinks = this.querySelector('ucd-theme-quick-links');
     if ( quickLinks ) {
       quickLinks.setAttribute('slot', 'quick-links');
       this._hasQuickLinks = true;
+      this._slottedComponents.quickLinks = quickLinks;
     } else {
       this._hasQuickLinks = false;
     }
@@ -210,8 +290,20 @@ export default class UcdThemeHeader extends Mixin(LitElement)
     if ( search ) {
       search.setAttribute('slot', 'search');
       this._hasSearch = true;
+      this._slottedComponents.search = search;
     } else {
       this._hasSearch = false;
+    }
+
+    let UcdlibBrandingBar = this.querySelector('ucdlib-branding-bar');
+    if ( UcdlibBrandingBar ) {
+      UcdlibBrandingBar.setAttribute('slot', 'branding-bar');
+      this._hasSlottedBranding = true;
+      this._slottedComponents.brandingBar = UcdlibBrandingBar;
+    } else if ( this.querySelector("*[slot='branding-bar']") ){
+      this._hasSlottedBranding = true;
+    } else {
+      this._hasSlottedBranding = false;
     }
   }
 

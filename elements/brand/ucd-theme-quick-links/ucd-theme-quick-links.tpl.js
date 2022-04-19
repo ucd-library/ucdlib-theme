@@ -84,7 +84,7 @@ return html`
       aria-controls="quick-links" 
       aria-expanded="${this.opened}" 
       aria-label="Toggle ${this.title} Menu">
-      ${this.title}<span class="submenu-toggle"><span class="submenu-toggle__icon">+</span></span>
+      ${this.title}<span class="submenu-toggle ${this.opened ? 'submenu-toggle--open' : ''}"><span class="submenu-toggle__icon">+</span></span>
     </button>
     <nav 
       id="quick-links" 
