@@ -3,6 +3,8 @@ dev
 bundle.js
 .DS_Store
 .env
+brand-app/js
+brand-app/css
 
 # Emacs files
 *~

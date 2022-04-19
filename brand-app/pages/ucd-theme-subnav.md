@@ -38,6 +38,7 @@ Patternlab url:
 | --- | --- | --- |
 | navTitle | <code>String</code> | Subnav header text |
 | titleHref | <code>String</code> | Link for subnav header (optional) |
+| titleClickEvent | <code>Boolean</code> | If navTitle, will fire an event when clicked. |
 
 <a name="openNavItem"></a>
 

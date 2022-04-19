@@ -149,7 +149,6 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
    * @description Fires an 'item-click' event
    * @param {Object} item - The link item
    * @param {Array} location - The link location in links array
-   * @returns 
    */
   _dispatchItemClick(item, location){
     if (item.href) return;

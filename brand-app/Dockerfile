@@ -8,8 +8,12 @@ COPY package-lock.json .
 RUN npm install
 
 COPY server.js .
-COPY fonts.css .
+COPY css css
 COPY fonts fonts
+COPY index.html .
+COPY external.html .
+COPY external-loader-client.js .
+COPY external-loader-service.js .
 COPY index.html .
 COPY user-testing user-testing
 

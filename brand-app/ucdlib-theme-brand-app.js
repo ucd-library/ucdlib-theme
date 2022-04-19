@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import {render, styles} from "./ucdlib-theme-test-app.tpl.js";
+import {render, styles} from "./ucdlib-theme-brand-app.tpl.js";
 import {Mixin, MainDomElement} from '../elements/utils/mixins';
 
 import "../elements/ucdlib/ucdlib-pages/ucdlib-pages.js";
@@ -11,7 +11,7 @@ import "../elements/ucdlib/ucdlib-icons/academic";
 import "../elements/ucdlib/ucdlib-icons/sitefarm";
 import "../elements/ucdlib/ucdlib-icons/editor";
 
-export default class UcdlibThemeTestApp extends Mixin(LitElement)
+export default class UcdlibThemeBrandApp extends Mixin(LitElement)
   .with(MainDomElement) {
 
   static get properties() {
@@ -71,4 +71,4 @@ export default class UcdlibThemeTestApp extends Mixin(LitElement)
 
 }
 
-customElements.define('ucdlib-theme-test-app', UcdlibThemeTestApp);
+customElements.define('ucdlib-theme-brand-app', UcdlibThemeBrandApp);

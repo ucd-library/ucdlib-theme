@@ -33,7 +33,7 @@ You can then start that with:
 
 ``` bash
 myport=4444
-docker run --rm -p ${myport}:3000 --name test-app -d local-dev/ucdlib-theme-test-app
+docker run --rm -p ${myport}:3000 --name brand-app -d local-dev/ucdlib-theme-brand-app
 ```
 
 The docker images are also tagged with a branch as well.

@@ -23,7 +23,7 @@ return html`
   <p>If you want to host the Proxima Nova font files on the same server as your application: </p>
   <ul class="list--arrow">
     <li>Download the fonts
-      <br><a href="https://github.com/ucd-library/ucdlib-theme/blob/main/test-app/fonts/proximanova/download.sh">This script</a> will do the work for you.
+      <br><a href="https://github.com/ucd-library/ucdlib-theme/blob/main/brand-app/fonts/proximanova/download.sh">This script</a> will do the work for you.
     </li>
     <li>Load the <a href="https://github.com/ucd-library/ucdlib-theme-sass/blob/main/source/sass/style-ucdlib.scss">ucdlib SASS build</a>
       <br> Load this SASS file instead of the main style.scss because this one does not load the proxima nova css rules that point to the campus server.
