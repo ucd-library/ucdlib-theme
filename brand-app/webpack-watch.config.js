@@ -1,14 +1,44 @@
 const path = require('path');
 const fs = require('fs-extra');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const appBuild = require('@ucd-lib/cork-app-build');
 
 let preview = './js';
 let previewFolder = path.join(__dirname, preview);
 if( fs.existsSync(previewFolder) ) {
   fs.removeSync(previewFolder);
 }
+fs.mkdirSync(previewFolder);
 
-let config = require('@ucd-lib/cork-app-build').watch({
+// copy resources
+fs.copy(
+  path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/js/solid.min.js'), 
+  path.join(__dirname, 'js/solid.min.js')
+);
+fs.copy(
+  path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js'), 
+  path.join(__dirname, 'js/fontawesome.min.js')
+);
+
+let cssFolder = path.join(__dirname, 'css');
+if( fs.existsSync(cssFolder) ) {
+  fs.removeSync(cssFolder);
+}
+fs.mkdirSync(cssFolder);
+
+fs.copy(
+  path.join(__dirname, 'node_modules/@ucd-lib/theme-sass/style-ucdlib.css'), 
+  path.join(__dirname, 'css/style-ucdlib.css')
+);
+fs.copy(
+  path.join(__dirname, 'node_modules/prismjs/themes/prism.css'), 
+  path.join(__dirname, 'css/prism.css')
+);
+fs.copy(
+  path.join(__dirname, 'fonts.css'), 
+  path.join(__dirname, 'css/fonts.css')
+);
+
+let config = appBuild.watch({
   // root directory, all paths below will be relative to root
   root : __dirname,
   // path to your entry .js file
@@ -17,6 +47,15 @@ let config = require('@ucd-lib/cork-app-build').watch({
   preview : preview,
   clientModules : 'node_modules'
 });
+
+config = [config, appBuild.watch({
+  root : __dirname,
+  entry : 'components.js',
+  preview,
+  modern : 'external.js',
+  ie : 'external-ie.js',
+  clientModules : 'node_modules'
+})];
 
 let loaderOptions = {
   css: {
@@ -36,22 +75,10 @@ let loaderOptions = {
       }
     }
   }
-}
-if( !Array.isArray(config) ) config = [config];
+};
+
 config.forEach(conf => {
   
-  // make our stylesheet
-  // conf.entry = [conf.entry, path.join(__dirname, './styles/style.scss')];
-  // conf.module.rules.push({
-  //   test: /\.s[ac]ss$/i,
-  //   issuer: { not: [ /\.js$/ ] },
-  //   use: [
-  //     { loader: MiniCssExtractPlugin.loader},
-  //     loaderOptions.css,
-  //     loaderOptions.scss,
-  //   ]
-  // });
-
   // import select scss partials to put in web component shadowdom
   conf.module.rules.push({
     test: /\.s[ac]ss$/i,
@@ -63,11 +90,6 @@ config.forEach(conf => {
     ]
   });
 
-  // conf.plugins = [
-  //   new MiniCssExtractPlugin({
-  //     filename: './styles.css'
-  //   })
-  // ]
 });
 
 module.exports = config;

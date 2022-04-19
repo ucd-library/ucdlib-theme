@@ -56,7 +56,7 @@ steps:
 
   - name: node:14
     entrypoint: "bash"
-    args: ["-c", "cd test-app; npm install" ]
+    args: ["-c", "cd brand-app; npm install" ]
 
   - name: node:14
     entrypoint: "bash"

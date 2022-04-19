@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 
+app.use('/ui', require('./external-loader-service'));
 app.use(express.static(__dirname));
 
 const port = process.env.PORT || 3000;

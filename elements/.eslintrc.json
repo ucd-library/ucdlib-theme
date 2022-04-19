@@ -1,3 +1,7 @@
 {
-  "ignorePatterns" : ["*.tpl.js"]
+  "ignorePatterns" : ["*.tpl.js"],
+  "globals": {
+    "UCD_LIB_THEME_LOADER" : "readonly",
+    "WebComponents" : "readonly"
+  }
 }

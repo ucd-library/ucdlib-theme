@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>UCD Theme Components</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      let customElementsDefine = window.customElements.define;
+
+      // hack: capture all pages
+      window.PAGES = [];
+      window.customElements.define = function(name, classDef) {
+        if( name.match(/^page-/) ) PAGES.push(name);
+        customElementsDefine.call(customElements, name, classDef);
+      };
+    </script>
+    <script src="/js/bundle.js"></script>
+    <script src="/js/solid.min.js"></script>
+    <script src="/js/fontawesome.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/css/style-ucdlib.css">
+    <link href="/css/prism.css" rel="stylesheet" />
+  </head>
+  <body>
+    <ucdlib-theme-brand-app></ucdlib-theme-brand-app>
+  </body>
+</html>
