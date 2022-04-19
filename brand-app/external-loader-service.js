@@ -24,9 +24,9 @@ router.get('/loader.js', (req, res) => {
   let flags = (req.query.flags || '').toLowerCase().split(',').map(item => item.trim());
 
   let loaderConfig = {
-    version: config.version,
-    host: 'http://localhost:3000'
+    version: config.version
   };
+
   for( let flag of flags ) {
     loaderConfig[flag] = true;
   }

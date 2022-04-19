@@ -9,6 +9,12 @@
 ### Functions
 
 <dl>
+<dt><a href="#firstUpdated">firstUpdated()</a></dt>
+<dd><p>Lit lifecycle method when element is first updated</p>
+</dd>
+<dt><a href="#dispatchLoadEvent">dispatchLoadEvent()</a></dt>
+<dd><p>fires off a &#39;ucdlib-iconset-added&#39; event so ucdlib-icon elements can re-render if applicable</p>
+</dd>
 <dt><a href="#getIconNames">getIconNames()</a> ⇒ <code>Array</code></dt>
 <dd><p>Returns a list of icon names for this set</p>
 </dd>
@@ -36,7 +42,20 @@ Component for creating svg iconsets to be consumed by the 'icon' attribute of uc
 | name | <code>String</code> | Name of the icon set. Usage: <ucdlib-icon icon="{thisProperty}:{icon}"></ucdlib-icon> |
 | size | <code>Number</code> | The size of an individual icon. Note that icons must be square. |
 | label | <code>String</code> | Optional friendly label for iconset. |
+| suppressWarnings | <code>String</code> | Suppress any "you're doing it wrong" console warnings |
 
+<a name="firstUpdated"></a>
+
+### firstUpdated()
+Lit lifecycle method when element is first updated
+
+**Kind**: global function  
+<a name="dispatchLoadEvent"></a>
+
+### dispatchLoadEvent()
+fires off a 'ucdlib-iconset-added' event so ucdlib-icon elements can re-render if applicable
+
+**Kind**: global function  
 <a name="getIconNames"></a>
 
 ### getIconNames() ⇒ <code>Array</code>

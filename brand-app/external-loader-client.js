@@ -5,31 +5,15 @@
   }
 
   function addCss(path) {
-    if( WebComponents.noPolyRequired ) {
-      console.log('doc write css', path);
-      document.open();
-      document.write('<link rel="stylesheet" href="'+host()+path+'" />');
-      document.close();
-    } else {
-      let link = document.createElement('link');
-      link.setAttribute('rel', 'stylesheet');
-      link.setAttribute('type', 'text/css');
-      link.setAttribute('href', host()+path);
-      document.head.appendChild(link);
-    }
+    document.open();
+    document.write('<link rel="stylesheet" href="'+host()+path+'" />');
+    document.close();
   }
 
   function addJs(path) {
-    if( WebComponents.noPolyRequired ) {
-      console.log('doc write js', path);
-      document.open();
-      document.write('<script src="'+host()+path+'" ><\/script>');
-      document.close();
-    } else {
-      let script = document.createElement('script');
-      script.setAttribute('src', host()+path);
-      document.head.appendChild(script);
-    }
+    document.open();
+    document.write('<script src="'+host()+path+'" ><\/script>');
+    document.close();
   }
 
   function loaderRootPath() {

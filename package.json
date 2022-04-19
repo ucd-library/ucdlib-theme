@@ -4,9 +4,9 @@
   "description": "University branding, additional theme support, theme elements",
   "main": "index.js",
   "scripts": {
-    "init": "npm install; cd brand-app && npm install",
+    "init": "npm install; cd brand-app && npm install; cd ../elements && npm install",
     "test": "mocha tests/index.js --timeout 10000",
-    "deploy-app": "./devops/deploy-gcloud-run.sh",
+    "deploy-app": "./devops/submit-build.sh",
     "local-build": "./devops/local-build.sh",
     "docs": "node docs.js"
   },
@@ -16,10 +16,10 @@
     "eslint": "^7.32.0",
     "eslint-plugin-jsdoc": "^33.3.0",
     "fs-extra": "^9.1.0",
+    "jsdoc-to-markdown": "^7.1.0",
     "memfs": "^3.4.0",
     "mocha": "^9.1.3",
     "puppeteer": "^10.4.0",
-    "jsdoc-to-markdown": "^7.1.0"
-  },
-  "dependencies": {}
+    "webpack": "^5.72.0"
+  }
 }
