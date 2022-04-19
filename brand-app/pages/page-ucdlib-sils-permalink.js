@@ -1,7 +1,7 @@
 import {LitElement } from 'lit';
 import {render} from "./page-ucdlib-sils-permalink.tpl.js";
 
-import {Mixin, MainDomElement} from '../../elements/utils/index.js';
+import {Mixin, MainDomElement} from '../../elements/utils/mixins';
 import {BrandedPageElement} from "../utils/index.js";
 
 import "../../elements/ucdlib/ucdlib-sils-permalink/ucdlib-sils-permalink.js";

@@ -82,13 +82,10 @@ return html`
             <li><a href="#ucdlib-iconset">Icon Set</a></li>
           </ul>
           <li><a href="#ucdlib-pages">Pages</a></li>
-<<<<<<< HEAD:test-app/ucdlib-theme-test-app.tpl.js
-          <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
-=======
           <ul link-text="SILS">
             <li><a href="#ucdlib-sils-search-redirect">Search Redirect</a></li>
+            <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
           </ul>
->>>>>>> main:brand-app/ucdlib-theme-brand-app.tpl.js
         </ul>
 
         <ul link-text="Brand Guides" href="#overview">
