@@ -56,8 +56,22 @@ return html`
   </ul>   
 
   <h2>Use in Web Application</h2>
+
   <p>TODO. Basically a rehash of this <a href="https://docs.google.com/document/d/1u288xsd539qGXWzOQITg6sig-FIAIJR695nNjC4TfBI/edit#bookmark=id.4ya1ygt45oo4">Google Doc section</a>,
    but with more example code for setting up the imports.
+  </p>
+
+  <p>
+    ${this.examplePanel(html`
+      npm install @ucd-lib/ucdlib-theme
+    `, false, 'Install via npm:')}
+  </p>
+
+  <h2>Use in Website</h2>
+
+  <p>
+    The library offers a prebuilt bundle that can load the UC Davis brand theme into your webpage using a single
+    script. <a href="/external.html">Click here to view script document.</a>
   </p>
 
 `;}
