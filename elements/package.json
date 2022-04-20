@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "@lit-labs/task": "^1.0.0",
-    "request": "^2.88.2",
     "@ucd-lib/theme-sass": "^5.0.15",
     "ip-cidr": "^3.0.4",
     "lit": "^2.0.2",
