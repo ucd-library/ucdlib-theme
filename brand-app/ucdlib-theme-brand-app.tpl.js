@@ -84,6 +84,7 @@ return html`
           <li><a href="#ucdlib-pages">Pages</a></li>
           <ul link-text="SILS">
             <li><a href="#ucdlib-sils-search-redirect">Search Redirect</a></li>
+            <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
           </ul>
         </ul>
 

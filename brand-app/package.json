@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "@lit-labs/task": "^1.0.0",
     "@ucd-lib/theme-elements": "file:../elements",
     "@ucd-lib/theme-sass": "^5.0.15",
     "cors": "^2.8.5",

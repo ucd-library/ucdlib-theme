@@ -16,5 +16,6 @@ import "./pages/page-ucdlib-icon";
 import "./pages/page-ucdlib-icons";
 import "./pages/page-ucdlib-iconset";
 import "./pages/page-ucdlib-pages";
+import "./pages/page-ucdlib-sils-permalink";
 import "./pages/page-ucdlib-branding-bar";
 import "./pages/page-ucdlib-sils-search-redirect";
