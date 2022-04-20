@@ -96,12 +96,13 @@
             </div>
           </div>
 
+          <h3>Flags</h3>
+
           <p>
             The loader.js endpoint accepts optional <b>?flags=</b> parameter.  You can provide multiple flags, comma separated.
             <br />Example: <b>?flags=ignoreFonts,ignoreIcons</b>
           </p>
-            
-          <h3>Flags</h3>
+
           <ul class="list--bordered" style="margin-bottom: 50px">
             <li>
               <b>ignoreCss:</b>  Do not load the global UCD Theme css
@@ -112,7 +113,21 @@
             <li>
               <b>ignoreIcons:</b> Do not load the UCD Theme icon sets
             </li>
+            <li>
+              <b>ignorePolyfills:</b> The loader.js script will detect if your browser does not support ES Classes.  
+              If your browser does not support ES Classes, by default, it will load a set of polyfills from 
+              <a href="https://babeljs.io/">Babel</a>.  However, if you wish to skip this step, provide the 
+              <b>ignorePolyfills</b> flag.  All modern browsers support ES Classes, so this is an edge use case.
+            </li>
           </ul>
+
+          <h3>Web Component Polyfills</h3>
+          <p>
+            The loader.js endpoint will detect if your browser supports web components.  If not, a set of <a href="https://github.com/webcomponents/polyfills">polyfills</a>
+            will be loaded.  All modern browsers support web components, this is an edge use case that any polyfills will be loaded.
+          </p>
+
+          <h3>Live Example</h3>
           
           <p>Please feel free to look at the source of this (external.html) page, it uses the loader.js script</p>
 
