@@ -6,6 +6,11 @@ import { MutationObserverController } from '../../utils/controllers/mutation-obs
 /**
  * @class UcdlibMd
  * @classdesc Component class for translating/displaying markdown into sanitized html
+ * @property {String} data - text to hold markdown code
+ * @property {Object} renderer - an object holding element functions to override the default markdown behavior 
+ *  Format: reference the Marked Renderer documentation at https://marked.js.org/using_pro#renderer
+ *
+ ** NOTE: THE FOLLOWING PROPERTIES ARE NOT IMPLEMENTED **
  * @property {String} ignore - comma-separated list of html tags to ignore special rendering, just render as text
  *  Format: ${tag wildcard},${tag name}, ie "h*,p"
  * @property {String} exclude -  comma-separated list of html tags to excise from output
@@ -20,7 +25,8 @@ export default class UcdlibMd extends LitElement {
       // ignore: {type: String},
       // exclude: {type: String},
       // subset: {type: String},
-      data: {type: String}
+      data: {type: String},
+      renderer: {type: Object}
     };
   }
 
@@ -29,6 +35,7 @@ export default class UcdlibMd extends LitElement {
   constructor() {
     super();
     this.data = '';
+    this.renderer = null;
     // this.ignore = '';
     // this.exclude = '';
     // this.subset = '';
@@ -89,34 +96,36 @@ export default class UcdlibMd extends LitElement {
   _setRendererOverrides() {
     // TODO determine what subset should include/exclude
     // const self = this;
-    const renderer = {
+    if (!this.renderer) {
+      this.renderer = {
 
-      // example of using the ignore/exclude properties
-      // heading(text, level) {
-      //   let renderedContent = '';
-      //   if (self.ignore && self.ignore.includes('h*') || self.ignore.includes(`h${level}`)) {
-      //     // ignore formatting
-      //     renderedContent = text;
-      //   } else if (!self.exclude || (self.exclude && !self.exclude.includes('h*') && !self.exclude.includes(`h${level}`))) {
-      //     // exclude should excise from output, so make sure it's not set for all headings or this heading level
-      //     renderedContent = `<h${level}>${text}</h${level}>`
-      //   }
-      //   return renderedContent;
-      // },
-
-      list(body, ordered, start) {
-        // TODO what does start control?
-        let renderedContent = '';
-        if (ordered) {
-
-        } else {
-          renderedContent = `<ul class="list--bordered">${body}</ul>`;
+        // example of using the ignore/exclude properties
+        // heading(text, level) {
+        //   let renderedContent = '';
+        //   if (self.ignore && self.ignore.includes('h*') || self.ignore.includes(`h${level}`)) {
+        //     // ignore formatting
+        //     renderedContent = text;
+        //   } else if (!self.exclude || (self.exclude && !self.exclude.includes('h*') && !self.exclude.includes(`h${level}`))) {
+        //     // exclude should excise from output, so make sure it's not set for all headings or this heading level
+        //     renderedContent = `<h${level}>${text}</h${level}>`
+        //   }
+        //   return renderedContent;
+        // },
+  
+        list(body, ordered, start) {
+          // TODO what does start control?
+          let renderedContent = '';
+          if (ordered) {
+            renderedContent = `<ul class="list--multilevel">${body}</ul>`;
+          } else {
+            renderedContent = `<ul class="list--bordered">${body}</ul>`;
+          }
+          return renderedContent;
         }
-        return renderedContent;
-      }
-
-    };
-    marked.use({ renderer });
+      };
+    }
+    
+    marked.use({ renderer: this.renderer });
   }
 
 }
