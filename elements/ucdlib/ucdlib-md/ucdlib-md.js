@@ -10,14 +10,6 @@ import { MutationObserverController } from '../../utils/controllers/mutation-obs
  * @property {String} data - text to hold markdown code
  * @property {Object} renderer - an object holding element functions to override the default markdown behavior 
  *  Format: reference the Marked Renderer documentation at https://marked.js.org/using_pro#renderer
- *
- ** NOTE: THE FOLLOWING PROPERTIES ARE NOT IMPLEMENTED **
- * @property {String} ignore - comma-separated list of html tags to ignore special rendering, just render as text
- *  Format: ${tag wildcard},${tag name}, ie "h*,p"
- * @property {String} exclude -  comma-separated list of html tags to excise from output
- *  Format: ${tag name},${tag name}, ie "img,p"
- * @property {String} subset - Specifies some common sets of ignores/excludes, that we use
- *  Format: "core|full|parsimonious"
 */
 export default class UcdlibMd extends LitElement {
 
