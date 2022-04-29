@@ -1,5 +1,6 @@
 import { LitElement, css } from 'lit';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { UcdlibMdContent } from './ucdlib-md-content.js';
 import { MutationObserverController } from '../../utils/controllers/mutation-observer.js';
 
@@ -75,7 +76,7 @@ export default class UcdlibMd extends LitElement {
     this._setRendererOverrides();
   
     // update markdown data with the latest, either when the content changes or data property is updated
-    this.data = marked.parse(this.data);
+    this.data = DOMPurify.sanitize(marked.parse(this.data));
     this.renderedElement.innerHTML = this.data;
   }
 
