@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { MutationObserverController } from '../../utils/controllers/mutation-observer.js';
+import { MutationObserverController } from '../../utils/controllers';
 
 /**
  * @class UcdlibMdContent

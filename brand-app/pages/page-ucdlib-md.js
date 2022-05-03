@@ -22,6 +22,30 @@ export default class PageUcdlibMd extends Mixin(LitElement)
     this.render = render.bind(this);
   }
 
+  /**
+   * @method firstUpdated
+   * @description Lit method called when element is first updated.
+   */
+  firstUpdated() {
+    document.querySelector('#entered-md').addEventListener('keyup', this._updateDisplayedMarkdown.bind(this));
+  }
+
+  /**
+   * @method _updateDisplayedMarkdown
+   * @description Helper method to update the ucdlib-md element with entered textarea text.
+   */
+  _updateDisplayedMarkdown() {    
+    document.querySelector('#md-renderer').data = document.querySelector('#entered-md').value;
+  }
+
+  /**
+   * @method disconnectedCallback
+   * @description Web Component lifecycle method when the componenent is disposed of
+   */
+  disconnectedCallback() {
+    document.querySelector('#entered-md').removeEventListener('keyup', this._updateDisplayedMarkdown.bind(this));
+  }
+
 }
 
 customElements.define('page-ucdlib-md', PageUcdlibMd);

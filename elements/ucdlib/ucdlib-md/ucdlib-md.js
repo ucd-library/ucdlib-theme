@@ -10,6 +10,8 @@ import { MutationObserverController } from '../../utils/controllers/mutation-obs
  * @property {String} data - text to hold markdown code
  * @property {Object} renderer - an object holding element functions to override the default markdown behavior 
  *  Format: reference the Marked Renderer documentation at https://marked.js.org/using_pro#renderer
+ * @property {Object} use - marked use object
+ * @property {Object} options - marked options object
 */
 export default class UcdlibMd extends LitElement {
 
@@ -19,7 +21,9 @@ export default class UcdlibMd extends LitElement {
       // exclude: {type: String},
       // subset: {type: String},
       data: {type: String},
-      renderer: {type: Object}
+      renderer: {type: Object},
+      use: {type: Object},
+      options: {type: Object}
     };
   }
 
@@ -29,9 +33,6 @@ export default class UcdlibMd extends LitElement {
     super();
     this.data = '';
     this.renderer = null;
-    // this.ignore = '';
-    // this.exclude = '';
-    // this.subset = '';
 
     this.renderedElement = document.createElement('div');
     this.renderedElement.setAttribute('rendered', '');
@@ -78,7 +79,8 @@ export default class UcdlibMd extends LitElement {
    * @private
    */
   _updateFromContentElementMd() {
-    this.data = this.contentElement.innerText.trim(); // innerHTML pulls in the <!----> lit appends
+    // remove whitespace between lines
+    this.data = this.contentElement.innerText.split('\n').map(line => line.trim()).join('\n');
   }
   
   /**
@@ -87,26 +89,9 @@ export default class UcdlibMd extends LitElement {
    * @private
    */
   _setRendererOverrides() {
-    // TODO determine what subset should include/exclude
-    // const self = this;
     if (!this.renderer) {
       this.renderer = {
-
-        // example of using the ignore/exclude properties
-        // heading(text, level) {
-        //   let renderedContent = '';
-        //   if (self.ignore && self.ignore.includes('h*') || self.ignore.includes(`h${level}`)) {
-        //     // ignore formatting
-        //     renderedContent = text;
-        //   } else if (!self.exclude || (self.exclude && !self.exclude.includes('h*') && !self.exclude.includes(`h${level}`))) {
-        //     // exclude should excise from output, so make sure it's not set for all headings or this heading level
-        //     renderedContent = `<h${level}>${text}</h${level}>`
-        //   }
-        //   return renderedContent;
-        // },
-  
         list(body, ordered, start) {
-          // TODO what does start control?
           let renderedContent = '';
           if (ordered) {
             renderedContent = `<ul class="list--multilevel">${body}</ul>`;
@@ -117,8 +102,17 @@ export default class UcdlibMd extends LitElement {
         }
       };
     }
-    
-    marked.use({ renderer: this.renderer });
+
+    if (!this.options) {
+      this.options = { breaks: true, gfm: true };
+    }
+
+    if (!this.use) {
+      this.use = { renderer: this.renderer };
+    }
+
+    marked.use(this.use);
+    marked.setOptions(this.options);
   }
 
 }

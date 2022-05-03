@@ -1,4 +1,4 @@
-import marked from 'marked';
+import { marked } from 'marked';
 
 const MdElement = (superClass) => class extends superClass {
 
