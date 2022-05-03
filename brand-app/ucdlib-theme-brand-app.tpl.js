@@ -86,6 +86,7 @@ return html`
             <li><a href="#ucdlib-sils-search-redirect">Search Redirect</a></li>
             <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
           </ul>
+          <li><a href="#ucdlib-md">Markdown</a></li>
         </ul>
 
         <ul link-text="Brand Guides" href="#overview">

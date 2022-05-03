@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/theme-elements",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Custom elements for the UCD brand theme",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,10 @@
   "dependencies": {
     "@lit-labs/task": "^1.0.0",
     "@ucd-lib/theme-sass": "^5.0.15",
+    "dompurify": "^2.3.6",
     "ip-cidr": "^3.0.4",
     "lit": "^2.0.2",
+    "marked": "^4.0.14",
     "photoswipe": "^4.1.3",
     "slim-select": "^1.26.2"
   }
