@@ -457,20 +457,13 @@
 
 <script>
   Array.from(document.querySelectorAll('a')).forEach(link => {
-    if ( link.href && (link.href.includes('stage') || link.href.includes('sandbox')) ) {
-      link.href = "#";
-    }
-    else if ( !link.href ) {
-      link.href = "#";
-    }
+    link.href = "#";
   })
   Array.from(document.querySelectorAll('ul,li')).forEach(link => {
     var href = link.getAttribute('href');
-    if ( href && (href.includes('stage') || href.includes('sadbox')) ) {
+    if ( href || href === '') {
       link.setAttribute('href', '#');
-    } else if ( href === '' ) {
-      link.setAttribute('href', '#');
-    }
+    } 
   })
   document.querySelector('ucd-theme-primary-nav')._onChildListMutation();
   document.querySelector('ucdlib-branding-bar')._onChildListMutation();
