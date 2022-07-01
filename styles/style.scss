@@ -54,6 +54,7 @@
 //------------------------------------
 //  Library styles
 //------------------------------------
-
-
-
+// Avoid screen flash before components are registered
+ucdlib-properties:not(:defined) {
+  display: none;
+}
