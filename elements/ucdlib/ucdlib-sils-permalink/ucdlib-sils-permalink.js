@@ -1,6 +1,7 @@
 import { LitElement} from 'lit';
 import {render, styles} from "./ucdlib-sils-permalink.tpl.js";
 import {PermalinkController} from './ucdlib-sils-permalink-controller.js';
+import {TaskController} from '../../utils/controllers/task.js';
 
 /**
  * @class UcdlibSilsPermalink
@@ -99,7 +100,8 @@ export default class UcdlibSilsPermalink extends LitElement {
    */  
   firstUpdated(changedProperties){
     if(this.permalink != ''){
-       this.perma = new PermalinkController(this, this._requestUrl());
+       this.perma = new TaskController(this, this._requestUrl());
+
        this.requestUpdate();
     }
   }
