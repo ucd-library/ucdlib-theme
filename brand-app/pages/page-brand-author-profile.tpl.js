@@ -32,6 +32,8 @@ accessing the appropriate JSON for the entry, and dynamically formatting the lin
 <p>Using the <a
 href="https://sandbox.library.ucdavis.edu/wp-json/ucdlib-directory/people">JSON</a>
 representation, we can fill a profile based on a directory email address given.</p>
+
+<p>Includes <code>email</code> for choosing person for author profile and <code>domain</code> for which domain you want to search in.</p>
   ${this.sampleList.map(id =>
     html`
       ${this.examplePanel(html`
