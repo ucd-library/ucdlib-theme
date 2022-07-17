@@ -5,12 +5,11 @@ import {TaskController} from '../../utils/controllers/task.js';
 /**
  * @class AuthorProfile
  * @description This author profile hydrates with the website wordpress api and goes into a profile block.
- * @property {String} href - Pointer to the permalink
- * @property {String} cite - Specify the citation style
+ * @property {String} email - Email to reference person
+ * @property {String} domain - Specify the domain to choose from
  *
- * <ucdlib-sils-permalink email="https://search.library.ucdavis.edu/permalink/01UCD_INST/1uov27j/alma9981249369903126"/>
+ * <brand-author-profile domain="sandbox" email='sabaggett@ucdavis.edu></brand-author-profile>
  */
-
 export default class BrandAuthorProfile extends LitElement {
   static get properties() {
     return {
@@ -29,7 +28,8 @@ export default class BrandAuthorProfile extends LitElement {
       contactAppointmentUrl: {type: String},
       positionTitle: {type: String},
       photo: {type: Object},
-      department: {type: String}
+      department: {type: String},
+      domain: {type: String}
     };
   }
 
@@ -45,7 +45,7 @@ export default class BrandAuthorProfile extends LitElement {
     this.ERROR = false;
     this.results = {};
     this.email = '';
-    this.size;
+    this.domain = 'sandbox';
     this.errorMessage = 'This is not an email.';
     
     this.svgIcon = {
@@ -68,51 +68,9 @@ export default class BrandAuthorProfile extends LitElement {
         `
     };
     this.render=render.bind(this);
-    this._handleResize = this._handleResize.bind(this);
-
 
   }
 
-    /**
-   * @method connectedCallback
-   * @description lit method called when element is connected to dom
-   */
-     connectedCallback() {
-      super.connectedCallback();
-      window.addEventListener('resize', this._handleResize);
-    }
-  
-    /**
-     * @method disconnectedCallback
-     * @description lit method called when element is disconnected to dom
-     */  
-    disconnectedCallback() {
-      window.removeEventListener('resize', this._handleResize);
-      super.disconnectedCallback();
-    }
-  
-  /**
-     * @method updated
-     * @description lit method called when props update
-     * 
-     * @param {Object} props 
-     */
-  updated(props) {
-    requestAnimationFrame( () => this._handleResize());
-    // if (props.has('visible') && this.visible ) {
-      
-    // }
-  }
-
-  /**
-   * @method _handleResize
-   * @description bound to main window resize event
-   */
-  _handleResize() {
-    this.size = window.innerWidth;
-    this.requestUpdate();
-  }
-  /**
 
   /**
    * @method firstUpdated
@@ -122,8 +80,7 @@ export default class BrandAuthorProfile extends LitElement {
    * @param {Object} changedProperties 
    * 
    */  
-  firstUpdated(changedProperties){
-    console.log(changedProperties);
+  firstUpdated(){
     if(this.email != ''){
       this.eController = new TaskController(this, this._requestUrl());
 
@@ -131,26 +88,58 @@ export default class BrandAuthorProfile extends LitElement {
     }
   }
 
-
-
   
-
+  /**
+   * @method validationLink
+   * 
+   * @description Validates the email to make sure it is an email
+   * 
+   * @param {String} email 
+   * 
+   * @returns {String}
+   * 
+   */ 
   validationLink(email){
     const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;  
     return regexExp.test(email);
   }
 
+  /**
+   * @method validationLink
+   * 
+   * @description Validates the email to make sure it is an email
+   * 
+   * @param {String} email 
+   * 
+   * @returns {String}
+   * 
+   */ 
   _onPending(){
     this.PENDING = true;
   }
  
-
+  /**
+   * @method _onError
+   * 
+   * @description Sets error variable to true
+   * 
+   * @param {String} e 
+   * 
+   */ 
   _onError(e){
     this.ERROR = true;
-    console.log("Error:", e);
+    console.error(e);
   }
 
-
+  /**
+   * @method _onComplete
+   * 
+   * @description on complete defines the forms and updates
+   * 
+   * @param {Object} results 
+   * 
+   * 
+   */ 
   _onComplete(results){
     this.COMPLETE = true;
     this.PENDING = false;
@@ -184,18 +173,32 @@ export default class BrandAuthorProfile extends LitElement {
 
   }
 
-
+  /**
+   * @method _requestUrl
+   * 
+   * @description configures the url and checks for email validation
+   * 
+   * @returns {String}
+   * 
+   */ 
   _requestUrl(){
     let email =this.email;
     let validate = this.validationLink(email);
     if(!validate)  console.error(email);
 
-    let url = "https://sandbox.library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
+    let url = "https://" + this.domain + ".library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
     this.requestUpdate();
     
     return url;
   }
 
+  /**
+   * @method _onLoading
+   * 
+   * @description Sets loading variable to true
+   * 
+   * 
+   */ 
   _onLoading(){
     this.LOADING = true;
   }
