@@ -4,6 +4,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="/ui/loader.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.css" />
+    <script src="https://unpkg.com/prismjs@1.28.0/prism.js"></script>
+    <script src="https://unpkg.com/prismjs@1.28.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+
+    <style>
+      .l-main {
+        padding-bottom: 25px;
+      }
+    </style>
   </head>
   <body>
 
@@ -62,6 +72,68 @@
       </ucd-theme-primary-nav>
 
     </ucd-theme-header>
+
+    <main class="l-main">
+      <div class="l-container">
+        <div class="l-content">
+
+          <div class="l-full-width">
+            <h1 class="page-title u-space-mb--large">Prebuilt Theme Package</h1>
+          </div>
+          <p>
+            The library offers a prebuilt bundle that can load the UC Davis brand theme into your webpage using a single
+            loader script.  This script will load the brands global css, icons, fonts and web components.
+          </p>
+
+          <div class="quick-summary">
+            <h2 class="quick-summary__title">Import Theme</h2>
+            <div class="quick-summary__body">
+              <pre class="u-space-my--flush language-html" style="background-color:white;" tabindex="0">
+                <code class="language-html">
+                  &lt;script src=&quot;https://brand.library.ucdavis.edu/ui/loader.js&quot;&gt;&lt;/script&gt;
+                </code>
+              </pre>
+            </div>
+          </div>
+
+          <h3>Flags</h3>
+
+          <p>
+            The loader.js endpoint accepts optional <b>?flags=</b> parameter.  You can provide multiple flags, comma separated.
+            <br />Example: <b>?flags=ignoreFonts,ignoreIcons</b>
+          </p>
+
+          <ul class="list--bordered" style="margin-bottom: 50px">
+            <li>
+              <b>ignoreCss:</b>  Do not load the global UCD Theme css
+            </li>
+            <li>
+              <b>ignoreFonts:</b> Do not load the Proxima Nova font set
+            </li>
+            <li>
+              <b>ignoreIcons:</b> Do not load the UCD Theme icon sets
+            </li>
+            <li>
+              <b>ignorePolyfills:</b> The loader.js script will detect if your browser does not support ES Classes.  
+              If your browser does not support ES Classes, by default, it will load a set of polyfills from 
+              <a href="https://babeljs.io/">Babel</a>.  However, if you wish to skip this step, provide the 
+              <b>ignorePolyfills</b> flag.  All modern browsers support ES Classes, so this is an edge use case.
+            </li>
+          </ul>
+
+          <h3>Web Component Polyfills</h3>
+          <p>
+            The loader.js endpoint will detect if your browser supports web components.  If not, a set of <a href="https://github.com/webcomponents/polyfills">polyfills</a>
+            will be loaded.  All modern browsers support web components, this is an edge use case that any polyfills will be loaded.
+          </p>
+
+          <h3>Live Example</h3>
+          
+          <p>Please feel free to look at the source of this (external.html) page, it uses the loader.js script</p>
+
+        </div>
+      </div>
+    </main>
 
   </body>
 </html>
