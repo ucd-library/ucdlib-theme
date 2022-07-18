@@ -10,6 +10,7 @@ import './pages/page-ucd-theme-brand-textbox';
 import './pages/page-ucd-theme-subnav';
 import "./pages/page-ucd-theme-slim-select";
 import "./pages/page-ucd-theme-list-accordion";
+import "./pages/page-brand-author-profile";
 
 // ucdlib components
 import "./pages/page-ucdlib-icon";
