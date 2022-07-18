@@ -36,7 +36,7 @@ representation, we can fill a profile based on a directory email address given.<
   ${this.sampleList.map(id =>
     html`
       ${this.examplePanel(html`
-      <brand-author-profile domain="sandbox" email='${id}'></brand-author-profile>
+      <brand-author-profile domain="stage" email='${id}'></brand-author-profile>
     `)}
   `)}
 
