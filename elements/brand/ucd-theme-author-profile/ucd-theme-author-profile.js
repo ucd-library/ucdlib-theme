@@ -45,7 +45,7 @@ export default class BrandAuthorProfile extends LitElement {
     this.ERROR = false;
     this.results = {};
     this.email = '';
-    this.domain = 'sandbox';
+    this.domain = '';
     this.errorMessage = 'This is not an email.';
     
     this.svgIcon = {
@@ -185,8 +185,11 @@ export default class BrandAuthorProfile extends LitElement {
     let email =this.email;
     let validate = this.validationLink(email);
     if(!validate)  console.error(email);
+    let url;
 
-    let url = "https://" + this.domain + ".library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
+    url = "https://library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
+    if (this.domain != "")
+      url = "https://" + this.domain + ".library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
     this.requestUpdate();
     
     return url;
