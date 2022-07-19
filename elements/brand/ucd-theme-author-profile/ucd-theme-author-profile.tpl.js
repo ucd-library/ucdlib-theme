@@ -41,28 +41,47 @@ export function render() {
       height:18px;
     }
     .container {
-      display: grid;
-      grid-template-columns: 20% 80%;
+      display: inline-grid;
+      grid-template-columns: 15% 85%;
+      width:100%;
+    }
+    .container-no-image {
+      display: inline-grid;
+      width:100%;
     }
     article {
-      width:75%;
       margin-bottom: 50px;
     }
-    .photo {
-      margin: 0 auto;
-      width: 135px;    
-      height: 135px;    
+    /* .photo {
       background-color:darkgrey;
+      display:inline-block;
+      width: 125%;
+      height: 100%;
+      padding-bottom: 25%;      
+      position: relative;
+      content: "";
+    } */
+    .photo {
+      position: relative;
+      width:90%;
+      height:90%;
     }
-    .photo_container {
-      text-align: center;
-      display:table-cell;
-      vertical-align:top;
-      display: flex;
-      height:135px;
+
+    .photo:after {
+      content: "";
+      display:inline-block;
     }
+
+    .content {
+      position: absolute;
+      width: 70%;
+      height: 70%;
+    }
+
+
     .text_container {
-      height:135px;
+      vertical-align:top;
+      display:inline-block;
     }
     .name {
       color:var(--ucd-blue-80); 
@@ -86,48 +105,31 @@ export function render() {
       margin-top:5px;
     }
 
-    @media (max-width: 1365px) {
-      .photo {
-          width: 100px;  
-          height: 100px;  
-        }
-      }
-    @media (max-width: 1100px) {
-      .photo {
-        width: 90px;  
-        height: 90px;  
-      }
-    }
-    @media (max-width: 1000px) {
-      .photo {
-        width: 80px;  
-        height: 80px;  
-      }
-    }
-    @media (max-width: 875px) {
-      .photo {
-        width: 70px;  
-        height: 70px;  
-      }
-    }
-    @media (max-width: 800px) {
-      .container {
-        display: block;
 
-      }
+    @media (max-width: 800px) {
+
       .contact-list {
         display:block;
         margin-bottom:5px;
       }
-      .photo {
-        width: 135px;    
-        height: 135px;    
-      }
-      .text_container {
-        text-align:left;
-      }
+
       .contact-list .pipe {
         display:none;
+      }
+      .photo {
+        width:90%;
+        height:90%;
+      }
+
+    }
+
+    @media (max-width: 550px) {
+      .container {
+        grid-template-columns: 35% 65%;
+      }
+      .photo {
+        width:80%;
+        height:80%;
       }
 
     }
@@ -147,27 +149,30 @@ ${this.eController ? html`
 
 <article>
   ${!this.LOADING ? html`
-
-
-      <div class="text_container">
-        <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
-        <p  class="title">${this.positionTitle} &#124; ${this.department}</p>
-            <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
-            <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
-            <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl}">Book an Appointment</a></p>
+      ${this.photo != "Empty"  && this.photo != undefined ? 
+      html`   
+      <div class="container">
+        <div class="photo"><img src="${this.photo.link}" alt="${this.photoAlt}"></div>
+        <div class="text_container"> 
+          <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
+          <p class="title">${this.positionTitle} &#124; ${this.department}</p>
+          <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
+          <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
+          <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl}">Book an Appointment</a></p>
+        </div>
       </div>
-    <!-- 
-    this.id
-    this.nameLast
-    this.nameFirst
-    this.link
-    this.contactWebsite
-    this.contactEmail
-    this.contactPhone
-    this.contactAppointmentUrl
-    this.positionTitle
-    this.photo
-    this.department -->
+      `
+      :html`
+      <div class="container-no-image">
+        <div class="text_container"> 
+          <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
+          <p class="title">${this.positionTitle} &#124; ${this.department}</p>
+          <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
+          <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
+          <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a></p>
+        </div>
+      </div>
+      `}
 
     `:html`
       <!-- 
