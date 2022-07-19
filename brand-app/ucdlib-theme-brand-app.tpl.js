@@ -59,7 +59,7 @@ return html`
             <li><a href="#ucd-theme-search-form">Search Form</a></li>
             <li><a href="#ucd-theme-quick-links">Quick Links</a></li>
             <li><a href="#ucdlib-branding-bar">UC Davis Library Branding Bar</a></li>
-            <li><a href="#brand-author-profile">Author Profile</a></li>
+            <li><a href="#ucdlib-author-profile">Author Profile</a></li>
           </ul>
           <ul link-text="Other Navigation">
             <li><a href="#ucd-theme-pagination">Pagination</a></li>

@@ -8,9 +8,9 @@ import {TaskController} from '../../utils/controllers/task.js';
  * @property {String} email - Email to reference person
  * @property {String} domain - Specify the domain to choose from
  *
- * <brand-author-profile domain="sandbox" email='sabaggett@ucdavis.edu></brand-author-profile>
+ * <ucdlib-author-profile domain="sandbox" email='sabaggett@ucdavis.edu></ucdlib-author-profile>
  */
-export default class BrandAuthorProfile extends LitElement {
+export default class UcdlibAuthorProfile extends LitElement {
   static get properties() {
     return {
       results : {type: Object, attribute:false},
@@ -211,4 +211,4 @@ export default class BrandAuthorProfile extends LitElement {
 
 }
 
-customElements.define('brand-author-profile', BrandAuthorProfile);
+customElements.define('ucdlib-author-profile', UcdlibAuthorProfile);
