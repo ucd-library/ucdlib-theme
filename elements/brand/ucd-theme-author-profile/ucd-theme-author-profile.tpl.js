@@ -52,15 +52,7 @@ export function render() {
     article {
       margin-bottom: 50px;
     }
-    /* .photo {
-      background-color:darkgrey;
-      display:inline-block;
-      width: 125%;
-      height: 100%;
-      padding-bottom: 25%;      
-      position: relative;
-      content: "";
-    } */
+
     .photo {
       position: relative;
       width:90%;
@@ -78,7 +70,6 @@ export function render() {
       height: 70%;
     }
 
-
     .text_container {
       vertical-align:top;
       display:inline-block;
@@ -91,7 +82,7 @@ export function render() {
       margin-bottom:0;
     }
     .info {
-      color:var(--ucd-blue-70); 
+      color:var(--ucd-blue-80); 
       margin-bottom:0;
     }
     .svg-icon {
@@ -104,7 +95,13 @@ export function render() {
       display:inline-block;
       margin-top:5px;
     }
-
+    .pipe {
+        font-size:30px;
+        vertical-align: middle;
+        font-weight: lighter;
+        line-height: 25px;
+        color:#36454F;
+    }
 
     @media (max-width: 800px) {
 
@@ -155,8 +152,8 @@ ${this.eController ? html`
         <div class="photo"><img src="${this.photo.link}" alt="${this.photoAlt}"></div>
         <div class="text_container"> 
           <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
-          <p class="title">${this.positionTitle} &#124; ${this.department}</p>
-          <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
+          <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
+          <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span>`: html``}</p>
           <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
           <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl}">Book an Appointment</a></p>
         </div>
@@ -166,7 +163,7 @@ ${this.eController ? html`
       <div class="container-no-image">
         <div class="text_container"> 
           <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
-          <p class="title">${this.positionTitle} &#124; ${this.department}</p>
+          <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
           <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
           <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
           <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a></p>
