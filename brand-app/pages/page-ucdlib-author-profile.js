@@ -1,12 +1,12 @@
 import {LitElement } from 'lit';
-import {render} from "./page-brand-author-profile.tpl.js";
+import {render} from "./page-ucdlib-author-profile.tpl.js";
 
 import {Mixin, MainDomElement} from '../../elements/utils/mixins';
 import {BrandedPageElement} from "../utils/index.js";
 
 import "../../elements/brand/ucd-theme-author-profile/ucd-theme-author-profile.js";
 
-export default class PageBrandAuthorProfile extends Mixin(LitElement)
+export default class PageUcdlibAuthorProfile extends Mixin(LitElement)
   .with(MainDomElement, BrandedPageElement) {
 
   static get properties() {
@@ -34,4 +34,4 @@ export default class PageBrandAuthorProfile extends Mixin(LitElement)
 
 }
 
-customElements.define('page-brand-author-profile', PageBrandAuthorProfile);
+customElements.define('page-ucdlib-author-profile', PageUcdlibAuthorProfile);

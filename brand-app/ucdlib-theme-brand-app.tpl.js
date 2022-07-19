@@ -87,7 +87,7 @@ return html`
             <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
           </ul>
           <li><a href="#ucdlib-md">Markdown</a></li>
-          <li><a href="#brand-author-profile">Author Profile</a></li>
+          <li><a href="#ucdlib-author-profile">Author Profile</a></li>
         </ul>
 
         <ul link-text="Brand Guides" href="#overview">
