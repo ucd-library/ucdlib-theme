@@ -164,9 +164,11 @@ export default class BrandAuthorProfile extends LitElement {
  
     this.positionTitle = this.results.positionTitle;
 
-    this.photo = this.results.photo;
+    this.photo = Object.keys(this.results.photo).length !== 0 ? this.results.photo : "Empty";
 
     this.department = this.results.department.title;
+    
+    this.photoAlt = this.nameFirst + "_" + this.nameLast + "_Img";
 
     this.requestUpdate();
 
