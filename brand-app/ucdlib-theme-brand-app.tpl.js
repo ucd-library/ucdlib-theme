@@ -59,7 +59,6 @@ return html`
             <li><a href="#ucd-theme-search-form">Search Form</a></li>
             <li><a href="#ucd-theme-quick-links">Quick Links</a></li>
             <li><a href="#ucdlib-branding-bar">UC Davis Library Branding Bar</a></li>
-            <li><a href="#ucdlib-author-profile">Author Profile</a></li>
           </ul>
           <ul link-text="Other Navigation">
             <li><a href="#ucd-theme-pagination">Pagination</a></li>
@@ -88,6 +87,7 @@ return html`
             <li><a href="#ucdlib-sils-permalink">SILS Permalinks</a></li>
           </ul>
           <li><a href="#ucdlib-md">Markdown</a></li>
+          <li><a href="#ucdlib-author-profile">Author Profile</a></li>
         </ul>
 
         <ul link-text="Brand Guides" href="#overview">
