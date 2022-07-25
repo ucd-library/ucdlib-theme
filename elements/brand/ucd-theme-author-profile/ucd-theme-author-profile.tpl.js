@@ -102,6 +102,9 @@ export function render() {
         line-height: 25px;
         color:#36454F;
     }
+    .noApp-pipe {
+      display:none;
+    }
 
     @media (max-width: 800px) {
 
@@ -146,6 +149,7 @@ ${this.eController ? html`
 
 <article>
   ${!this.LOADING ? html`
+      ${console.log("Here:",this.contactAppointmentUrl)}
       ${this.photo != "Empty"  && this.photo != undefined ? 
       html`   
       <div class="container">
@@ -154,8 +158,8 @@ ${this.eController ? html`
           <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
           <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
           <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span>`: html``}</p>
-          <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
-          <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl}">Book an Appointment</a></p>
+          <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>
+          <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
         </div>
       </div>
       `
@@ -165,8 +169,8 @@ ${this.eController ? html`
           <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
           <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
           <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
-          <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> <span class="pipe">&#124;</span>`: html``}</p>
-          <p class="contact-list">${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a></p>
+          <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>
+          <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
         </div>
       </div>
       `}
