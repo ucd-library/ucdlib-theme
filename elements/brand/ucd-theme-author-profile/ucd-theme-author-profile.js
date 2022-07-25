@@ -160,7 +160,7 @@ export default class UcdlibAuthorProfile extends LitElement {
 
     this.contactPhone = this.results.contactPhone.length !== 0 ? this.results.contactPhone[0].value : null;
 
-    this.contactAppointmentUrl = this.results.contactAppointmentUrl;
+    this.contactAppointmentUrl = this.results.contactAppointmentUrl != "" ? this.results.contactAppointmentUrl : undefined;
  
     this.positionTitle = this.results.positionTitle;
 

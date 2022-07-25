@@ -149,7 +149,6 @@ ${this.eController ? html`
 
 <article>
   ${!this.LOADING ? html`
-      ${console.log("Here:",this.contactAppointmentUrl)}
       ${this.photo != "Empty"  && this.photo != undefined ? 
       html`   
       <div class="container">
