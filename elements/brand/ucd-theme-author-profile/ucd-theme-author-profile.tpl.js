@@ -175,21 +175,26 @@ ${this.eController ? html`
       `}
 
     `:html`
-      <!-- 
-        If it is in the loading stage of the permalink fetch
-        it will render this
-        look.
-      -->
-      <div class="vm-teaser__figure category_loading"></div>
-      <div class="vm-teaser__body">
-        <div class="load_teaser_a"></div>
-        <br/>
-        <div class="load_teaser_b"></div>
-        <br/>
-        <div class="load_teaser_c"></div>
-        <br/>
-        <div class="load_teaser_c"></div>
-      </div>
+      ${this.ERROR ? html`
+        <p>Person does not exist!</p>
+      `: html`
+        <!-- 
+          If it is in the loading stage of the permalink fetch
+          it will render this
+          look.
+        -->
+        <div class="vm-teaser__figure category_loading"></div>
+        <div class="vm-teaser__body">
+          <div class="load_teaser_a"></div>
+          <br/>
+          <div class="load_teaser_b"></div>
+          <br/>
+          <div class="load_teaser_c"></div>
+          <br/>
+          <div class="load_teaser_c"></div>
+        </div>
+        `}
+
     `}
 </article>
 `;

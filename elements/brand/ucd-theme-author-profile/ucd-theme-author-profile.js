@@ -128,6 +128,7 @@ export default class UcdlibAuthorProfile extends LitElement {
    */ 
   _onError(e){
     this.ERROR = true;
+    console.log(this.ERROR);
     console.error(e);
   }
 
@@ -141,37 +142,44 @@ export default class UcdlibAuthorProfile extends LitElement {
    * 
    */ 
   _onComplete(results){
-    this.COMPLETE = true;
-    this.PENDING = false;
-    this.LOADING = false;
     this.results = results;
+    if(this.results.data != undefined) {
+      this.ERROR = true;
+    }
+    else {
+      this.COMPLETE = true;
+      this.PENDING = false;
+      this.LOADING = false;
 
-    this.id = this.results.id;
 
-    this.nameLast = this.results.nameLast;
+      this.id = this.results.id;
 
-    this.nameFirst = this.results.nameFirst;
+      this.nameLast = this.results.nameLast;
 
-    this.link = this.results.link;
+      this.nameFirst = this.results.nameFirst;
 
-    this.contactWebsite = this.results.contactWebsite.length !== 0 ? this.results.contactWebsite[0].value :null;
+      this.link = this.results.link;
 
-    this.contactEmail = this.results.contactEmail.length !== 0 ? this.results.contactEmail[0].value : null;
+      this.contactWebsite = this.results.contactWebsite.length !== 0 ? this.results.contactWebsite[0].value :null;
 
-    this.contactPhone = this.results.contactPhone.length !== 0 ? this.results.contactPhone[0].value : null;
+      this.contactEmail = this.results.contactEmail.length !== 0 ? this.results.contactEmail[0].value : null;
 
-    this.contactAppointmentUrl = this.results.contactAppointmentUrl != "" ? this.results.contactAppointmentUrl : undefined;
- 
-    this.positionTitle = this.results.positionTitle;
+      this.contactPhone = this.results.contactPhone.length !== 0 ? this.results.contactPhone[0].value : null;
 
-    this.photo = Object.keys(this.results.photo).length !== 0 ? this.results.photo : "Empty";
+      this.contactAppointmentUrl = this.results.contactAppointmentUrl != "" ? this.results.contactAppointmentUrl : undefined;
+  
+      this.positionTitle = this.results.positionTitle;
 
-    this.department = this.results.department.title;
+      this.photo = Object.keys(this.results.photo).length !== 0 ? this.results.photo : "Empty";
+
+      this.department = this.results.department.title;
+      
+      this.photoAlt = this.nameFirst + "_" + this.nameLast + "_Img";
+
+      this.requestUpdate();
+    }
+
     
-    this.photoAlt = this.nameFirst + "_" + this.nameLast + "_Img";
-
-    this.requestUpdate();
-
 
   }
 
