@@ -1,16 +1,11 @@
 import { LitElement } from 'lit';
-import {render, styles} from "./ucd-theme-breadcrumbs.tpl";
+import {render, styles} from "./ucd-theme-breadcrumbs.tpl.js";
 
-import {Mixin, MainDomElement} from '../../elements/utils/mixins';
-import {BrandedPageElement } from "../utils/index.js";
-
-
-export default class PageBrandBreadcrumbs extends Mixin(LitElement)
-  .with(MainDomElement, BrandedPageElement ) {
+export default class UcdThemeBreadcrumbs extends LitElement {
 
   static get properties() {
     return {
-      
+      links: {type: Array}
     };
   }
 
@@ -21,8 +16,15 @@ export default class PageBrandBreadcrumbs extends Mixin(LitElement)
   constructor() {
     super();
     this.render = render.bind(this);
+    this.links;
+  }
+
+  firstUpdated(){
+    this.lastElement = this.links[this.links.length - 1];
+    this.requestUpdate();
   }
 
 }
 
-customElements.define('page-brand-breadcrumbs', PageBrandBreadcrumbs);
+customElements.define('ucd-theme-breadcrumbs', UcdThemeBreadcrumbs);
+
