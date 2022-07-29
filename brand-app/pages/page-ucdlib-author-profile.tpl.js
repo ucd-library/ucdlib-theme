@@ -22,7 +22,7 @@ ${this.pageTitle('Author Profile')}
 <p>The notion of the email is to be able to add links complete
 website records, for example this <a
 href="https://sandbox.library.ucdavis.edu/wp-json/ucdlib-directory/person/qjhart@ucdavis.edu">Person</a>.
-The <code> &lt;ucdlib-author-profile domain="sandbox" email="qjhart@ucdavis.edu"&gt;&lt;/ucdlib-author-profile&gt; </code> 
+The <code> &lt;ucdlib-theme-author-profile domain="sandbox" email="qjhart@ucdavis.edu"&gt;&lt;/ucdlib-theme-author-profile&gt; </code> 
 could be used to add links. Formatting for these links could be created by
 accessing the appropriate JSON for the entry, and dynamically formatting the link.</p>
 
@@ -34,7 +34,7 @@ representation, we can fill a profile based on a directory email address given.<
   ${this.sampleList.map(id =>
     html`
       ${this.examplePanel(html`
-      <ucdlib-author-profile domain="stage" email='${id}'></ucdlib-author-profile>
+      <ucdlib-theme-author-profile domain="stage" email='${id}'></ucdlib-theme-author-profile>
     `)}
   `)}
 
