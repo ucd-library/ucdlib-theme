@@ -34,7 +34,7 @@ representation, we can fill a profile based on a directory email address given.<
   ${this.sampleList.map(id =>
     html`
       ${this.examplePanel(html`
-      <ucdlib-author-profile domain="stage" email='${id}'></ucdlib-author-profile>
+      <ucdlib-author-profile domain="stage" email='${id}' sidebar></ucdlib-author-profile>
     `)}
   `)}
 
