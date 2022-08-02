@@ -8,7 +8,7 @@ import {TaskController} from '../../utils/controllers/task.js';
  * @property {String} email - Email to reference person
  * @property {String} domain - Specify the domain to choose from
  *
- * <ucdlib-author-profile domain="sandbox" email='sabaggett@ucdavis.edu></ucdlib-author-profile>
+ * <ucdlib-theme-author-profile domain="sandbox" email='sabaggett@ucdavis.edu></ucdlib-theme-author-profile>
  */
 export default class UcdlibAuthorProfile extends LitElement {
   static get properties() {
@@ -75,21 +75,19 @@ export default class UcdlibAuthorProfile extends LitElement {
 
 
   /**
-   * @method firstUpdated
+   * @method updated
    * 
-   * @description updated when the page first renders
+   * @description request user data when email or domain changes
    * 
-   * @param {Object} changedProperties 
+   * @param {Object} props 
    * 
    */  
-  firstUpdated(){
-    if(this.email != ''){
+  updated(props){
+    if( props.has('email') || props.has('domain') ){
+      if( !this.email ) return;
       this.eController = new TaskController(this, this._requestUrl());
-
-      this.requestUpdate();
     }
   }
-
   
   /**
    * @method validationLink
@@ -221,4 +219,4 @@ export default class UcdlibAuthorProfile extends LitElement {
 
 }
 
-customElements.define('ucdlib-author-profile', UcdlibAuthorProfile);
+customElements.define('ucdlib-theme-author-profile', UcdlibAuthorProfile);
