@@ -40,6 +40,9 @@ export function render() {
       width: 33.3%;
       height:18px;
     }
+    .author_profile{
+
+    }
     .container {
       display: inline-grid;
       grid-template-columns: 15% 85%;
@@ -147,7 +150,7 @@ ${this.eController ? html`
     }`:html``
 }
 
-<article>
+<article class="author-profile">
   ${!this.LOADING ? html`
       ${this.photo != "Empty"  && this.photo != undefined ? 
       html`   
