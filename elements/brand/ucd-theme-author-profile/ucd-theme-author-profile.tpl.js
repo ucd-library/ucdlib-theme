@@ -156,19 +156,7 @@ ${this.eController ? html`
   ${!this.LOADING ? html`
       ${this.photo != "Empty"  && this.photo != undefined ? 
       html`   
-        ${this.sidebar ? html`
-          <div class="side-bar">
-            <div class="photo"><img src="${this.photo.link}" alt="${this.photoAlt}"></div>
-            <div class="text_container"> 
-              <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
-              <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
-              <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span>`: html``}</p>
-              <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>
-              <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
-            </div>
-          </div>
-        `:html`
-          <div class="container">
+        <div class="${this.sidebar ? 'side-bar':'container'}">
           <div class="photo"><img src="${this.photo.link}" alt="${this.photoAlt}"></div>
           <div class="text_container"> 
             <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
@@ -178,7 +166,6 @@ ${this.eController ? html`
             <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
           </div>
         </div>
-        `}
       `
       :html`
       <div class="container-no-image">
