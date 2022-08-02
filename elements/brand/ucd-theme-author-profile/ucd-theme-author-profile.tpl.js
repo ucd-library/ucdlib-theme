@@ -78,14 +78,14 @@ export function render() {
       display:inline-block;
     }
     .name {
-      color:var(--ucd-blue-80); 
+      color: #13639e;
       margin-bottom:0;
     }
     .title {
       margin-bottom:0;
     }
     .info {
-      color:var(--ucd-blue-80); 
+      color: #13639e;
       margin-bottom:0;
     }
     .svg-icon {
@@ -108,7 +108,11 @@ export function render() {
     .noApp-pipe {
       display:none;
     }
-
+    @media (min-width: 992px) {
+      .container {
+        grid-template-columns: 25% 75%;
+      }
+    }
     @media (max-width: 800px) {
 
       .contact-list {
@@ -150,7 +154,7 @@ ${this.eController ? html`
     }`:html``
 }
 
-<article class="author-profile">
+<article>
   ${!this.LOADING ? html`
       ${this.photo != "Empty"  && this.photo != undefined ? 
       html`   
