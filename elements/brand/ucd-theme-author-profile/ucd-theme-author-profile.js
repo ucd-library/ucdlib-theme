@@ -29,7 +29,8 @@ export default class UcdlibAuthorProfile extends LitElement {
       positionTitle: {type: String},
       photo: {type: Object},
       department: {type: String},
-      domain: {type: String}
+      domain: {type: String},
+      sidebar: {type: Boolean}
     };
   }
 
@@ -46,6 +47,7 @@ export default class UcdlibAuthorProfile extends LitElement {
     this.results = {};
     this.email = '';
     this.domain = '';
+
     this.errorMessage = 'This is not an email.';
     
     this.svgIcon = {
