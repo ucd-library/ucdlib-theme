@@ -42,7 +42,7 @@ export function render() {
     }
     .side-bar{
       display: inline-grid;
-      grid-template-columns: 25% 75%;
+      grid-template-columns: 15% 85%;
       width:100%;
     }
     .container {
@@ -111,6 +111,12 @@ export function render() {
       display:none;
     }
 
+    @media (min-width:992px) {
+      .side-bar{
+        grid-template-columns: 25% 75%;
+      }  
+    }
+
     @media (max-width: 800px) {
 
       .contact-list {
@@ -132,6 +138,7 @@ export function render() {
       .container {
         grid-template-columns: 35% 65%;
       }
+      
       .photo {
         width:80%;
         height:80%;
