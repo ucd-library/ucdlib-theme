@@ -1,5 +1,5 @@
 import {html, LitElement} from 'lit';
-import {render, styles} from "./ucd-theme-author-profile.tpl.js";
+import {render, styles} from "./ucdlib-author-profile.tpl.js";
 import {TaskController} from '../../utils/controllers/task.js';
 
 /**
@@ -151,7 +151,6 @@ export default class UcdlibAuthorProfile extends LitElement {
       this.PENDING = false;
       this.LOADING = false;
 
-
       this.id = this.results.id;
 
       this.nameLast = this.results.nameLast;
@@ -219,4 +218,4 @@ export default class UcdlibAuthorProfile extends LitElement {
 
 }
 
-customElements.define('ucdlib-theme-author-profile', UcdlibAuthorProfile);
+customElements.define('ucdlib-author-profile', UcdlibAuthorProfile);
