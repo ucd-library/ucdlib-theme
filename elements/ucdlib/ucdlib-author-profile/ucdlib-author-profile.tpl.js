@@ -112,9 +112,9 @@ export function render() {
     }
 
     @media (min-width:992px) {
-      .side-bar{
+      .container{
         grid-template-columns: 25% 75%;
-      }  
+      }
     }
 
     @media (max-width: 800px) {
