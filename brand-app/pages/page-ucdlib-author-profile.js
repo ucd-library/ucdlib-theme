@@ -16,15 +16,12 @@ export default class PageUcdlibAuthorProfile extends Mixin(LitElement)
 
   constructor() {
     super();
-    this.new_permalinks = [];
-    this.hasCustomData = false;
     this.sampleList = [
       'mmlivas@ucdavis.edu',
       'qjhart@ucdavis.edu',
       'spelkey@ucdavis.edu',
       'mjwarren@ucdavis.edu',
       'dfsnapp@ucdavis.edu',
-      'error@email.edu'
     ];
 
 
