@@ -13,7 +13,7 @@ export function styles() {
   const elementStyles = css`
     :host {
       display: block;
-      max-width: 500px;
+      max-width: 33rem;
       margin: auto;
     }
     h2 {
@@ -44,8 +44,9 @@ export function styles() {
       justify-content: space-between;
     }
     .search-options label {
-      color: ${unsafeCSS(categoryBrands.primary.hex)};
+      font-weight: 700;
       padding-bottom: 0;
+      color: ${unsafeCSS(categoryBrands.primary.hex)};
     }
     input[type=checkbox] {
       margin-right: 0;
@@ -53,13 +54,15 @@ export function styles() {
     .search-options button {
       border: none;
       background-color: inherit;
-      color: ${unsafeCSS(categoryBrands.primary.hex)};
+      font-weight: 700;
       text-decoration: underline;
       padding: 0;
       font-family: inherit;
+      color: ${unsafeCSS(categoryBrands.primary.hex)};
     }
     .checkbox label::before {
       background-color: white;
+      border: 1px solid rgb(153, 153, 153);
     }
     .dark h2 {
       color: ${unsafeCSS(categoryBrands.secondary.hex)}
