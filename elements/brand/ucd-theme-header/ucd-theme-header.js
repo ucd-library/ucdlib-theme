@@ -18,6 +18,7 @@ import {
  * @property {String} slogan - Optional text to display below site name
  * @property {String} figureSrc - Site logo/icon to display next to site name
  * @property {String} siteUrl - Url to use for links around site name and figure
+ * @property {Boolean} silenceWarnings - Console warnings will be silences
  * @property {Boolean} opened - Whether header is open in the mobile view
  * @property {Boolean} preventFixed - Navbar will not be fixed to top of screen in desktop view
  * 
@@ -49,6 +50,7 @@ export default class UcdThemeHeader extends LitElement {
       figureSrc: {type: String, attribute: "figure-src"},
       siteUrl: {type: String, attribute: "site-url"},
       opened: {type: Boolean},
+      silenceWarnings: {type: Boolean, attribute: 'silence-warnings'},
       preventFixed: {type: Boolean, attribute: "prevent-fixed"},
       isDemo: {type: Boolean, attribute: "is-demo"},
       _transitioning: {type: Boolean, state: true},
@@ -57,6 +59,8 @@ export default class UcdThemeHeader extends LitElement {
       _hasQuickLinks: {type: Boolean, state: true},
       _hasSearch: {type: Boolean, state: true},
       _brandingBarInView: {type: Boolean, state: true},
+      _brandingBarLinks: {type: Array, state: true},
+      _brandingBarListener: {type: Boolean, state: true},
       _components: {type: Object, state: true}
     };
   }
@@ -79,6 +83,7 @@ export default class UcdThemeHeader extends LitElement {
     this.figureSrc = "";
     this.opened = false;
     this.isDemo = false;
+    this.silenceWarnings = false;
 
     this._transitioning = false;
     this._hasPrimaryNav = false;
@@ -87,6 +92,8 @@ export default class UcdThemeHeader extends LitElement {
     this._hasSearch = false;
     this._animationDuration = 500;
     this._brandingBarInView = false;
+    this._brandingBarLinks = [];
+    this._brandingBarListener = false;
     this._slottedComponents = {};
 
   }
@@ -262,6 +269,21 @@ export default class UcdThemeHeader extends LitElement {
   }
 
   /**
+   * @method _onBrandingBarUpdate
+   * @description Listens to nav item changes to the ucdlib-branding-bar element (if applicable)
+   * @private
+   * @param {Element} ele - ucdlib-branding-bar element
+   */
+  _onBrandingBarUpdate(ele) {
+    if ( ele.navItems ) {
+      this._brandingBarLinks = ele.navItems;
+    } else {
+      this._brandingBarLinks = [];
+    }
+    console.log(ele.navItems);
+  }
+
+  /**
    * @method _onChildListMutation
    * @description Fires when there are changes to this element's non-shadow DOM children
    * @private
@@ -273,7 +295,9 @@ export default class UcdThemeHeader extends LitElement {
       this._hasPrimaryNav = true;
       this._slottedComponents.primaryNav = primaryNav;
     } else {
-      console.warn("No 'ucd-theme-primary-nav' child element found!");
+      if ( !this.silenceWarnings ) {
+        console.warn("No 'ucd-theme-primary-nav' child element found!");
+      }
       this._hasPrimaryNav = false;
     }
 
@@ -300,10 +324,18 @@ export default class UcdThemeHeader extends LitElement {
       UcdlibBrandingBar.setAttribute('slot', 'branding-bar');
       this._hasSlottedBranding = true;
       this._slottedComponents.brandingBar = UcdlibBrandingBar;
+      if ( !this._brandingBarListener ){
+        this._onBrandingBarUpdate(UcdlibBrandingBar);
+        UcdlibBrandingBar.addEventListener('nav-update', (e) => {this._onBrandingBarUpdate(e.target);});
+        this._brandingBarListener = true;
+      }
+
     } else if ( this.querySelector("*[slot='branding-bar']") ){
       this._hasSlottedBranding = true;
+      this._brandingBarLinks = [];
     } else {
       this._hasSlottedBranding = false;
+      this._brandingBarLinks = [];
     }
   }
 

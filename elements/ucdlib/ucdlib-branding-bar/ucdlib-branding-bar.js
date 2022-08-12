@@ -92,7 +92,12 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
    */
   _onChildListMutation(){
     let navItems = this.parseNavChildren();
-    if ( navItems.length ) this.navItems = navItems;
+    if ( navItems.length ) {
+      this.navItems = navItems;
+    } else {
+      this.navItems = [];
+    }
+    this.dispatchEvent(new CustomEvent('nav-update', {bubbles: true, composed: false}));
   }
 
 }

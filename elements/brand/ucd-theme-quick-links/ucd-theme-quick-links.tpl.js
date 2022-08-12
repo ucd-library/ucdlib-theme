@@ -29,6 +29,9 @@ export function styles() {
     .click-attached {
       cursor: pointer;
     }
+    .submenu-toggle__icon {
+      min-width: 40%;
+    }
     @media (min-width: 992px) {
       .slot-parent {
         display: block;

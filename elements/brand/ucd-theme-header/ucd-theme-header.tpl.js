@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import headingStyles from "@ucd-lib/theme-sass/1_base_html/_headings.css.js";
 import headerStyles from "@ucd-lib/theme-sass/4_component/_header.css.js";
@@ -40,6 +41,9 @@ export function styles() {
       .fixed-mobile .l-header__branding {
         margin-top: 55px;
       }
+      .branding-bar-mobile-links {
+        display: block;
+      }
     }
 
     @media (min-width: 992px) {
@@ -51,6 +55,36 @@ export function styles() {
         left: 0;
         width: 100%;
       }
+      .branding-bar-mobile-links {
+        display: none;
+      }
+    }
+    .branding-bar-mobile-links ul {
+      margin: 0px;
+      padding: 0px;
+      list-style: none;
+    }
+    .branding-bar-mobile-links li {
+      margin: 0px;
+      padding: 0px;
+      list-style: none;
+    }
+    .branding-bar-mobile-links a {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border-bottom: 0.15rem solid rgb(219, 234, 247);
+      background-color: #fff;
+      color: rgb(2, 40, 81);
+      font-weight: 700;
+      line-height: 1.5rem;
+      text-decoration: none;
+    }
+    .branding-bar-mobile-links a:hover {
+      background-color: rgb(255, 191, 0);
+    }
+    .branding-bar-mobile-links li:last-child a {
+      border-bottom: none;
     }
 
   `;
@@ -137,6 +171,19 @@ ${this.isDemo ? html`
         <div class="l-nav-horizontal__primary-nav">
           <slot name="primary-nav"></slot>
         </div>
+        ${this._brandingBarLinks.length ? html`
+          <div class='branding-bar-mobile-links'>
+            <ul>
+              ${this._brandingBarLinks.map(link => html`
+                <li><a 
+                  href=${ifDefined(link.href ? link.href : null)}
+                  target=${ifDefined(link.newTab ? "_blank": null)}
+                  >${link.linkText}</a></li>
+              `)}
+            </ul>
+
+          </div>
+        ` : html``}
       </div>
     </div>
   </div>
