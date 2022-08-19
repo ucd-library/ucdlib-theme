@@ -280,7 +280,6 @@ export default class UcdThemeHeader extends LitElement {
     } else {
       this._brandingBarLinks = [];
     }
-    console.log(ele.navItems);
   }
 
   /**
