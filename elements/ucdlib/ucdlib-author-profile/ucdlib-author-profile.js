@@ -6,9 +6,9 @@ import {TaskController} from '../../utils/controllers/task.js';
  * @class AuthorProfile
  * @description This author profile hydrates with the website wordpress api and goes into a profile block.
  * @property {String} email - Email to reference person
- * @property {String} domain - Specify the domain to choose from
+ * @property {String} host - Specify the host to choose from
  *
- * <ucdlib-theme-author-profile domain="sandbox" email='sabaggett@ucdavis.edu></ucdlib-theme-author-profile>
+ * <ucdlib-theme-author-profile host="sandbox" email='sabaggett@ucdavis.edu></ucdlib-theme-author-profile>
  */
 export default class UcdlibAuthorProfile extends LitElement {
   static get properties() {
@@ -29,7 +29,8 @@ export default class UcdlibAuthorProfile extends LitElement {
       positionTitle: {type: String},
       photo: {type: Object},
       department: {type: String},
-      domain: {type: String},
+      host: {type: String},
+      apiPath: {type: String},
       sidebar: {type: Boolean}
     };
   }
@@ -46,7 +47,9 @@ export default class UcdlibAuthorProfile extends LitElement {
     this.ERROR = false;
     this.results = {};
     this.email = '';
-    this.domain = '';
+    this.host = window.location.origin;
+    this.apiPath =  '/wp-json/ucdlib-directory/person/';
+
 
     this.errorMessage = 'This is not an email.';
     
@@ -77,13 +80,13 @@ export default class UcdlibAuthorProfile extends LitElement {
   /**
    * @method updated
    * 
-   * @description request user data when email or domain changes
+   * @description request user data when email or host changes
    * 
    * @param {Object} props 
    * 
    */  
   updated(props){
-    if( props.has('email') || props.has('domain') ){
+    if( props.has('email') || props.has('host') ){
       if( !this.email ) return;
       this.eController = new TaskController(this, this._requestUrl());
     }
@@ -194,11 +197,9 @@ export default class UcdlibAuthorProfile extends LitElement {
     let email =this.email;
     let validate = this.validationLink(email);
     if(!validate)  console.error(email);
-    let url;
 
-    url = "https://library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
-    if (this.domain != "")
-      url = "https://" + this.domain + ".library.ucdavis.edu/wp-json/ucdlib-directory/person/" + String(email);
+    let url = (this.host || window.location.origin) + this.apiPath + String(email);
+
     this.requestUpdate();
     
     return url;
