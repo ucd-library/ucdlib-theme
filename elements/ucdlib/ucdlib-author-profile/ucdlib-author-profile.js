@@ -16,21 +16,21 @@ export default class UcdlibAuthorProfile extends LitElement {
       results : {type: Object, attribute:false},
       email : {type: String},
       id: {type: Number},
-      nameLast: {type: String},
-      nameFirst: {type: String},
+      nameLast: {type: String, attribute: 'name-last'},
+      nameFirst: {type: String, attribute: 'name-first'},
       link: {type: String},
-      contactWebsite: {type: String},
-      contactEmail: {type: String},
-      contactPhone: {type: String},
-      contactWebsiteLabel: {type: String},
-      contactEmailLabel: {type: String},
-      contactPhoneLabel: {type: String},
-      contactAppointmentUrl: {type: String},
-      positionTitle: {type: String},
+      contactWebsite: {type: String, attribute: 'contact-website'},
+      contactEmail: {type: String, attribute: 'contact-email'},
+      contactPhone: {type: String, attribute: 'contact-phone'},
+      contactWebsiteLabel: {type: String, attribute: 'contact-website-label'},
+      contactEmailLabel: {type: String, attribute: 'contact-email-label'},
+      contactPhoneLabel: {type: String, attribute: 'contact-phone-label'},
+      contactAppointmentUrl: {type: String, attribute: 'contact-appointment-url'},
+      positionTitle: {type: String, attribute: 'position-title'},
       photo: {type: Object},
       department: {type: String},
       host: {type: String},
-      apiPath: {type: String},
+      apiPath: {type: String,  attribute: 'api-path'},
       sidebar: {type: Boolean}
     };
   }
@@ -86,7 +86,7 @@ export default class UcdlibAuthorProfile extends LitElement {
    * 
    */  
   updated(props){
-    if( props.has('email') || props.has('host') ){
+    if( props.has('email') || props.has('host') || props.has('apiPath')){
       if( !this.email ) return;
       this.eController = new TaskController(this, this._requestUrl());
     }
