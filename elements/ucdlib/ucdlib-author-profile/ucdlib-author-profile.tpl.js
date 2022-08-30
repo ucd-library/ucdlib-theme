@@ -166,7 +166,7 @@ ${this.eController ? html`
         <div class="${this.sidebar ? 'side-bar':'container'}">
           <div class="photo"><img src="${this.photo.link}" alt="${this.photoAlt}"></div>
           <div class="text_container"> 
-            <h3 class="name"><a class="name" href="">${this.nameFirst} ${this.nameLast}</a></h3>
+            <h3 class="name"><a class="name"  href="${this.link}">${this.nameFirst} ${this.nameLast}</a></h3>
             <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
             <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span>`: html``}</p>
             <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>

@@ -22,7 +22,7 @@ export function render() {
   <p>Use the <code>email</code> attribute to query an employee: </p>
   ${this.sampleList.map(email => this.examplePanel(
     html`
-      <ucdlib-author-profile domain="stage" email='${email}'></ucdlib-author-profile>
+      <ucdlib-author-profile host="https://library.ucdavis.edu" email='${email}'></ucdlib-author-profile>
     `)  
   )}
 
@@ -44,17 +44,17 @@ export function render() {
         </p>
       </div>
       <div class='l-second panel'>
-        <ucdlib-author-profile domain="stage" email='${this.sampleList[0]}' sidebar></ucdlib-author-profile>
-        <ucdlib-author-profile domain="stage" email='${this.sampleList[1]}' sidebar></ucdlib-author-profile>
+        <ucdlib-author-profile host="https://library.ucdavis.edu" email='${this.sampleList[0]}' sidebar></ucdlib-author-profile>
+        <ucdlib-author-profile host="https://library.ucdavis.edu" email='${this.sampleList[1]}' sidebar></ucdlib-author-profile>
       </div>
   </div>
     `)}
 
   <h2>Changing the Data Source</h2>
   <p>By default, this element queries data from <code>https://library.ucdavis.edu</code>. 
-    However, the <code>domain</code> attribute can be used to query a subdomain of the site instead:</p>
+    However, the <code>host</code> attribute can be used to query a subdomain of the site instead:</p>
     ${this.examplePanel(html`
-        <ucdlib-author-profile domain="stage" email='qjhart@ucdavis.edu'></ucdlib-author-profile>
+        <ucdlib-author-profile host="https://library.ucdavis.edu" email='qjhart@ucdavis.edu'></ucdlib-author-profile>
       `)}
 
   `;}
