@@ -45,6 +45,10 @@ export function render() {
       grid-template-columns: 15% 85%;
       width:100%;
     }
+
+    .side-bar .contact-list{
+      display: block;
+    }
     .container {
       display: inline-grid;
       grid-template-columns: 15% 85%;
@@ -98,7 +102,7 @@ export function render() {
     }
     .contact-list{
       display:inline-block;
-      margin-top:5px;
+      margin: 5px 0;
     }
     .pipe {
         font-size:30px;
@@ -121,7 +125,6 @@ export function render() {
 
       .contact-list {
         display:block;
-        margin-bottom:5px;
       }
 
       .contact-list .pipe {
@@ -166,7 +169,7 @@ ${this.eController ? html`
         <div class="${this.sidebar ? 'side-bar':'container'}">
           <div class="photo"><img src="${this.photo.link}" alt="${this.photoAlt}"></div>
           <div class="text_container"> 
-            <h3 class="name"><a class="name"  href="${this.link}">${this.nameFirst} ${this.nameLast}</a></h3>
+            <h4 class="name"><a class="name"  href="${this.link}">${this.nameFirst} ${this.nameLast}</a></h4>
             <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
             <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span>`: html``}</p>
             <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>
@@ -177,7 +180,7 @@ ${this.eController ? html`
       :html`
       <div class="container-no-image">
         <div class="text_container"> 
-          <h3 class="name"><a class="name" href="${this.link}">${this.nameFirst} ${this.nameLast}</a></h3>
+          <h4 class="name"><a class="name" href="${this.link}">${this.nameFirst} ${this.nameLast}</a></h4>
           <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
           <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
           <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>
