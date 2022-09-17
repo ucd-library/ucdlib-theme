@@ -161,6 +161,7 @@ export default class UcdlibAuthorProfile extends LitElement {
       this.nameFirst = this.results.nameFirst;
 
       this.link = this.results.link;
+      console.log(this.link);
 
       this.contactWebsite = this.results.contactWebsite.length !== 0 ? this.results.contactWebsite[0].value :null;
 
