@@ -22,7 +22,7 @@ export function render() {
   <p>Use the <code>email</code> attribute to query an employee: </p>
   ${this.sampleList.map(email => this.examplePanel(
     html`
-      <ucdlib-author-profile host="https://library.ucdavis.edu" email='${email}' ></ucdlib-author-profile>
+      <ucdlib-author-profile host="https://library.ucdavis.edu" email='${email}'></ucdlib-author-profile>
     `)  
   )}
 
