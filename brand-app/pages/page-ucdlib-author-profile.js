@@ -22,6 +22,7 @@ export default class PageUcdlibAuthorProfile extends Mixin(LitElement)
       'spelkey@ucdavis.edu',
       'mjwarren@ucdavis.edu',
       'dfsnapp@ucdavis.edu',
+      'mgvannoord@ucdavis.edu'
     ];
 
 
