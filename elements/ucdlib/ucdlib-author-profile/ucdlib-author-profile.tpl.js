@@ -58,9 +58,6 @@ export function render() {
       display: inline-grid;
       width:100%;
     }
-    article {
-      margin-bottom: 50px;
-    }
 
     .photo {
       position: relative;
@@ -102,7 +99,6 @@ export function render() {
     }
     .contact-list{
       display:inline-block;
-      margin: 5px 0;
     }
     .pipe {
         font-size:30px;
