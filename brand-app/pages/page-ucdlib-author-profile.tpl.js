@@ -45,6 +45,7 @@ export function render() {
       </div>
       <div class='l-second panel'>
         <ucdlib-author-profile host="https://library.ucdavis.edu" email='${this.sampleList[0]}' sidebar></ucdlib-author-profile>
+        <br />
         <ucdlib-author-profile host="https://library.ucdavis.edu" email='${this.sampleList[1]}' sidebar></ucdlib-author-profile>
       </div>
   </div>
