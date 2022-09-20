@@ -99,7 +99,7 @@ export function render() {
     }
     .contact-list{
       display:inline-block;
-      margin:0;
+      margin-bottom:0;
     }
     .pipe {
         font-size:30px;
