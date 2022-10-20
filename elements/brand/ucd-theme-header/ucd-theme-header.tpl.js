@@ -122,8 +122,8 @@ ${this.isDemo ? html`
     </div>
     <div class="mobile-bar__fixed-site-name"><a href=${this.siteUrl}>${this.siteName}</a></div>
     <div class="mobile-bar__university">
-      <a href="https://www.ucdavis.edu/">
-        <img class="ucd-logo" src='data:image/svg+xml;utf8,${this._ucdLogo('gold')}'>
+      <a href="https://www.ucdavis.edu/" aria-label="UC Davis main website link">
+        <img class="ucd-logo" src='data:image/svg+xml;utf8,${this._ucdLogo('gold')}' alt="UC Davis main website link">
       </a>
     </div>
   </div>
@@ -131,8 +131,8 @@ ${this.isDemo ? html`
   <div id="branding-bar-container">
     <div class="header__bar">
         <div class="header__university">
-          <a href="https://www.ucdavis.edu/">
-            <img class="ucd-logo" src='data:image/svg+xml;utf8,${this._ucdLogo()}'>
+          <a href="https://www.ucdavis.edu/" aria-label="UC Davis main website link">
+            <img class="ucd-logo" src='data:image/svg+xml;utf8,${this._ucdLogo()}' alt="UC Davis main website link">
           </a>
         </div>
     </div>
@@ -142,7 +142,7 @@ ${this.isDemo ? html`
       ` : html`
         <div class="site-branding">
           <div class="site-branding__figure" ?hidden=${!this.figureSrc}>
-            <a href="${this.siteUrl}" class=""><img src=${this.figureSrc} class="site-logo" alt="Site Logo" /></a>
+            <a href="${this.siteUrl}" class="" aria-label="UC Davis Library website link"><img src=${this.figureSrc} class="site-logo" alt="Site Logo" /></a>
           </div>
           <div class="site-branding__body">
           <h1 class="site-branding__site-name" ?hidden=${!this.siteName}>

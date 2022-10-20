@@ -20,7 +20,7 @@ export function styles() {
     .submenu-toggle__icon {
       min-width: 40%;
     }
-    @media (min-width: 992px) {
+    @media (min-width: 755px) {
       nav.primary-nav--mega li.depth-0 > ul.menu {
         opacity: 1;
         display: block;
@@ -54,7 +54,7 @@ export function styles() {
 
     }
 
-    @media (max-width: 991px) {
+    @media (max-width: 754px) {
       ul.menu ul.menu {
         display: none;
         overflow-y: hidden;
@@ -69,8 +69,28 @@ export function styles() {
       ul.menu ul.menu.menu--open {
         display: block;
       }
+    }
+
+    @media (min-width: 755px) {
+      .primary-nav--superfish li.alt-size {
+        1position: relative;
+      }
+      .primary-nav li.alt-size {
+        1float: left;
+      }
+
+      .primary-nav,
+      .primary-nav a {
+        1background-color: transparent;
+        1font-size: 0.85rem;
+        1border-bottom: none;
+      }
 
     }
+    
+
+
+
   `;
 
   return [
@@ -91,6 +111,9 @@ return html`
   }
   ul.menu li.sf--hover > ul.menu {
     transition: opacity ${this.animationDuration + "ms"} ${this.hoverDelay + "ms"}, height ${this.animationDuration + "ms"};
+  }
+  ul.menu li {
+    float: ${!this.altSize ? 'left' : ''}
   }
 
 </style>

@@ -44,6 +44,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
       animationDuration: {type: Number, attribute: "animation-duration"},
       navItems: {type: Array},
       maxDepth: {type: Number, attribute: "max-depth"},
+      altSize: {type: Boolean},
+      _extraStyles: {type: String},
       _megaIsOpen: {type: Boolean, state: true}
     };
   }
@@ -66,6 +68,13 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     this._classPrefix = "primary-nav";
     this._acceptedNavTypes = ['superfish', 'mega'];
     this._megaIsOpen = false;
+    this.altSize = false;
+    this._extraStyles = '';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.altSize = true;
   }
 
   /**
@@ -300,7 +309,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
           <a 
             href=${ifDefined(navItem.href ? navItem.href : null)}
             tabindex=${this._setTabIndex(depth)}
-            @focus=${this._onItemFocus}>
+            @focus=${this._onItemFocus}
+            class="${this.altSize ? 'alt-size' : ''}">
             ${navItem.linkText}<span class="${this._classPrefix}__submenu-indicator"></span>
           </a>
           <button 
@@ -368,7 +378,8 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     classes[`depth-${depth}`] = true;
     if ( navItem.isOpen ) classes['sf--hover'] = true;
     if ( navItem.isClosing ) classes.closing = true;
-    if (navItem.megaFocus) classes['mega-focus'] = true;
+    if ( navItem.megaFocus ) classes['mega-focus'] = true;
+    if ( this.altSize ) classes['alt-size'] = true;
     return classes;
   }
 
