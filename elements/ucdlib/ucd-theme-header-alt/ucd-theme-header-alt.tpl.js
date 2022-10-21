@@ -260,7 +260,6 @@ export function styles() {
     brandingStyles,
     mobileBarStyles,
     navToggleStyles,
-    // offCanvasStyles,
     elementStyles
   ];
 }
