@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import {render, styles} from "./ucd-theme-primary-nav.tpl.js";
+import {render, styles} from "./ucdlib-primary-nav.tpl.js";
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -8,13 +8,8 @@ import { Mixin, NavElement } from "../../utils/mixins";
 import { MutationObserverController, BreakPointsController } from '../../utils/controllers';
 
 /**
- * @class UcdThemePrimaryNav
+ * @class UcdlibPrimaryNav
  * @classdesc Component class for displaying a primary site nav
- * 
- * Pattern Lab Url:
- *  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav/molecules-navigation-00-primary-nav.rendered.html
- *  - http://dev.webstyleguide.ucdavis.edu/redesign/patterns/molecules-navigation-00-primary-nav-megamenu/molecules-navigation-00-primary-nav-megamenu.rendered.html
- * 
  * @property {String} navType - The primary style type of the nav:
  *  'superfish' - The default
  *  'mega' - Hovering over any top-level link opens a single nav with all subnav links
@@ -25,15 +20,15 @@ import { MutationObserverController, BreakPointsController } from '../../utils/c
  * @property {Number} maxDepth - Maximum number of submenus to show
  * 
  * @example
- *  <ucd-theme-primary-nav>
+ *  <ucdlib-primary-nav>
  *    <a href="#">link 1</a>
  *    <a href="#">link 2</a>
  *    <ul link-title="link with subnav" href="#">
  *      <li><a href="#">subnav link 1</a></li>
  *    </ul>
- *  </ucd-theme-primary-nav>
+ *  </ucdlib-primary-nav>
  */
-export default class UcdThemePrimaryNav extends Mixin(LitElement)
+export default class UcdlibPrimaryNav extends Mixin(LitElement)
   .with(NavElement) {
 
   static get properties() {
@@ -56,7 +51,7 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
     super();
     this.render = render.bind(this);
     this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
-    this.breakPoints = new BreakPointsController(this);
+    this.breakPoints = new BreakPointsController(this, 755); // override default mobile screen width
 
     this.navType = "superfish";
     this.styleModifiers = "";
@@ -586,4 +581,4 @@ export default class UcdThemePrimaryNav extends Mixin(LitElement)
 
 }
 
-customElements.define('ucd-theme-primary-nav', UcdThemePrimaryNav);
+customElements.define('ucdlib-primary-nav', UcdlibPrimaryNav);

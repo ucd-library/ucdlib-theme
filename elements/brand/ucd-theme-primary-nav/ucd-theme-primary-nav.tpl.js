@@ -17,10 +17,7 @@ export function styles() {
     button[disabled] {
       pointer-events: none;
     }
-    .submenu-toggle__icon {
-      min-width: 40%;
-    }
-    @media (min-width: 755px) {
+    @media (min-width: 992px) {
       nav.primary-nav--mega li.depth-0 > ul.menu {
         opacity: 1;
         display: block;
@@ -54,7 +51,7 @@ export function styles() {
 
     }
 
-    @media (max-width: 754px) {
+    @media (max-width: 991px) {
       ul.menu ul.menu {
         display: none;
         overflow-y: hidden;
@@ -69,108 +66,8 @@ export function styles() {
       ul.menu ul.menu.menu--open {
         display: block;
       }
-    }
-
-   
-
-    @media (min-width: 755px) {
-      .primary-nav {
-        background-color: transparent;
-        font-size: 0.85rem;
-      }
-      .primary-nav ul ul {
-        display: none;
-      }
-      .primary-nav li.alt-size {
-        float: left;
-      }
-      .primary-nav li.alt-size:hover ul {
-        background-color: #fffbed;
-      }
-      .primary-nav li.alt-size li {
-        float: none;
-      }
-      .primary-nav li.alt-size:hover > .primary-nav__top-link a, 
-      .primary-nav li.alt-size:focus-within > .primary-nav__top-link a.alt-size, 
-      .primary-nav li.alt-size:hover > .primary-nav__top-link .primary-nav__nolink {
-        color: #022851;
-      }
-      .primary-nav li.alt-size .submenu-toggle {
-        display: none;
-      }
-    }
-    
-    @media (min-width: 755px) {
-      .primary-nav li.alt-size li a, li.alt-size li .primary-nav__nolink {
-        margin-left: 0;
-        padding: 0.5rem 1rem;
-        font-size: 0.9375em;
-        line-height: 1.35;
-      }
-      .primary-nav li.alt-size li a:focus, li.alt-size li .primary-nav__nolink:focus {
-        background-color: #ffbf00;
-      }
-      .primary-nav li.alt-size li a:before, 
-      .primary-nav li.alt-size li a:after, 
-      li.alt-size li .primary-nav__nolink:before, 
-      li.alt-size li .primary-nav__nolink:after {
-        display: none;
-      }
-
-      .primary-nav li.alt-size a {
-        color: white;
-        background-color: transparent;
-      }
-
-      .primary-nav li.alt-size a::before {
-        width: 1rem;
-        1height: 3.25rem;
-        margin-right: 0.5rem;
-        margin-left: -1rem;
-        background-color: transparent;
-        clip-path: polygon(93% 0px, 110% 0px, 110% 102%, 0% 102%);
-        content: "";
-      }
-
-
-      .primary-nav a, .primary-nav__nolink {
-        margin-left: 1rem;
-        padding: 0;
-        border-bottom: 0;
-        background-color: transparent;
-        font-weight: 700;
-        line-height: 3.25rem;
-      }
-      .primary-nav a:before, .primary-nav__nolink:before {
-        width: 1rem;
-        height: 3.25rem;
-        margin-right: 0.5rem;
-        margin-left: -1rem;
-        background-color: transparent;
-        clip-path: polygon(93% 0, 110% 0, 110% 102%, 0% 102%);
-        content: "";
-      }
-      .primary-nav a:focus:before, .primary-nav a:hover:before, .primary-nav__nolink:focus:before, .primary-nav__nolink:hover:before {
-        background-color: #ffbf00;
-      }
-      .primary-nav a:after, .primary-nav__nolink:after {
-        z-index: 1;
-        width: 1rem;
-        height: 3.25rem;
-        margin-right: -1rem;
-        margin-left: 0.5rem;
-        background-color: transparent;
-        clip-path: polygon(-2px -2px, 100% -2px, 7% 102%, -2px 100%);
-        content: "";
-      }
-      .primary-nav a:focus:after, .primary-nav a:hover:after, .primary-nav__nolink:focus:after, .primary-nav__nolink:hover:after {
-        background-color: #ffbf00;
-      }
-
-
 
     }
-
   `;
 
   return [
@@ -192,6 +89,7 @@ return html`
   ul.menu li.sf--hover > ul.menu {
     transition: opacity ${this.animationDuration + "ms"} ${this.hoverDelay + "ms"}, height ${this.animationDuration + "ms"};
   }
+
 </style>
 <nav 
   id=${this._classPrefix}

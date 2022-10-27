@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import {render, styles} from "./ucd-theme-header-alt.tpl.js";
+import {render, styles} from "./ucdlib-header.tpl.js";
 
 import { 
   MutationObserverController, 
@@ -7,7 +7,7 @@ import {
   WaitController } from '../../utils/controllers';
 
 /**
- * @class UcdThemeHeaderAlt
+ * @class UcdlibHeader
  * @classdesc Component class for displaying the site header
  * 
  * @property {String} siteName - Name of website to display
@@ -25,7 +25,7 @@ import {
  *  </ucd-theme-header-alt>
  * 
  */
-export default class UcdThemeHeaderAlt extends LitElement {
+export default class UcdlibHeader extends LitElement {
 
   static get properties() {
     return {
@@ -186,14 +186,14 @@ export default class UcdThemeHeaderAlt extends LitElement {
    * @private
    */
   _onChildListMutation(){
-    let primaryNav = this.querySelector('ucd-theme-primary-nav');
+    let primaryNav = this.querySelector('ucdlib-primary-nav');
     if ( primaryNav ) {
       primaryNav.setAttribute('slot', 'primary-nav');
       this._hasPrimaryNav = true;
       this._slottedComponents.primaryNav = primaryNav;
     } else {
       if ( !this.silenceWarnings ) {
-        console.warn("No 'ucd-theme-primary-nav' child element found!");
+        console.warn("No 'ucdlib-primary-nav' child element found!");
       }
       this._hasPrimaryNav = false;
     }
@@ -201,4 +201,4 @@ export default class UcdThemeHeaderAlt extends LitElement {
 
 }
 
-customElements.define('ucd-theme-header-alt', UcdThemeHeaderAlt);
+customElements.define('ucdlib-header', UcdlibHeader);

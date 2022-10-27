@@ -28,7 +28,7 @@ export function styles() {
       }
     }
 
-    @media (max-width: 754px) {
+    @media (max-width: 755px) {
       .fixed-mobile .mobile-bar {
         position: fixed;
         width: 100%;
@@ -73,7 +73,7 @@ export function styles() {
       height: 100%;
       min-height: 3.25rem;
     }
-    @media (max-width: 754px) {
+    @media (max-width: 755px) {
       .l-header .l-navbar {
         position: absolute;
         top: 3.25rem;
@@ -159,6 +159,9 @@ export function styles() {
       .l-nav-horizontal__quick-links {
         z-index: 2;
         grid-area: quick;
+      }
+      .site-branding__site-name {
+        font-size: 2rem;
       }
     }
 
