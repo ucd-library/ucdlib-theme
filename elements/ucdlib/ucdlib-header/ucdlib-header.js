@@ -14,15 +14,16 @@ import {
  * @property {Boolean} silenceWarnings - Console warnings will be silences
  * @property {Boolean} opened - Whether header is open in the mobile view
  * @property {Boolean} preventFixed - Navbar will not be fixed to top of screen in desktop view
- * 
- * @example
- *  <ucd-theme-header-alt site-name="A UC Davis Website">
+ * @property {Number} mobileWidth - Screen width for mobile header display
+
+* @example
+ *  <ucdlib-header site-name="A UC Davis Website" mobile-width="42">
  *    <ucd-theme-primary-nav>
  *      <a href="#">LINK 1</a>
  *      <a href="#">LINK 2</a>
  *      <a href="#">LINK 3</a>
  *    </ucd-theme-primary-nav>
- *  </ucd-theme-header-alt>
+ *  </ucdlib-header>
  * 
  */
 export default class UcdlibHeader extends LitElement {
@@ -33,7 +34,7 @@ export default class UcdlibHeader extends LitElement {
       opened: {type: Boolean},
       silenceWarnings: {type: Boolean, attribute: 'silence-warnings'},
       preventFixed: {type: Boolean, attribute: "prevent-fixed"},
-      isDemo: {type: Boolean, attribute: "is-demo"},
+      mobileWidth: {type: Number, attribute: "mobile-width"},
       _transitioning: {type: Boolean, state: true},
       _hasPrimaryNav: {type: Boolean, state: true},
       _hasSearch: {type: Boolean, state: true},
@@ -53,10 +54,12 @@ export default class UcdlibHeader extends LitElement {
     this.wait = new WaitController(this);
     new PopStateObserverController(this, "_onLocationChange");
 
+    debugger;
+
     this.siteName = "";
     this.opened = false;
-    this.isDemo = false;
     this.silenceWarnings = false;
+    this.mobileWidth = 755;
 
     this._transitioning = false;
     this._hasPrimaryNav = false;

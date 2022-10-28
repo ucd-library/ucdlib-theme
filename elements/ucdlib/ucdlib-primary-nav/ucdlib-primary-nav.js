@@ -18,9 +18,10 @@ import { MutationObserverController, BreakPointsController } from '../../utils/c
  * @property {Number} hoverDelay - How long (ms) after hover will menu open/close
  * @property {Number} animationDuration - How long (ms) for a menu to fade in/out
  * @property {Number} maxDepth - Maximum number of submenus to show
+ * @property {Number} mobileWidth - Screen width for mobile header display
  * 
  * @example
- *  <ucdlib-primary-nav>
+ *  <ucdlib-primary-nav mobile-width="42">
  *    <a href="#">link 1</a>
  *    <a href="#">link 2</a>
  *    <ul link-title="link with subnav" href="#">
@@ -39,6 +40,7 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
       animationDuration: {type: Number, attribute: "animation-duration"},
       navItems: {type: Array},
       maxDepth: {type: Number, attribute: "max-depth"},
+      mobileWidth: {type: Number, attribute: "mobile-width"},
       _megaIsOpen: {type: Boolean, state: true}
     };
   }
@@ -49,6 +51,7 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
 
   constructor() {
     super();
+    debugger;
     this.render = render.bind(this);
     this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
     this.breakPoints = new BreakPointsController(this, 755); // override default mobile screen width
@@ -57,6 +60,7 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
     this.styleModifiers = "";
     this.hoverDelay = 300;
     this.animationDuration = 300;
+    this.mobileWidth = 755;
 
     this._classPrefix = "primary-nav";
     this._acceptedNavTypes = ['superfish', 'mega'];
