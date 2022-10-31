@@ -17,9 +17,6 @@ export function styles() {
     button[disabled] {
       pointer-events: none;
     }
-    .submenu-toggle__icon {
-      min-width: 40%;
-    }
     @media (min-width: 992px) {
       nav.primary-nav--mega li.depth-0 > ul.menu {
         opacity: 1;

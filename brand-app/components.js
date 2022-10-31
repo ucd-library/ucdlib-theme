@@ -21,3 +21,5 @@ import "./pages/page-ucdlib-sils-permalink";
 import "./pages/page-ucdlib-branding-bar";
 import "./pages/page-ucdlib-sils-search-redirect";
 import "./pages/page-ucdlib-md";
+import "./pages/page-ucdlib-header";
+import "./pages/page-ucdlib-primary-nav.js";

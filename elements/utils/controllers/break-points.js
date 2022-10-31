@@ -1,9 +1,9 @@
 export class BreakPointsController{
   
-  constructor(host){
+  constructor(host, mobileBreakPoint=992){
     (this.host = host).addController(this);
 
-    this.mobileBreakPoint = 992;
+    this.mobileBreakPoint = mobileBreakPoint;
   }
 
   /**

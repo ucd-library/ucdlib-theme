@@ -1,12 +1,8 @@
 ### Classes
 
 <dl>
-<dt><a href="#UcdThemeHeader">UcdThemeHeader</a></dt>
+<dt><a href="#UcdlibHeader">UcdlibHeader</a></dt>
 <dd><p>Component class for displaying the site header</p>
-<p> PatternLab Url:</p>
-<ul>
-<li><a href="http://dev.webstyleguide.ucdavis.edu/redesign/?p=organisms-header">http://dev.webstyleguide.ucdavis.edu/redesign/?p=organisms-header</a></li>
-</ul>
 </dd>
 </dl>
 
@@ -24,13 +20,10 @@
 </dd>
 </dl>
 
-<a name="UcdThemeHeader"></a>
+<a name="UcdlibHeader"></a>
 
-### UcdThemeHeader
+### UcdlibHeader
 Component class for displaying the site header
-
- PatternLab Url:
-   - http://dev.webstyleguide.ucdavis.edu/redesign/?p=organisms-header
 
 **Kind**: global class  
 **Properties**
@@ -38,12 +31,10 @@ Component class for displaying the site header
 | Name | Type | Description |
 | --- | --- | --- |
 | siteName | <code>String</code> | Name of website to display |
-| slogan | <code>String</code> | Optional text to display below site name |
-| figureSrc | <code>String</code> | Site logo/icon to display next to site name |
-| siteUrl | <code>String</code> | Url to use for links around site name and figure |
 | silenceWarnings | <code>Boolean</code> | Console warnings will be silences |
 | opened | <code>Boolean</code> | Whether header is open in the mobile view |
 | preventFixed | <code>Boolean</code> | Navbar will not be fixed to top of screen in desktop view |
+| mobileWidth | <code>Number</code> | Screen width for mobile header display, defaults to 755 |
 
 <a name="_onLocationChange"></a>
 
