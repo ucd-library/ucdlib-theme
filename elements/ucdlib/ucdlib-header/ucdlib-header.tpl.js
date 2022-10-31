@@ -97,7 +97,6 @@ export function styles() {
 }
 
 export function render() { 
-  debugger;
 return html`
 ${this.isDemo ? html`
   <style>
@@ -233,7 +232,7 @@ ${this.isDemo ? html`
     grid-area: quick;
   }
   .site-branding__site-name {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
 }
 </style>

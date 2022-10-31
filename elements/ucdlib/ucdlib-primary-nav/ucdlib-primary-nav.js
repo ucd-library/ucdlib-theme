@@ -18,7 +18,7 @@ import { MutationObserverController, BreakPointsController } from '../../utils/c
  * @property {Number} hoverDelay - How long (ms) after hover will menu open/close
  * @property {Number} animationDuration - How long (ms) for a menu to fade in/out
  * @property {Number} maxDepth - Maximum number of submenus to show
- * @property {Number} mobileWidth - Screen width for mobile header display
+ * @property {Number} mobileWidth - Screen width for mobile header display, defaults to 755
  * 
  * @example
  *  <ucdlib-primary-nav mobile-width="42">
@@ -51,7 +51,6 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
 
   constructor() {
     super();
-    debugger;
     this.render = render.bind(this);
     this.mutationObserver = new MutationObserverController(this, {subtree: true, childList: true});
     this.breakPoints = new BreakPointsController(this, 755); // override default mobile screen width

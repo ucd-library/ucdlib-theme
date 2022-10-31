@@ -76,6 +76,10 @@ return html`
         </ul>
 
         <ul link-text="Library Web Components">
+          <ul link-text="Header" href="/#ucdlib-header">
+            <li><a href="/#ucdlib-header">Controller</a></li>
+            <li><a href="/#ucdlib-primary-nav">Primary Nav</a></li>
+          </ul>
           <ul link-text="Icons" href="#ucdlib-icons">
             <li><a href="#ucdlib-icons">Icons</a></li>
             <li><a href="#ucdlib-icon">Icon</a></li>

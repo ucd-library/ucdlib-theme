@@ -26,6 +26,8 @@ Component class for translating/displaying markdown into sanitized html
 | --- | --- | --- |
 | data | <code>String</code> | text to hold markdown code |
 | renderer | <code>Object</code> | an object holding element functions to override the default markdown behavior   Format: reference the Marked Renderer documentation at https://marked.js.org/using_pro#renderer |
+| use | <code>Object</code> | marked use object |
+| options | <code>Object</code> | marked options object |
 
 <a name="updated"></a>
 
