@@ -87,8 +87,27 @@ export default class UcdlibSilsSearchRedirect extends LitElement {
    */
   _onSubmit(e){
     e.preventDefault();
+    this.doSearch('simple-search');
+
+  }
+
+  /**
+   * @method _onAdvancedSearch
+   * @description Called when advanced search button is clicked
+   * @private
+   */
+  _onAdvancedSearch(){
+    this.doSearch('advanced-search');
+  }
+
+  /**
+   * @method doSearch
+   * @description Either redirects to Primo or fires event listener
+   * @param {*} searchType - advanced or basic
+   */
+  doSearch(searchType){
+    let advanced = searchType == "advanced-search";
     let corpus = this.ucdOnly ? "ucd" : "everything";
-    let advanced = e.submitter.id == "advanced-search";
 
     let url = this.primo.makeSearchUrl(this.query, corpus, advanced);
     if ( this.preventRedirect ) {

@@ -107,7 +107,7 @@ return html`
       <div class="checkbox u-space-mr--small u-space-mt--small">
         <input id="corpus" type="checkbox" ?checked=${this.ucdOnly} @input=${this._onCorpusChange}><label for="corpus">UC Davis libraries only</label>
       </div>
-      <button id="advanced-search" class="u-space-mt--small" type="submit">Advanced Search</button>
+      <button id="advanced-search" class="u-space-mt--small" type="button" @click=${this._onAdvancedSearch}>Advanced Search</button>
     </div>
 </form>
 
