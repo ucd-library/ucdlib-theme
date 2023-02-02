@@ -115,10 +115,10 @@ export default class UcdThemePagination extends LitElement {
   }
 
   /**
-   * @method updated()
-   * @description Changes occur on update
+   * @method willUpdate()
+   * @description Changes before updated
    */
-  updated(props) {
+  willUpdate(props) {
     if( props.has('currentPage') || props.has('maxPages') ) {
       
       if( this.xs_screen && this.screen_check ) {
