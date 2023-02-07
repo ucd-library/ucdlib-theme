@@ -115,26 +115,26 @@ export default class UcdThemePagination extends LitElement {
   }
 
   /**
-   * @method updated()
-   * @description Changes occur on update
+   * @method willUpdate()
+   * @description Changes before updated
    */
-  updated(props3) {
-    if( props3.has('currentPage') ) {
+  willUpdate(props) {
+    if( props.has('currentPage') || props.has('maxPages') ) {
       
-      if(this.xs_screen && this.screen_check) {
+      if( this.xs_screen && this.screen_check ) {
         let pages = [this.currentPage];
         this._pages = pages;  // Mobile Pagination
-      }else{
-        if(this.ellipses && this.maxPages >= 8){
+      } else {
+        if( this.ellipses && this.maxPages >= 8 ) {
           this._pages = this._renderEllipse();
-        }else if(this.ellipses && this.maxPages < 8){
+        } else if ( this.ellipses && this.maxPages < 8 ) {
           this._pages = this._renderOriginal();
-        }else {
+        } else {
           let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
           
           if( startIndex < 0 ) {
             startIndex = 0;
-          } else if( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
+          } else if ( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
             startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
           }
           if( startIndex < 0 ) {
@@ -150,9 +150,7 @@ export default class UcdThemePagination extends LitElement {
           }
           this._pages = pages;
         } 
-
       } // Desktop Pagination
-
     }
   }
 
