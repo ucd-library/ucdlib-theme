@@ -138,10 +138,10 @@ export default class UcdlibPages extends LitElement {
   _select(value, child, attribute) {
     if( value ) {
       if( attribute ) child.setAttribute(attribute, attribute);
-      else child.style.display = 'block';
+      child.style.display = 'block';
     } else {
       if( attribute ) child.removeAttribute(attribute, attribute);
-      else child.style.display = 'none';
+      child.style.display = 'none';
     }
   }
 
