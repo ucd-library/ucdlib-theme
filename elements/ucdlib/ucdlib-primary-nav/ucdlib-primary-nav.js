@@ -41,6 +41,8 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
       navItems: {type: Array},
       maxDepth: {type: Number, attribute: "max-depth"},
       mobileWidth: {type: Number, attribute: "mobile-width"},
+      mobileOnly: {type: Boolean, attribute: "mobile-only"},
+      desktopOnly: {type: Boolean, attribute: "desktop-only"},
       _megaIsOpen: {type: Boolean, state: true}
     };
   }
@@ -60,6 +62,8 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
     this.hoverDelay = 300;
     this.animationDuration = 300;
     this.mobileWidth = 755;
+    this.mobileOnly = false;
+    this.desktopOnly = false;
 
     this._classPrefix = "primary-nav";
     this._acceptedNavTypes = ['superfish', 'mega'];
@@ -364,9 +368,11 @@ export default class UcdlibPrimaryNav extends Mixin(LitElement)
   _makeLiClassMap(navItem, depth=0){
     let classes = {};
     classes[`depth-${depth}`] = true;
-    if ( navItem.isOpen ) classes['sf--hover'] = true;
-    if ( navItem.isClosing ) classes.closing = true;
-    if (navItem.megaFocus) classes['mega-focus'] = true;
+    if( navItem.isOpen ) classes['sf--hover'] = true;
+    if( navItem.isClosing ) classes.closing = true;
+    if( navItem.megaFocus ) classes['mega-focus'] = true;
+    if( navItem.mobileOnly ) classes['mobile-only'] = true;
+    if( navItem.desktopOnly ) classes['desktop-only'] = true;
     return classes;
   }
 

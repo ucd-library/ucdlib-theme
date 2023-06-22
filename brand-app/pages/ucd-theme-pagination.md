@@ -13,8 +13,8 @@
 ### Functions
 
 <dl>
-<dt><a href="#updated_new">updated()()</a></dt>
-<dd><p>Changes occur on update</p>
+<dt><a href="#willUpdate_new">willUpdate()()</a></dt>
+<dd><p>Changes before updated</p>
 </dd>
 <dt><a href="#_constructClasses">_constructClasses()</a> ⇒ <code>Object</code></dt>
 <dd><p>Makes a class map object based on element properties/attributes. 
@@ -68,10 +68,10 @@ Pattern Lab Url:
 | max-pages | <code>String</code> | Max number of total pages |
 | visible-link-count | <code>String</code> | How many page links to show |
 
-<a name="updated_new"></a>
+<a name="willUpdate_new"></a>
 
-### updated()()
-Changes occur on update
+### willUpdate()()
+Changes before updated
 
 **Kind**: global function  
 <a name="_constructClasses"></a>

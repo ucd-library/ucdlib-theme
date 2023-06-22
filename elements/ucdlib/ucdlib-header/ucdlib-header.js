@@ -60,7 +60,7 @@ export default class UcdlibHeader extends LitElement {
     this.silenceWarnings = false;
     this.mobileWidth = 755;
     this.isDemo = false;
-    
+
     this._transitioning = false;
     this._hasPrimaryNav = false;
     this._hasSearch = false;
