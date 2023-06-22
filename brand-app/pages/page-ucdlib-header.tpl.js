@@ -32,9 +32,10 @@ return html`
       is-demo>
 
       <ucdlib-primary-nav>
+        <a href="#" mobile-only>Home</a>
         <ul link-text="Books" href="#">
           <li><a href="#">Biographies</a></li>
-          <li><a href="#">Fantasy</a></li>
+          <li><a href="#" mobile-only>Fantasy</a></li>
           <li><a href="#">Mystery</a></li>
         </ul>
         <a href=#>Magazines</a>
@@ -48,6 +49,10 @@ return html`
   <div class="alert alert--warning">
   Note, the <code>is-demo</code> attribute adjusts the position of the mobile menu so it doesn't cover the "close" button in this demo application.
     It should not be used otherwise.
+    <br>
+    <br>
+    Also of note, the <code>mobile-only</code> and <code>desktop-only</code> attributes can be added to a link to control if it is displayed in the mobile or desktop view.
+    This can be useful for links back to the Home page, for example, which is not necessary in desktop mode.
   </div>
 
   <h3>Customizing the Mobile Width Threshold</h3>

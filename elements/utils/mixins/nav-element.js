@@ -34,7 +34,7 @@ const NavElement = (superClass) => class extends superClass {
    * @returns {Object} Formatted object describing the menu item and its children
    */
   _makeNavItemTree(ele){
-    let linkText, href, subItems = [], isOpen=false, inlineStyles={}, newTab=false;
+    let linkText, href, subItems = [], isOpen=false, inlineStyles={}, newTab=false, mobileOnly=false, desktopOnly=false;
     if ( ele.tagName === 'LI' && ele.children.length > 0) ele = ele.children[0];
 
     if ( ele.tagName === 'A' ) {
@@ -53,9 +53,10 @@ const NavElement = (superClass) => class extends superClass {
       }
     }
     if (ele.getAttribute('target') == '_blank') newTab = true;
-
+    if ( ele.hasAttribute('mobile-only') ) mobileOnly = true;
+    if ( ele.hasAttribute('desktop-only') ) desktopOnly = true;
     if ( linkText ) linkText = linkText.trim();
-    return {linkText, href, subItems, isOpen, inlineStyles, newTab};
+    return {linkText, href, subItems, isOpen, inlineStyles, newTab, mobileOnly, desktopOnly};
   }
 
   /**

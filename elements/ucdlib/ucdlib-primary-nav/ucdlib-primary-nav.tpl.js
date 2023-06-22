@@ -351,6 +351,16 @@ return html`
     }
   }
 
+  @media (max-width: ${this.mobileWidth - 1}px) {
+    .desktop-only {
+      display: none !important;
+    }
+  }
+  @media (min-width: ${this.mobileWidth}px) {
+    .mobile-only {
+      display: none !important;
+    }
+  }
 
 </style>
 <nav 
