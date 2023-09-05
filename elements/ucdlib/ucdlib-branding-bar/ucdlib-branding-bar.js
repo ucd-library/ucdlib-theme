@@ -80,7 +80,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
    * @returns {TemplateResult}
    */
   _renderFigure(){
-    if( this.figureUrl ) {
+    if( this.figure === 'custom' ) {
       return html`<img src="${this.figureUrl}" />`;
     }
     if ( this.figure === 'logo') return logo;
