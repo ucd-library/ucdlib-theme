@@ -1,4 +1,4 @@
-import { LitElement, svg } from 'lit';
+import { LitElement, html, svg } from 'lit';
 import {render, styles} from "./ucdlib-branding-bar.tpl.js";
 
 import {Mixin, NavElement} from "../../utils/mixins";
@@ -28,6 +28,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
   static get properties() {
     return {
       figure: {type: String},
+      figureUrl: {type: String, attribute: "figure-url"},
       siteName: {type: String, attribute: "site-name"},
       slogan: {type: String},
       siteUrl: {type: String, attribute: "site-url"},
@@ -62,7 +63,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
    */
   willUpdate(props){
     if ( props.has("figure") && props.get("figure") !== undefined ){
-      const allowedKeywords = ['book', 'logo'];
+      const allowedKeywords = ['book', 'logo', 'custom'];
       if ( !allowedKeywords.includes(props.get('figure')) ){
         console.warn(`${props.get('figure')} is not a recognized "figure" keyword.
           Allowed values: ${JSON.stringify(allowedKeywords)}
@@ -79,6 +80,9 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
    * @returns {TemplateResult}
    */
   _renderFigure(){
+    if( this.figureUrl ) {
+      return html`<img src="${this.figureUrl}" />`;
+    }
     if ( this.figure === 'logo') return logo;
     if ( this.figure === 'book' ) return bookLogo;
     return svg``;

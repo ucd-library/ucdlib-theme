@@ -27,6 +27,10 @@ export function styles() {
       width: 70px;
       min-width: 70px;
     }
+    .figure--custom img {
+      width: 150px;
+      min-width: 150px;
+    }
     .figure--logo svg {
       width: 375px;
       min-width: 375px;
