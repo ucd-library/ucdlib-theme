@@ -23,6 +23,10 @@ import {
  *      <a href="#">LINK 2</a>
  *      <a href="#">LINK 3</a>
  *    </ucd-theme-primary-nav>
+ *    <ucd-theme-search-popup>
+ *      <ucd-theme-search-form>
+ *      </ucd-theme-search-form>
+ *    </ucd-theme-search-popup>
  *  </ucdlib-header>
  * 
  */
@@ -38,6 +42,7 @@ export default class UcdlibHeader extends LitElement {
       isDemo: {type: Boolean, attribute: "is-demo"},
       _transitioning: {type: Boolean, state: true},
       _hasPrimaryNav: {type: Boolean, state: true},
+      _hasQuickLinks: {type: Boolean, state: true},
       _hasSearch: {type: Boolean, state: true},
       _components: {type: Object, state: true}
     };
@@ -63,6 +68,7 @@ export default class UcdlibHeader extends LitElement {
 
     this._transitioning = false;
     this._hasPrimaryNav = false;
+    this._hasQuickLinks = false;
     this._hasSearch = false;
     this._animationDuration = 500;
     this._slottedComponents = {};
@@ -74,6 +80,9 @@ export default class UcdlibHeader extends LitElement {
    */
   _onLocationChange(){
     this.close();
+    if ( this._hasQuickLinks ){
+      this._slottedComponents.quickLinks.close();
+    }
   }
 
   /**
@@ -199,6 +208,15 @@ export default class UcdlibHeader extends LitElement {
         console.warn("No 'ucdlib-primary-nav' child element found!");
       }
       this._hasPrimaryNav = false;
+    }
+
+    let search = this.querySelector('ucd-theme-search-popup');
+    if ( search ) {
+      search.setAttribute('slot', 'search');
+      this._hasSearch = true;
+      this._slottedComponents.search = search;
+    } else {
+      this._hasSearch = false;
     }
   }
 

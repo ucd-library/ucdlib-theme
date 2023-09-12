@@ -8,7 +8,7 @@ import headerLayoutStyles from "@ucd-lib/theme-sass/5_layout/_l-header.css.js"
 import brandingStyles from "@ucd-lib/theme-sass/4_component/_site-branding.css.js"
 import mobileBarStyles from "@ucd-lib/theme-sass/4_component/_mobile-bar.css.js";
 import navToggleStyles from "@ucd-lib/theme-sass/4_component/_nav-toggle.css.js"
-// import offCanvasStyles from "@ucd-lib/theme-sass/4_component/_nav-off-canvas.css.js"
+import offCanvasStyles from "@ucd-lib/theme-sass/4_component/_nav-off-canvas.css.js"
 
 export function styles() {
   const elementStyles = css`
@@ -40,16 +40,18 @@ export function styles() {
 
     .logo-container {
       display: flex;
-      background-color: #13639E;
-      clip-path: polygon(1rem 0px, 110% 0px, 110% 102%, 0% 102%);
+      
     }
 
-    .logo-container::before {
-      width: 1rem;
+    .website-link-container {
+      padding-left: 0.5rem;
+      background-color: #13639E;
+      clip-path: polygon(1rem 0px, 110% 0px, 110% 104%, 0% 104%);
+    }
+
+    .website-link-container::before {      
       margin-left: 0.5rem;
-      background-color: #14447A;
       content: "";
-      transform: skewX(-16deg);
     }
 
     .logo-link::before {
@@ -57,10 +59,18 @@ export function styles() {
       color: white;
     }
 
-    .logo-container:hover {
+    .website-link-container:hover {
       background-color: #FFBF00;
-
     }
+
+    .logo-border {
+      background-color: #14447A;
+      width: 1rem;
+      transform: skewX(-16deg);
+      position: relative;
+      left: 0.55rem;
+    }
+
     .logo-link img {
       fill: #FFFFFF;
     }
@@ -92,7 +102,8 @@ export function styles() {
     brandingStyles,
     mobileBarStyles,
     navToggleStyles,
-    elementStyles
+    offCanvasStyles,
+    elementStyles,
   ];
 }
 
@@ -211,6 +222,7 @@ ${this.isDemo ? html`
   }
   .menu--hidden .off-canvas__container {
     display: grid;
+    grid-template-areas: "nav quick search logo";
   }
   .l-nav-horizontal {
     display: grid;
@@ -268,10 +280,19 @@ ${this.isDemo ? html`
         <div>
           <slot name="primary-nav"></slot>
         </div>
+        ${this._hasSearch ? html`
+          <div class="l-nav-horizontal__search-popup">      
+            <slot name="search"></slot>
+          </div>
+        ` : html``}
+        
         <div class="logo-container">
-          <a class="logo-link" href="https://www.ucdavis.edu/" aria-label="UC Davis main website link">
-            <div class="ucd-logo"></div>
-          </a>
+          <div ?hidden=${this._hasSearch} class="logo-border"></div>
+          <div class="website-link-container">
+            <a class="logo-link" href="https://www.ucdavis.edu/" aria-label="UC Davis main website link">
+              <div class="ucd-logo"></div>
+            </a>
+          </div>
         </div>
 
       </div>
