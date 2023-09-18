@@ -42,6 +42,12 @@ return html`
         <a href="#">Journals</a>
       </ucdlib-primary-nav>
 
+      <ucd-theme-search-popup>
+        <ucd-theme-search-form
+          @search="e => console.log(e.detail.searchTerm)">
+        </ucd-theme-search-form>
+      </ucd-theme-search-popup>
+
     </ucdlib-header>
   `)}
 

@@ -140,7 +140,6 @@ return html`
       padding: 0 !important;
       border-bottom: 0 !important;
       background-color: transparent !important;
-      font-weight: 700 !important;
       line-height: 3.25rem !important;
     }
     .primary-nav a:before, .primary-nav__nolink:before {
