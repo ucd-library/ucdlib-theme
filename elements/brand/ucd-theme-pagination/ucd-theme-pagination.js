@@ -82,8 +82,11 @@ export default class UcdThemePagination extends LitElement {
       size : {
         type: String,
         attribute : 'size'
+      },
+      darkmode : {
+        type: Boolean,
+        attribute : 'darkmode'
       }
-
     };
   }
 
@@ -108,10 +111,11 @@ export default class UcdThemePagination extends LitElement {
     this.ellipses = false;
     this.xs_screen = false;
     this.size = '';
+    this.darkmode = false;
 
     this.screen_check = (window.innerWidth <= this.breakPoints.mobileBreakPoint)  ? true : false;
 
-    this.render = render.bind(this);
+    this.render = render.bind(this);    
   }
 
   /**
@@ -186,10 +190,14 @@ export default class UcdThemePagination extends LitElement {
       args.class += ' pager__item--current';
     }
 
+    if( this.darkmode ) {
+      args.class += ' darkmode';
+    }
+
     if( !this.basePath && !this.useHash ) { 
-      return html `<li  class="pager__item ${args.class || ''}">
+      return html `<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-        html`<a style="pointer-events: none; cursor: default; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
+        html`<a style="pointer-events: none; cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
         html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
          }  
         </li>`;            
@@ -198,7 +206,7 @@ export default class UcdThemePagination extends LitElement {
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page + (this.queryParams ? '?' + this.queryParams : '');
     return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-          html` <a style="pointer-events: none; cursor: default; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 
+          html` <a style="pointer-events: none; cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};" href="${href}">${args.label || page}</a>`: 
           html` <a href="${href}">${args.label || page}</a>`
         }   
         </li>`;
