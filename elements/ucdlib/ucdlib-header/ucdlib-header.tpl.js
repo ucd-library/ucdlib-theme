@@ -208,6 +208,14 @@ ${this.isDemo ? html`
   }
 }
 @media (min-width: ${this.mobileWidth}px) {
+  .menu--closed .off-canvas--left {
+    transform: none !important;
+  }
+  .off-canvas {
+    position: initial !important;
+    width: auto !important;
+    background-color: transparent !important;
+  }
   .l-header .l-navbar {
     width: 100%;
     height: auto;
@@ -221,7 +229,7 @@ ${this.isDemo ? html`
     width: 100%;
   }
   .menu--hidden .off-canvas__container {
-    display: grid;
+    display: grid !important;
     grid-template-areas: "nav quick search logo";
   }
   .l-nav-horizontal {
