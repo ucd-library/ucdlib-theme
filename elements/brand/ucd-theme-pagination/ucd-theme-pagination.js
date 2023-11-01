@@ -39,54 +39,18 @@ export default class UcdThemePagination extends LitElement {
 
   static get properties() {
     return {
-      basePath : {
-        type: String, 
-        attribute: 'base-path'
-      },
-      queryParams: {
-        type: String,
-        attribute: 'query-params'
-      },
-      useHash : {
-        type: Boolean, 
-        attribute: 'use-hash'
-      },
-      currentPage : {
-        type : Number,
-        attribute: 'current-page',
-        reflect: true
-      },
-      maxPages : {
-        type : Number,
-        attribute : 'max-pages'
-      },
-      visibleLinkCount : {
-        type : Number,
-        attribute : 'visible-link-count'
-      },
-      disableLabel : {
-        type: Boolean,
-        attribute : 'disable-label'
-      },
-      _pages : {
-        type: Array
-      },
-      ellipses : {
-        type: Boolean,
-        attribute : 'ellipses'
-      },
-      xs_screen : {
-        type: Boolean,
-        attribute : 'xs-screen'
-      },
-      size : {
-        type: String,
-        attribute : 'size'
-      },
-      darkmode : {
-        type: Boolean,
-        attribute : 'darkmode'
-      }
+      basePath : { type: String, attribute: 'base-path' },
+      queryParams: { type: String, attribute: 'query-params' },
+      useHash : { type: Boolean, attribute: 'use-hash' },
+      currentPage : { type : Number, attribute: 'current-page', reflect: true },
+      maxPages : { type : Number, attribute : 'max-pages' },
+      visibleLinkCount : { type : Number, attribute : 'visible-link-count' },
+      disableLabel : { type: Boolean, attribute : 'disable-label' },
+      _pages : { type: Array },
+      ellipses : { type: Boolean, attribute : 'ellipses' },
+      xs_screen : { type: Boolean, attribute : 'xs-screen' },
+      size : { type: String, attribute : 'size' },
+      darkmode : { type: Boolean, attribute : 'darkmode' },
     };
   }
 
@@ -124,37 +88,31 @@ export default class UcdThemePagination extends LitElement {
    */
   willUpdate(props) {
     if( props.has('currentPage') || props.has('maxPages') ) {
-      
-      if( this.xs_screen && this.screen_check ) {
-        let pages = [this.currentPage];
-        this._pages = pages;  // Mobile Pagination
+      if( this.ellipses && this.maxPages >= 8 ) {
+        this._pages = this._renderEllipse();
+      } else if ( this.ellipses && this.maxPages < 8 ) {
+        this._pages = this._renderOriginal();
       } else {
-        if( this.ellipses && this.maxPages >= 8 ) {
-          this._pages = this._renderEllipse();
-        } else if ( this.ellipses && this.maxPages < 8 ) {
-          this._pages = this._renderOriginal();
-        } else {
-          let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
-          
-          if( startIndex < 0 ) {
-            startIndex = 0;
-          } else if ( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
-            startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
-          }
-          if( startIndex < 0 ) {
-            startIndex = 0;
-          }
-      
-          let endIndex = startIndex + this.visibleLinkCount;
-          if( endIndex > this.maxPages ) endIndex = this.maxPages;
-      
-          let pages = [];
-          for( let i = startIndex; i < endIndex; i++ ) {
-            pages.push(i+1);
-          }
-          this._pages = pages;
-        } 
-      } // Desktop Pagination
+        let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
+        
+        if( startIndex < 0 ) {
+          startIndex = 0;
+        } else if ( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
+          startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
+        }
+        if( startIndex < 0 ) {
+          startIndex = 0;
+        }
+    
+        let endIndex = startIndex + this.visibleLinkCount;
+        if( endIndex > this.maxPages ) endIndex = this.maxPages;
+    
+        let pages = [];
+        for( let i = startIndex; i < endIndex; i++ ) {
+          pages.push(i+1);
+        }
+        this._pages = pages;
+      }
     }
   }
 
