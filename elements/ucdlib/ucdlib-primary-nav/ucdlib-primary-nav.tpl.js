@@ -361,6 +361,10 @@ return html`
     }
   }
 
+  .primary-nav a:hover, .primary-nav__nolink:hover {
+    background-color: #ffbf00 !important;
+  }
+
 </style>
 <nav 
   id=${this._classPrefix}

@@ -82,6 +82,23 @@ ${this.examplePanel(html`
   </ucd-theme-pagination>
 `)}
 
+<p><code>darkmode</code> changes the color theme to be more user friendly on darker backgrounds
+</p>
+${this.examplePanel(html`
+  <ucd-theme-pagination
+    current-page="1"
+    max-pages="20"
+    darkmode>
+  </ucd-theme-pagination>
+`, false, '', true)}
+${this.examplePanel(html`
+  <ucd-theme-pagination
+    current-page="16"
+    max-pages="20"
+    darkmode>
+  </ucd-theme-pagination>
+`, false, '', true)}
+
 
 <h2>Wiring It Up</h2>
 <p>If <code>use-hash</code> or <code>base-path</code> attributes are used, an href will be constructed based on those parameters</p>

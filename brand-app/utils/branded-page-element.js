@@ -52,10 +52,11 @@ const BrandedPageElement = (superClass) => class extends superClass {
    * @param {TemplateResult} code A lit html render template
    * @param {Boolean} hideRendered Won't render code.
    * @param {String} title provide text title instead of rendering code
+   * @param {Boolean} darkmode set darkmode
    * 
    * @returns {TemplateResult}
    */
-  examplePanel(code, hideRendered=false, title=''){
+  examplePanel(code, hideRendered=false, title='', darkmode=false){
     if ( !code || !code.strings ) return html``;
 
     let codeString = code.strings.map((s, i) => {
@@ -82,7 +83,7 @@ const BrandedPageElement = (superClass) => class extends superClass {
     return html`
     <div>
       <div class="quick-summary">
-        <div class="quick-summary__body u-space-px u-space-py ${hideRendered ? 'u-hidden' : ''}">
+        <div class="quick-summary__body u-space-px u-space-py ${hideRendered ? 'u-hidden' : ''}" style="${darkmode ? 'background-color: #14447A' : ''}">
           ${title || code}
         </div>
 

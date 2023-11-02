@@ -33,6 +33,35 @@ export function styles() {
         align-items: center;
       }
     }
+
+    .pager__item.darkmode a {
+      color: white;
+    }
+
+    .pager .darkmode span {
+      color: white;
+    }
+
+    .pager__item--current.darkmode a {
+      background-color: #FFBF00;
+      color: #002851;
+    }
+
+    .pager__item.darkmode:hover a {
+      color: #002851 !important;
+    }
+
+    .pager__item--previous.pager__item--current.darkmode,
+    .pager__item--previous.pager__item--current.darkmode:hover,
+    .pager__item--next.pager__item--current.darkmode,
+    .pager__item--next.pager__item--current.darkmode:hover {
+      background-color: transparent;
+    }
+
+    .pager__item--previous.pager__item--current.darkmode:hover a,
+    .pager__item--next.pager__item--current.darkmode:hover a {
+      color: #cccccc !important;
+    }
   `;
 
   return [normalizeCss, resetCss, paginationCss, elementStyles];
@@ -44,7 +73,7 @@ return html`
   <ul class="pager">
     ${this.xs_screen ? 
       html`
-        <div class="xs-screen">
+        <div class="xs-screen${this.darkmode ? ' darkmode' : ''}">
           ${this._renderLink(
             this.currentPage-1, 
             {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
@@ -58,7 +87,7 @@ return html`
             )} 
         </div>
 
-        <div class="default">
+        <div class="default${this.darkmode ? ' darkmode' : ''}">
           ${this._renderLink(
             this.currentPage-1, 
             {label: 'Prev', class: 'pager__item--previous', noHighlight: false}

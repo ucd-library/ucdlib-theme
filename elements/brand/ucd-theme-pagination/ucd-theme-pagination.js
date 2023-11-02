@@ -39,51 +39,18 @@ export default class UcdThemePagination extends LitElement {
 
   static get properties() {
     return {
-      basePath : {
-        type: String, 
-        attribute: 'base-path'
-      },
-      queryParams: {
-        type: String,
-        attribute: 'query-params'
-      },
-      useHash : {
-        type: Boolean, 
-        attribute: 'use-hash'
-      },
-      currentPage : {
-        type : Number,
-        attribute: 'current-page',
-        reflect: true
-      },
-      maxPages : {
-        type : Number,
-        attribute : 'max-pages'
-      },
-      visibleLinkCount : {
-        type : Number,
-        attribute : 'visible-link-count'
-      },
-      disableLabel : {
-        type: Boolean,
-        attribute : 'disable-label'
-      },
-      _pages : {
-        type: Array
-      },
-      ellipses : {
-        type: Boolean,
-        attribute : 'ellipses'
-      },
-      xs_screen : {
-        type: Boolean,
-        attribute : 'xs-screen'
-      },
-      size : {
-        type: String,
-        attribute : 'size'
-      }
-
+      basePath : { type: String, attribute: 'base-path' },
+      queryParams: { type: String, attribute: 'query-params' },
+      useHash : { type: Boolean, attribute: 'use-hash' },
+      currentPage : { type : Number, attribute: 'current-page', reflect: true },
+      maxPages : { type : Number, attribute : 'max-pages' },
+      visibleLinkCount : { type : Number, attribute : 'visible-link-count' },
+      disableLabel : { type: Boolean, attribute : 'disable-label' },
+      _pages : { type: Array },
+      ellipses : { type: Boolean, attribute : 'ellipses' },
+      xs_screen : { type: Boolean, attribute : 'xs-screen' },
+      size : { type: String, attribute : 'size' },
+      darkmode : { type: Boolean, attribute : 'darkmode' },
     };
   }
 
@@ -108,10 +75,11 @@ export default class UcdThemePagination extends LitElement {
     this.ellipses = false;
     this.xs_screen = false;
     this.size = '';
+    this.darkmode = false;
 
     this.screen_check = (window.innerWidth <= this.breakPoints.mobileBreakPoint)  ? true : false;
 
-    this.render = render.bind(this);
+    this.render = render.bind(this);    
   }
 
   /**
@@ -120,37 +88,31 @@ export default class UcdThemePagination extends LitElement {
    */
   willUpdate(props) {
     if( props.has('currentPage') || props.has('maxPages') ) {
-      
-      if( this.xs_screen && this.screen_check ) {
-        let pages = [this.currentPage];
-        this._pages = pages;  // Mobile Pagination
+      if( this.ellipses && this.maxPages >= 8 ) {
+        this._pages = this._renderEllipse();
+      } else if ( this.ellipses && this.maxPages < 8 ) {
+        this._pages = this._renderOriginal();
       } else {
-        if( this.ellipses && this.maxPages >= 8 ) {
-          this._pages = this._renderEllipse();
-        } else if ( this.ellipses && this.maxPages < 8 ) {
-          this._pages = this._renderOriginal();
-        } else {
-          let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
-          
-          if( startIndex < 0 ) {
-            startIndex = 0;
-          } else if ( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
-            startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
-          }
-          if( startIndex < 0 ) {
-            startIndex = 0;
-          }
-      
-          let endIndex = startIndex + this.visibleLinkCount;
-          if( endIndex > this.maxPages ) endIndex = this.maxPages;
-      
-          let pages = [];
-          for( let i = startIndex; i < endIndex; i++ ) {
-            pages.push(i+1);
-          }
-          this._pages = pages;
-        } 
-      } // Desktop Pagination
+        let startIndex = Math.floor(this.currentPage - (this.visibleLinkCount/2));
+        
+        if( startIndex < 0 ) {
+          startIndex = 0;
+        } else if ( (this.currentPage + (this.visibleLinkCount/2)) > this.maxPages ) {
+          startIndex -= Math.ceil(this.currentPage + (this.visibleLinkCount/2)) - this.maxPages - 1;
+        }
+        if( startIndex < 0 ) {
+          startIndex = 0;
+        }
+    
+        let endIndex = startIndex + this.visibleLinkCount;
+        if( endIndex > this.maxPages ) endIndex = this.maxPages;
+    
+        let pages = [];
+        for( let i = startIndex; i < endIndex; i++ ) {
+          pages.push(i+1);
+        }
+        this._pages = pages;
+      }
     }
   }
 
@@ -186,10 +148,14 @@ export default class UcdThemePagination extends LitElement {
       args.class += ' pager__item--current';
     }
 
+    if( this.darkmode ) {
+      args.class += ' darkmode';
+    }
+
     if( !this.basePath && !this.useHash ) { 
-      return html `<li  class="pager__item ${args.class || ''}">
+      return html `<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-        html`<a style="pointer-events: none; cursor: default; color:#999999; background: white" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
+        html`<a style="pointer-events: none; cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
         html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
          }  
         </li>`;            
@@ -198,7 +164,7 @@ export default class UcdThemePagination extends LitElement {
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page + (this.queryParams ? '?' + this.queryParams : '');
     return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-          html` <a style="pointer-events: none; cursor: default; color:#999999; background:white;" href="${href}">${args.label || page}</a>`: 
+          html` <a style="pointer-events: none; cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};" href="${href}">${args.label || page}</a>`: 
           html` <a href="${href}">${args.label || page}</a>`
         }   
         </li>`;
