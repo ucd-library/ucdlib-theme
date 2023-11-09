@@ -27,10 +27,6 @@ export function styles() {
       width: 70px;
       min-width: 70px;
     }
-    .figure--custom img {
-      width: 150px;
-      min-width: 150px;
-    }
     .figure--logo svg {
       width: 375px;
       min-width: 375px;
@@ -66,7 +62,7 @@ export function styles() {
         display: none;
       }
     }
-    
+
   `;
 
   return [
@@ -76,8 +72,14 @@ export function styles() {
     elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
+  <style>
+    .figure--custom img {
+      width: ${this.figureCustomWidth};
+      min-width: ${this.figureCustomWidth};
+    }
+  </style>
   <div class="container figure--${this.figure}">
     <div class="site-branding">
       <div class="site-branding__figure">
@@ -93,7 +95,7 @@ return html`
     ${this.navItems.length ? html`
       <nav class="menu">
         ${this.navItems.map(link => html`
-          <a 
+          <a
             href=${ifDefined(link.href ? link.href : null)}
             target=${ifDefined(link.newTab ? "_blank": null)}
             >${link.linkText}</a>

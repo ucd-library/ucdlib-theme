@@ -9,12 +9,13 @@ import bookLogo from "./book.js";
 /**
  * @class UcdlibBrandingBar
  * @classdesc Component class for displaying a Library branding bar in a header
- * 
- * @property {String} figure - Figure to display: 'book' or 'logo'
+ *
+ * @property {String} figure - Figure to display: 'book', 'logo', or 'custom'
+ * @property {String} figureSrc - Url of image to use for custom figure
  * @property {String} siteName - Name of website to display
  * @property {String} slogan - Optional text to display below site name
  * @property {String} siteUrl - Url to use for links around site name and figure
- * 
+ *
  * @examples
  *  <ucdlib-branding-bar>
  *   <a href="#">My Account</a>
@@ -28,7 +29,8 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
   static get properties() {
     return {
       figure: {type: String},
-      figureUrl: {type: String, attribute: "figure-url"},
+      figureSrc: {type: String, attribute: "figure-src"},
+      figureCustomWidth: {type: String, attribute: "figure-custom-width"},
       siteName: {type: String, attribute: "site-name"},
       slogan: {type: String},
       siteUrl: {type: String, attribute: "site-url"},
@@ -49,6 +51,8 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
     );
 
     this.figure = "book";
+    this.figureSrc = '';
+    this.figureCustomWidth = '150px';
     this.siteName = "UC Davis Library";
     this.slogan = "";
     this.siteUrl = "/";
@@ -81,7 +85,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
    */
   _renderFigure(){
     if( this.figure === 'custom' ) {
-      return html`<img src="${this.figureUrl}" />`;
+      return html`<img src="${this.figureSrc}" />`;
     }
     if ( this.figure === 'logo') return logo;
     if ( this.figure === 'book' ) return bookLogo;

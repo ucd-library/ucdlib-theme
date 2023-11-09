@@ -10,7 +10,7 @@ export function styles() {
   return [elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
   ${this.pageTitle("UC Davs Library Branding Bar")}
   ${this.importPanel("ucdlib/ucdlib-branding-bar/ucdlib-branding-bar.js")}
@@ -27,7 +27,7 @@ return html`
   <p>It can be placed inside the <a href="#ucd-theme-header">header controller component</a>:</p>
 
   ${this.examplePanel(html`
-    <ucd-theme-header 
+    <ucd-theme-header
       prevent-fixed
       is-demo>
 
@@ -61,6 +61,15 @@ return html`
       </ucd-theme-quick-links>
 
     </ucd-theme-header>
+  `)}
+
+  <p>The logo can be updated with the <code>figure</code> or <code>figure-src</code> attributes:</p>
+  ${this.examplePanel(html`
+    <ucdlib-branding-bar figure='custom' figure-src='/img/datalab_logo_square-square.png' figure-custom-width='100px' site-name='Datalab'>
+      <a href="#">My Account</a>
+      <a href="#">Access VPN</a>
+      <a href="#">Give</a>
+    </ucdlib-branding-bar>
   `)}
 
 
