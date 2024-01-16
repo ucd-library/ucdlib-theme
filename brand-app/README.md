@@ -17,6 +17,11 @@ And then in another terminal start your server with:
 node server.js
 ```
 
+To also work on a local copy of the sass files, update the package.json files in `brand-app` and `elements` and then reinstall packages:
+```
+@ucd-lib/theme-sass": "file:../../ucdlib-theme-sass/source/sass"
+```
+
 ## Docker Testing
 
 If for whatever reason, you'd like to run a dockerized test, you can use use the `local-build.sh`

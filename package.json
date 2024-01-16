@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/theme",
-  "version": "1.1.4",
+  "version": "2.0.0",
   "description": "University branding, additional theme support, theme elements",
   "main": "index.js",
   "scripts": {

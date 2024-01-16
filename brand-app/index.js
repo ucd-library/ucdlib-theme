@@ -11,3 +11,6 @@ import "./pages/page-brand-buttons.js";
 import "./pages/page-brand-selectors.js";
 
 import "./components.js";
+
+import { PageWidthController } from "@ucd-lib/theme-elements/utils/controllers";
+(new PageWidthController).init();
