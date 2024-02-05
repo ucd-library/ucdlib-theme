@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/theme-elements",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Custom elements for the UCD brand theme",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@lit-labs/task": "^1.0.0",
-    "@ucd-lib/theme-sass": "^6.0.0",
+    "@ucd-lib/theme-sass": "^6.0.1",
     "dompurify": "^2.3.9",
     "ip-cidr": "^3.0.4",
     "lit": "^3.0.2",
