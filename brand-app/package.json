@@ -29,7 +29,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@lit-labs/task": "^1.0.0",
     "@ucd-lib/theme-elements": "file:../elements",
-    "@ucd-lib/theme-sass": "^6.0.0",
+    "@ucd-lib/theme-sass": "^6.0.1",
     "cors": "^2.8.5",
     "dompurify": "^2.3.9",
     "dotenv": "^16.0.0",
