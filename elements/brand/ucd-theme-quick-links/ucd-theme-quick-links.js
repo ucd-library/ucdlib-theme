@@ -25,6 +25,7 @@ export default class UcdThemeQuickLinks extends LitElement {
       styleModifiers: {type: String, attribute: "style-modifiers"},
       opened: {type: Boolean},
       animationDuration: {type: Number, attribute: "animation-duration"},
+      showProfileIcon: {type: Boolean, attribute: "show-profile-icon"},
       _links: {type: Array, state: true},
       _hasCustomIcons: {type: Boolean, state: true},
       _transitioning: {type: Boolean, state: true},
@@ -46,6 +47,7 @@ export default class UcdThemeQuickLinks extends LitElement {
     this.styleModifiers = "";
     this.opened = false;
     this.animationDuration = 300;
+    this.showProfileIcon = false;
 
     this._links = [];
     this._classPrefix = "quick-links";

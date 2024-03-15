@@ -37,6 +37,17 @@ return html`
     </ucd-theme-quick-links>
   `)}
 
+  <p>Use the <code>show-profile-icon</code> attribute to show a profile icon</p>
+  ${this.examplePanel(html`
+    <ucd-theme-quick-links 
+      title="My Account"
+      show-profile-icon>
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </ucd-theme-quick-links>
+  `)}
+
   <h2>Style Modifiers</h2>
 
   <p>Use space-delimited keywords in the <code>style-modifers</code> attribute to alter the appearance of the element.

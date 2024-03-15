@@ -13,6 +13,9 @@ export function styles() {
     :host {
       display: block;
     }
+    [hidden] {
+      display: none !important;
+    }
     .slot-parent {
       display: none;
     }
@@ -43,8 +46,44 @@ export function styles() {
         margin-right: .75rem;
         color: #13639e;
         font-size: .875em;
+      }
+
+      .quick-links__title.show-profile:after {
+        content: "";
+      }
+      
+      .quick-links__title.show-profile .profile-icon {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow: hidden;
+        width: 2.4375rem;
+        height: 2.4375rem;
+        padding: 0px;
+        border: 0px;
+        border-radius: 50%;
+        background-color: #ffbf00;
+        background-size: 50%;
+        color: rgb(255, 255, 255);
+        text-indent: inherit;
+        margin-left: .75rem;
+      }
+
+      .quick-links__title.show-profile .profile-icon svg {
+        fill: white;
+        height: 65%;
+        width: 65%;
+        margin: 0 auto;
+      }
+
+      .quick-links__title.show-profile:hover .profile-icon, .quick-links__title.show-profile:focus .profile-icon {
+        background-color: #13639e;
+      }
+
+      .quick-links__title.show-profile {
+        padding-right: 0;
+      }
     }
-  }
   `;
 
   return [
@@ -82,12 +121,15 @@ return html`
   </style>
   <div class="quick-links">
     <button 
-      class="quick-links__title"
+      class="quick-links__title ${this.showProfileIcon ? 'show-profile' : ''}"
       @click=${this._onBtnClick}
       aria-controls="quick-links" 
       aria-expanded="${this.opened}" 
       aria-label="Toggle ${this.title} Menu">
       ${this.title}<span class="submenu-toggle ${this.opened ? 'submenu-toggle--open' : ''}"><span class="submenu-toggle__icon">+</span></span>
+      <div class="profile-icon" ?hidden="${!this.showProfileIcon}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+      </div>
     </button>
     <nav 
       id="quick-links" 
