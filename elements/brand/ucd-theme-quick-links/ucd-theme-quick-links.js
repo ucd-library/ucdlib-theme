@@ -6,7 +6,7 @@ import { MutationObserverController, WaitController } from '../../utils/controll
 /**
  * @class UcdThemeQuickLinks
  * @classdesc Component class for displaying a quick links nav
- * 
+ *
  *  Patternlab Url:
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links
  *    - http://dev.webstyleguide.ucdavis.edu/redesign/?p=molecules-quick-links-2-columns
@@ -16,6 +16,7 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  * @property {String} styleModifiers - Apply alternate styles with a space-separated list.
  * @property {Boolean} opened - Menu is open
  * @property {Number} animationDuration - Length of animation when opening/closing menu
+ * @property {Boolean} useIcon - Show a custom icon next to the title
  */
 export default class UcdThemeQuickLinks extends LitElement {
 
@@ -25,7 +26,7 @@ export default class UcdThemeQuickLinks extends LitElement {
       styleModifiers: {type: String, attribute: "style-modifiers"},
       opened: {type: Boolean},
       animationDuration: {type: Number, attribute: "animation-duration"},
-      useProfileIcon: {type: Boolean, attribute: "use-profile-icon"},
+      useIcon: {type: Boolean, attribute: "use-icon"},
       _links: {type: Array, state: true},
       _hasCustomIcons: {type: Boolean, state: true},
       _transitioning: {type: Boolean, state: true},
@@ -47,7 +48,7 @@ export default class UcdThemeQuickLinks extends LitElement {
     this.styleModifiers = "";
     this.opened = false;
     this.animationDuration = 300;
-    this.useProfileIcon = false;
+    this.useIcon = false;
 
     this._links = [];
     this._classPrefix = "quick-links";
@@ -104,7 +105,7 @@ export default class UcdThemeQuickLinks extends LitElement {
    */
   ingestChildren(){
     // remove any slotted icons created from a previous render
-    this.querySelectorAll('slot:not([name="profile-icon"])').forEach(ele => ele.remove());
+    this.querySelectorAll('slot:not([name="custom-icon"])').forEach(ele => ele.remove());
     this._hasCustomIcons = false;
 
     let links = [];
@@ -113,8 +114,8 @@ export default class UcdThemeQuickLinks extends LitElement {
       let link = {};
 
       // if first child exists, we assume it is an icon
-      if ( 
-        child.childElementCount > 0 && 
+      if (
+        child.childElementCount > 0 &&
         index < 3 &&
         child.children[0].tagName !== 'A'
       ){
@@ -159,7 +160,7 @@ export default class UcdThemeQuickLinks extends LitElement {
    * @method _onItemClick
    * @private
    * @description Attached to menu item links without an href
-   * @param {Event} e 
+   * @param {Event} e
    */
   _onItemClick(e){
     this._dispatchItemClick(e.target.index);
@@ -169,7 +170,7 @@ export default class UcdThemeQuickLinks extends LitElement {
    * @method _onItemKeyup
    * @private
    * @description Attached to menu item links without an href
-   * @param {Event} e 
+   * @param {Event} e
    */
   _onItemKeyup(e){
     if( e.which !== 13 ) return;
@@ -201,7 +202,7 @@ export default class UcdThemeQuickLinks extends LitElement {
   _getNavClasses(){
     let classes = {};
     classes[`${this._classPrefix}__menu`] = true;
-    
+
     if ( this.styleModifiers ) {
       this.styleModifiers.split(" ").forEach(mod => {
         if (mod) classes[`${this._classPrefix}--${mod}`] = true;

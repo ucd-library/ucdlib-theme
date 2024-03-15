@@ -48,11 +48,11 @@ export function styles() {
         font-size: .875em;
       }
 
-      .quick-links__title.show-profile:after {
+      .quick-links__title.show-icon:after {
         content: "";
       }
-      
-      .quick-links__title.show-profile .profile-icon {
+
+      .quick-links__title.show-icon .custom-icon {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
@@ -69,18 +69,18 @@ export function styles() {
         margin-left: .75rem;
       }
 
-      .quick-links__title.show-profile .profile-icon ::slotted(svg) {
+      .quick-links__title.show-icon .custom-icon ::slotted(svg) {
         fill: white;
         height: 65%;
         width: 65%;
         margin: 0 auto;
       }
 
-      .quick-links__title.show-profile:hover .profile-icon, .quick-links__title.show-profile:focus .profile-icon {
+      .quick-links__title.show-icon:hover .custom-icon, .quick-links__title.show-icon:focus .custom-icon {
         background-color: #13639e;
       }
 
-      .quick-links__title.show-profile {
+      .quick-links__title.show-icon {
         padding-right: 0;
       }
     }
@@ -96,7 +96,7 @@ export function styles() {
   ];
 }
 
-export function render() { 
+export function render() {
 return html`
   ${this._hasCustomIcons ? html`
     <style>
@@ -120,20 +120,20 @@ return html`
     }
   </style>
   <div class="quick-links">
-    <button 
-      class="quick-links__title ${this.useProfileIcon ? 'show-profile' : ''}"
+    <button
+      class="quick-links__title ${this.useIcon ? 'show-icon' : ''}"
       @click=${this._onBtnClick}
-      aria-controls="quick-links" 
-      aria-expanded="${this.opened}" 
+      aria-controls="quick-links"
+      aria-expanded="${this.opened}"
       aria-label="Toggle ${this.title} Menu">
       ${this.title}<span class="submenu-toggle ${this.opened ? 'submenu-toggle--open' : ''}"><span class="submenu-toggle__icon">+</span></span>
-      <div class="profile-icon" ?hidden="${!this.useProfileIcon}">
-        <slot name="profile-icon"></slot>
+      <div class="custom-icon" ?hidden="${!this.useIcon}">
+        <slot name="custom-icon"></slot>
       </div>
     </button>
-    <nav 
-      id="quick-links" 
-      class=${classMap(this._getNavClasses())} 
+    <nav
+      id="quick-links"
+      class=${classMap(this._getNavClasses())}
       style=${styleMap(this._getNavStyles())}
       aria-label="Quick Links Menu">
     <ul class="menu" id="menu">
@@ -142,8 +142,8 @@ return html`
           ${link.href ? html`
             <a href="${link.href}">${this._renderSlot(link)}${link.text}</a>
           ` : html`
-            <a 
-              class="click-attached" 
+            <a
+              class="click-attached"
               tabindex="0"
               @click=${this._onItemClick}
               @keyup=${this._onItemKeyup}
@@ -153,7 +153,7 @@ return html`
       `)}
     </ul>
     </nav>
-    
+
   </div>
 
 `;}
