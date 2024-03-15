@@ -31,7 +31,7 @@ export default class PageInfographics extends Mixin(LitElement)
 customElements.define('page-infographics', PageInfographics);
 
 
-import factoidCss from '@ucd-lib/theme-sass/main_site/factoid/_factoid.css.js';
+import factoidCss from "@ucd-lib/theme-sass/4_component/_factoid.css.js";
 
 export class MyFactoid extends LitElement {
   static get styles() {return [factoidCss];}

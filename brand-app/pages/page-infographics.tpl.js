@@ -3,7 +3,7 @@ import { html, css } from 'lit';
 import "../../elements/ucdlib/ucdlib-icon/ucdlib-icon";
 
 import normalizeCss from "@ucd-lib/theme-sass/normalize.css.js";
-import factoidCss from '@ucd-lib/theme-sass/main_site/factoid/_factoid.css.js';
+import factoidCss from "@ucd-lib/theme-sass/4_component/_factoid.css.js";
 import layoutCss from "@ucd-lib/theme-sass/5_layout/_index.css.js";
 
 export function styles() {
