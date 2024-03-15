@@ -25,7 +25,7 @@ export default class UcdThemeQuickLinks extends LitElement {
       styleModifiers: {type: String, attribute: "style-modifiers"},
       opened: {type: Boolean},
       animationDuration: {type: Number, attribute: "animation-duration"},
-      showProfileIcon: {type: Boolean, attribute: "show-profile-icon"},
+      useProfileIcon: {type: Boolean, attribute: "use-profile-icon"},
       _links: {type: Array, state: true},
       _hasCustomIcons: {type: Boolean, state: true},
       _transitioning: {type: Boolean, state: true},
@@ -47,7 +47,7 @@ export default class UcdThemeQuickLinks extends LitElement {
     this.styleModifiers = "";
     this.opened = false;
     this.animationDuration = 300;
-    this.showProfileIcon = false;
+    this.useProfileIcon = false;
 
     this._links = [];
     this._classPrefix = "quick-links";
@@ -104,7 +104,7 @@ export default class UcdThemeQuickLinks extends LitElement {
    */
   ingestChildren(){
     // remove any slotted icons created from a previous render
-    this.querySelectorAll('[slot]').forEach(ele => ele.remove());
+    this.querySelectorAll('slot:not([name="profile-icon"])').forEach(ele => ele.remove());
     this._hasCustomIcons = false;
 
     let links = [];
