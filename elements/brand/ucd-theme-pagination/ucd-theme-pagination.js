@@ -140,6 +140,11 @@ export default class UcdThemePagination extends LitElement {
    * @returns {HTML}
    */
   _renderLink(page, args={}) {
+    if( this.ellipses && typeof page === 'object' ) {
+      args.label = args.label || page.label || '';
+      page = page.page || 1;
+    }
+
     if( page < 1 ) page = 1;
     if( page > this.maxPages ) page = this.maxPages;
 
@@ -211,11 +216,11 @@ export default class UcdThemePagination extends LitElement {
     if ((this.currentPage <= endIndex - 4) && (this.currentPage >= startIndex + 4)){
       for( let i = startIndex; i < endIndex; i++ ) {
         if(i == 0) pages.push(i+1);    
-        else if (i == (startIndex + 1)) pages.push("...");
+        else if (i == (startIndex + 1)) pages.push({ page: this.currentPage - 3, label: '...' });
         else if (i > (startIndex + 1) && i < this.currentPage - 3) continue; 
         else if (i >= (this.currentPage - 3) && i < (this.currentPage + 2)) pages.push(i+1);
         else if (i < 4 && i < this.currentPage + 2) continue; 
-        else if (i == (endIndex - 2)) pages.push("...");
+        else if (i == (endIndex - 2)) pages.push({ page: this.currentPage + 3, label: '...' });
         else if (i == endIndex - 1) pages.push(i+1);  
       }
     } //Middle ellipses
@@ -223,14 +228,14 @@ export default class UcdThemePagination extends LitElement {
       for( let i = startIndex; i < endIndex; i++ ) {
         if (i == 0) pages.push(i+1);
         else if(i > 0 && i < (endIndex - 6)) continue;
-        else if (i == (endIndex - 6)) pages.push("...");
+        else if (i == (endIndex - 6)) pages.push({ page: i+1, label: '...' });
         else pages.push(i+1);       
       }
     } //Left ellipses
     else if(this.currentPage <= endIndex - 4){
       for( let i = startIndex; i < endIndex; i++ ) {
         if(i < 6) pages.push(i+1);
-        else if (i == 6) pages.push("...");
+        else if (i == 6) pages.push({ page: i+1, label: '...' });
         else if (i > 6 && i < (endIndex - 2)) continue; 
         else if (i == endIndex - 1) pages.push(i+1);  
       }
