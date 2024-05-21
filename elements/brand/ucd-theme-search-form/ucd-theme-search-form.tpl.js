@@ -16,7 +16,11 @@ export function styles() {
     }
     .search-form__submit {
       line-height: 1.9;
-      text-indent: .2em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: normal;
+      text-indent: inherit;
     }
   `;
   return [
@@ -45,8 +49,7 @@ return html`
     name=${this.queryParam} 
     @input="${this._onInput}"
     value="${this.value}">
-  <button type="submit" class="search-form__submit">&#xf002; Submit
-  </button>
+  <button type="submit" class="search-form__submit">&#xf002;</button>
 
 </form>
 `;}
