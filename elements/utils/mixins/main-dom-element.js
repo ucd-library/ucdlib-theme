@@ -15,6 +15,19 @@ const MainDomElement = (superClass) => class extends superClass {
    * @returns {LitElement}
    */
   createRenderRoot() {
+    // hack for inserting styles into main dom
+    let styles = this.constructor.elementStyles || [];
+    if( !Array.isArray(styles) ) styles = [styles];
+
+    for (const s of styles) {
+      const style = document.createElement('style');
+      const nonce = global['litNonce'];
+      if (nonce !== undefined) {
+        style.setAttribute('nonce', nonce);
+      }
+      style.textContent = s.cssText;
+      this.appendChild(style);
+    }
     return this;
   }
 
