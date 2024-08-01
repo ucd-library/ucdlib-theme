@@ -21,5 +21,21 @@ export function render() {
         I am the content.
       </ucd-theme-collapse>
     `)}
+
+    <h2>Using CSS Custom Properties</h2>
+
+    ${this.examplePanel(html`
+      <style>
+        .custom-collapse {
+          --collapse-background-color: #FFFBED;
+          --collapse-border-color: #FFBF00;
+        }
+      </style>
+      <div class="custom-collapse">
+        <ucd-theme-collapse brand-class="category-brand--secondary" title="I am the panel title">
+          I am the content.
+        </ucd-theme-collapse>
+      </div>
+    `)}
   `;
 }
