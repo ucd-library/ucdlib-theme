@@ -13,6 +13,11 @@ export function styles() {
     [hidden] {
       display: none;
     }
+
+    .collapse__content {
+      background-color: var(--collapse-background-color, white);
+      border-color: var(--collapse-border-color, black);
+    }
   `;
 
   return [

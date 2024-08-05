@@ -47,6 +47,7 @@ Component class for displaying a quick links nav
 | styleModifiers | <code>String</code> | Apply alternate styles with a space-separated list. |
 | opened | <code>Boolean</code> | Menu is open |
 | animationDuration | <code>Number</code> | Length of animation when opening/closing menu |
+| useIcon | <code>Boolean</code> | Show a custom icon next to the title |
 
 <a name="open"></a>
 
