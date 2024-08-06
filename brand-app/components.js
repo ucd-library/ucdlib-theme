@@ -23,6 +23,7 @@ import "./pages/page-ucdlib-sils-search-redirect";
 import "./pages/page-ucdlib-md";
 import "./pages/page-ucdlib-header";
 import "./pages/page-ucdlib-primary-nav.js";
+import "./pages/page-ucdlib-range-slider.js";
 
 // non-component js.
 import {PageWidthController} from '../elements/utils/controllers';
