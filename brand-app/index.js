@@ -1,7 +1,6 @@
 import './ucdlib-theme-brand-app.js';
 
 // IMPORT APP PAGES HERE
-// import "./pages/page-ucdlib-range-slider.js";
 
 // guides
 import "./pages/page-overview.js";
