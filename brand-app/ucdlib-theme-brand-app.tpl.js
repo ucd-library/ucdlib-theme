@@ -92,6 +92,7 @@ return html`
           </ul>
           <li><a href="#ucdlib-md">Markdown</a></li>
           <li><a href="#ucdlib-author-profile">Author Profile</a></li>
+          <li><a href="#ucdlib-range-slider">Range Slider</a></li>
         </ul>
 
         <ul link-text="Brand Guides" href="#overview">
@@ -101,8 +102,6 @@ return html`
           <li><a href="#fonts">Fonts</a></li>
           <li><a href="#brand-buttons">Buttons</a></li>
           <li><a href="#brand-selectors">Selectors</a></li>
-
-
         </ul>
       </ucd-theme-primary-nav>
 
