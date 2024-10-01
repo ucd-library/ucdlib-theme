@@ -118,6 +118,10 @@ export default function render() {
     border-bottom: 5px solid white;
   }
 
+  #numberLine {
+    cursor: move;
+  }
+
   .btn {
     position: absolute;
     height: 25px;
@@ -155,7 +159,11 @@ export default function render() {
 <svg ?hidden="${this.hideHistogram}" id="histogram"></svg>
 
 <div class="slider">
-  <div id="numberLine"></div>
+  <div id="numberLine"
+    prop="outside-range"
+    @mousedown="${this._onMoveStart}"
+    @touchstart="${this._onMoveStart}">
+  </div>
 
   <div id="fillLine"
     prop="range"

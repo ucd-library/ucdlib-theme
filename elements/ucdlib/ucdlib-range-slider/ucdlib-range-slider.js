@@ -232,6 +232,9 @@ export default class UcdlibRangeSlider extends LitElement {
       svg.appendChild(rect);
     });
 
+    this.binWidth = binWidth;
+    this.numBins = (this.mergedData.length || this.data.length);
+
     this._updateHistogramColors();
   }
 
@@ -271,14 +274,26 @@ export default class UcdlibRangeSlider extends LitElement {
    * to the widget
    *
    * @param {Number} value number line value
+   * @param {Boolean} isMin is this the min value
    *
    * @returns {Number} px location
    */
-  _valueToPx(value) {
-    value = value - this.absMin;
-    let range = this.absMax - this.absMin;
-    let valPerPx = range / this.width;
-    return Math.round(value / valPerPx);
+  _valueToPx(value, isMin=false) {
+    let px = 0;
+    let range = this.absMax - this.absMin + 1;
+
+    value -= this.absMin;
+    if( !isMin ) value += 1;
+    
+    // no merging of bins
+    if( this.numBins === range ) {
+      px = Math.round(value * this.binWidth);
+    } else {
+      let rangeWidth = this.binWidth / (range / this.numBins);
+      px = Math.round(value * rangeWidth);
+    }
+
+    return px;
   }
 
   /**
@@ -339,7 +354,7 @@ export default class UcdlibRangeSlider extends LitElement {
     let uv =
       this.max > this.absMax ? this.absMax : this.max;
 
-    let minPxValue = this._valueToPx(lv);
+    let minPxValue = this._valueToPx(lv, true);
     let maxPxValue = this._valueToPx(uv);
 
     this.shadowRoot.querySelector('#lowNumberBtn').style.left =
@@ -471,6 +486,9 @@ export default class UcdlibRangeSlider extends LitElement {
     this.isMoving = true;
     this.movingMin = this.movingType === 'max' ? false : true;
     this.movingMax = this.movingType === 'min' ? false : true;
+
+    if( this.movingType === 'range' ) this._onMoveMiddle(e);
+    if( this.movingType === 'outside-range' ) this._onMoveOutsideRange(e);
   }
 
   /**
@@ -494,9 +512,9 @@ export default class UcdlibRangeSlider extends LitElement {
       left = e.pageX - this.left;
     }
 
-    if (this.movingType === 'min') {
+    if( this.movingType === 'min' ) {
       this.min = this._pxToValue(left);
-    } else if (this.movingType === 'max') {
+    } else if( this.movingType === 'max' ) {
       this.max = this._pxToValue(left);
     }
 
@@ -512,6 +530,45 @@ export default class UcdlibRangeSlider extends LitElement {
       else this.max = this.min;
     }
     this.hasRendered = false;
+  }
+
+  /**
+   * @method _onMoveMiddle
+   * @description bound to mousemove event on this element.  Update min/max
+   * values based closest min/max button (adjust selection that is closest to mouse position)
+   * @param {MouseEvent} e
+   */
+  _onMoveMiddle(e) {
+    let fillLineWidth = e.currentTarget.offsetWidth;
+    let leftOffset = e.offsetX;
+
+    if( (fillLineWidth / 2) < leftOffset ) {
+      this.movingType = 'max';
+    } else {
+      this.movingType = 'min';
+    }
+
+    this._onMove(e);
+  }
+
+  /**
+   * @method _onMoveOutsideRange
+   * @description bound to mousemove event on this element.  Update min/max
+   * values based on mouse position, but only if the mouse is outside the current
+   * min/max range
+   * @param {MouseEvent} e
+   */
+  _onMoveOutsideRange(e) {
+    let fillLineWidth = e.currentTarget.offsetWidth;
+    let leftOffset = e.offsetX;
+
+    if( (fillLineWidth / 2) < leftOffset ) {
+      this.movingType = 'max';
+    } else {
+      this.movingType = 'min';
+    }
+
+    this._onMove(e);
   }
 
   /**
