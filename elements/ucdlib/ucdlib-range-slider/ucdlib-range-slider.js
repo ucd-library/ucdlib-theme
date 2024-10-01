@@ -487,7 +487,8 @@ export default class UcdlibRangeSlider extends LitElement {
     this.movingMin = this.movingType === 'max' ? false : true;
     this.movingMax = this.movingType === 'min' ? false : true;
 
-    if( this.movingType === 'range' ) this._onMoveMiddle(e);    
+    if( this.movingType === 'range' ) this._onMoveMiddle(e);
+    if( this.movingType === 'outside-range' ) this._onMoveOutsideRange(e);
   }
 
   /**
@@ -538,6 +539,26 @@ export default class UcdlibRangeSlider extends LitElement {
    * @param {MouseEvent} e
    */
   _onMoveMiddle(e) {
+    let fillLineWidth = e.currentTarget.offsetWidth;
+    let leftOffset = e.offsetX;
+
+    if( (fillLineWidth / 2) < leftOffset ) {
+      this.movingType = 'max';
+    } else {
+      this.movingType = 'min';
+    }
+
+    this._onMove(e);
+  }
+
+  /**
+   * @method _onMoveOutsideRange
+   * @description bound to mousemove event on this element.  Update min/max
+   * values based on mouse position, but only if the mouse is outside the current
+   * min/max range
+   * @param {MouseEvent} e
+   */
+  _onMoveOutsideRange(e) {
     let fillLineWidth = e.currentTarget.offsetWidth;
     let leftOffset = e.offsetX;
 
