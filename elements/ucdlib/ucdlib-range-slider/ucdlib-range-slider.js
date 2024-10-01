@@ -486,6 +486,8 @@ export default class UcdlibRangeSlider extends LitElement {
     this.isMoving = true;
     this.movingMin = this.movingType === 'max' ? false : true;
     this.movingMax = this.movingType === 'min' ? false : true;
+
+    if( this.movingType === 'range' ) this._onMoveMiddle(e);    
   }
 
   /**
@@ -509,9 +511,9 @@ export default class UcdlibRangeSlider extends LitElement {
       left = e.pageX - this.left;
     }
 
-    if (this.movingType === 'min') {
+    if( this.movingType === 'min' ) {
       this.min = this._pxToValue(left);
-    } else if (this.movingType === 'max') {
+    } else if( this.movingType === 'max' ) {
       this.max = this._pxToValue(left);
     }
 
@@ -527,6 +529,25 @@ export default class UcdlibRangeSlider extends LitElement {
       else this.max = this.min;
     }
     this.hasRendered = false;
+  }
+
+  /**
+   * @method _onMoveMiddle
+   * @description bound to mousemove event on this element.  Update min/max
+   * values based closest min/max button (adjust selection that is closest to mouse position)
+   * @param {MouseEvent} e
+   */
+  _onMoveMiddle(e) {
+    let fillLineWidth = e.currentTarget.offsetWidth;
+    let leftOffset = e.offsetX;
+
+    if( (fillLineWidth / 2) < leftOffset ) {
+      this.movingType = 'max';
+    } else {
+      this.movingType = 'min';
+    }
+
+    this._onMove(e);
   }
 
   /**
