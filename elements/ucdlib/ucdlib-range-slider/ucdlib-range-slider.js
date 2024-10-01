@@ -232,6 +232,9 @@ export default class UcdlibRangeSlider extends LitElement {
       svg.appendChild(rect);
     });
 
+    this.binWidth = binWidth;
+    this.numBins = (this.mergedData.length || this.data.length);
+
     this._updateHistogramColors();
   }
 
@@ -271,14 +274,26 @@ export default class UcdlibRangeSlider extends LitElement {
    * to the widget
    *
    * @param {Number} value number line value
+   * @param {Boolean} isMin is this the min value
    *
    * @returns {Number} px location
    */
-  _valueToPx(value) {
-    value = value - this.absMin;
-    let range = this.absMax - this.absMin;
-    let valPerPx = range / this.width;
-    return Math.round(value / valPerPx);
+  _valueToPx(value, isMin=false) {
+    let px = 0;
+    let range = this.absMax - this.absMin + 1;
+
+    value -= this.absMin;
+    if( !isMin ) value += 1;
+    
+    // no merging of bins
+    if( this.numBins === range ) {
+      px = Math.round(value * this.binWidth);
+    } else {
+      let rangeWidth = this.binWidth / (range / this.numBins);
+      px = Math.round(value * rangeWidth);
+    }
+
+    return px;
   }
 
   /**
@@ -339,7 +354,7 @@ export default class UcdlibRangeSlider extends LitElement {
     let uv =
       this.max > this.absMax ? this.absMax : this.max;
 
-    let minPxValue = this._valueToPx(lv);
+    let minPxValue = this._valueToPx(lv, true);
     let maxPxValue = this._valueToPx(uv);
 
     this.shadowRoot.querySelector('#lowNumberBtn').style.left =
