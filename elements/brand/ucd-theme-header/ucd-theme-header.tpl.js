@@ -101,21 +101,26 @@ export function styles() {
   ];
 }
 
-export function render() { 
+export function render() {
 return html`
 ${this.isDemo ? html`
   <style>
     .l-navbar { top: auto !important}
   </style>
 ` : html``}
+${this._hasQuickLinks ? html`
+  <style>::slotted(ucd-theme-search-popup){ --ucd-theme-search-popup--margin-right:-1rem;}</style>
+` : html`
+  <style>::slotted(ucd-theme-search-popup){--ucd-theme-search-popup--margin-right:0;}</style>
+`}
 <header class=${classMap(this._getHeaderClasses())}>
   <div class="mobile-bar">
     <div class="mobile-bar__nav-toggle">
-      <button 
+      <button
         @click=${this._onBtnClick}
-        class="nav-toggle ${this.opened ? 'nav-toggle--active' : ''}" 
-        aria-controls="primary-nav" 
-        aria-expanded="${this.opened ? 'true' : 'false'}" 
+        class="nav-toggle ${this.opened ? 'nav-toggle--active' : ''}"
+        aria-controls="primary-nav"
+        aria-expanded="${this.opened ? 'true' : 'false'}"
         aria-label="Toggle Main Menu">
         <span class="nav-toggle__icon nav-toggle__icon--menu">Menu</span>
       </button>
@@ -175,7 +180,7 @@ ${this.isDemo ? html`
           <div class='branding-bar-mobile-links'>
             <ul>
               ${this._brandingBarLinks.map(link => html`
-                <li><a 
+                <li><a
                   href=${ifDefined(link.href ? link.href : null)}
                   target=${ifDefined(link.newTab ? "_blank": null)}
                   >${link.linkText}</a></li>
@@ -188,6 +193,4 @@ ${this.isDemo ? html`
     </div>
   </div>
 </header>
-  
-
 `;}

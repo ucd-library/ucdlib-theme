@@ -10,7 +10,7 @@ export function styles() {
   return [elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
 
   ${this.pageTitle('Site Header')}
@@ -23,15 +23,15 @@ return html`
       <li><a href="#ucd-theme-search-popup">search-popup</a></li>
     </ul>
   <p>
-    Pass through these elements as children to construct the site header. 
+    Pass through these elements as children to construct the site header.
     Only <code>ucd-theme-primary-nav</code> is required.
   </p>
 
   ${this.examplePanel(html`
-    <ucd-theme-header 
+    <ucd-theme-header
       site-name="UC Davis Library"
       slogan="Books!"
-      figure-src="/img/book-logo.png" 
+      figure-src="/img/book-logo.png"
       prevent-fixed
       is-demo>
 
@@ -83,11 +83,17 @@ return html`
         <a href="#">Journals</a>
       </ucd-theme-primary-nav>
 
+      <ucd-theme-search-popup>
+        <ucd-theme-search-form
+          @search="${e => console.log(e.detail.searchTerm)}">
+        </ucd-theme-search-form>
+      </ucd-theme-search-popup>
+
     </ucd-theme-header>
   `)}
 
   <p>The branding bar can also be completely overwritten with your own styles by using the <code>branding-bar</code> slot:</p>
-  
+
   ${this.examplePanel(html`
     <ucd-theme-header is-demo prevent-fixed>
       <div slot="branding-bar" class="custom-branding">
