@@ -44,8 +44,10 @@ export function styles() {
       .branding-bar-mobile-links {
         display: block;
       }
+      .fixed-mobile .off-canvas__container {
+        padding-bottom: 9rem;
+      }
     }
-
     @media (min-width: 992px) {
       .fixed-desktop .l-navbar {
         position: fixed;
