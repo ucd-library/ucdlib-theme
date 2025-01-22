@@ -20,7 +20,7 @@
 <dt><a href="#_updateHistogramColors">_updateHistogramColors()</a></dt>
 <dd><p>update light/medium/dark bin colors in histogram</p>
 </dd>
-<dt><a href="#_valueToPx">_valueToPx(value)</a> ⇒ <code>Number</code></dt>
+<dt><a href="#_valueToPx">_valueToPx(value, isMin)</a> ⇒ <code>Number</code></dt>
 <dd><p>given a number line value, return px location relative
 to the widget</p>
 </dd>
@@ -59,6 +59,15 @@ down on element indicating a move is starting</p>
 <dd><p>bound to mousemove event on this element.  Update min/max
 values based on type of move that is happening ie min, max or range.  Does
 nothing if we are not moving.</p>
+</dd>
+<dt><a href="#_onMoveMiddle">_onMoveMiddle(e)</a></dt>
+<dd><p>bound to mousemove event on this element.  Update min/max
+values based closest min/max button (adjust selection that is closest to mouse position)</p>
+</dd>
+<dt><a href="#_onMoveOutsideRange">_onMoveOutsideRange(e)</a></dt>
+<dd><p>bound to mousemove event on this element.  Update min/max
+values based on mouse position, but only if the mouse is outside the current
+min/max range</p>
 </dd>
 <dt><a href="#_onMoveStop">_onMoveStop()</a></dt>
 <dd><p>bound to mouseup/mouseout event on window.  It&#39;s always best to bind
@@ -113,7 +122,7 @@ update light/medium/dark bin colors in histogram
 **Kind**: global function  
 <a name="_valueToPx"></a>
 
-### \_valueToPx(value) ⇒ <code>Number</code>
+### \_valueToPx(value, isMin) ⇒ <code>Number</code>
 given a number line value, return px location relative
 to the widget
 
@@ -123,6 +132,7 @@ to the widget
 | Param | Type | Description |
 | --- | --- | --- |
 | value | <code>Number</code> | number line value |
+| isMin | <code>Boolean</code> | is this the min value |
 
 <a name="_pxToValue"></a>
 
@@ -202,6 +212,31 @@ down on element indicating a move is starting
 bound to mousemove event on this element.  Update min/max
 values based on type of move that is happening ie min, max or range.  Does
 nothing if we are not moving.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| e | <code>MouseEvent</code> | 
+
+<a name="_onMoveMiddle"></a>
+
+### \_onMoveMiddle(e)
+bound to mousemove event on this element.  Update min/max
+values based closest min/max button (adjust selection that is closest to mouse position)
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| e | <code>MouseEvent</code> | 
+
+<a name="_onMoveOutsideRange"></a>
+
+### \_onMoveOutsideRange(e)
+bound to mousemove event on this element.  Update min/max
+values based on mouse position, but only if the mouse is outside the current
+min/max range
 
 **Kind**: global function  
 

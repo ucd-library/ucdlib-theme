@@ -91,6 +91,16 @@ export default class UcdThemeSearchForm extends LitElement {
     this.dispatchEvent(e);
   }
 
+  /**
+   * @method clearSearch
+   * @description Clears the search input
+   * @public
+   */
+  clearSearch() {
+    this.value = '';
+    this.shadowRoot.querySelector('#search').value = '';
+  }
+
 }
 
 customElements.define('ucd-theme-search-form', UcdThemeSearchForm);
