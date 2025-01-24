@@ -48,7 +48,7 @@ return html`
     class="search-form__input ${this.inputClass}" 
     name=${this.queryParam} 
     @input="${this._onInput}"
-    value="${this.value}">
+    .value="${this.value}">
   <button type="submit" class="search-form__submit">&#xf002;</button>
 
 </form>

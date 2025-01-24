@@ -29,7 +29,8 @@ export default class UcdThemeSearchForm extends LitElement {
       formClass: {type: String, attribute: "form-class"},
       labelText: {type: String, attribute: "label-text"},
       inputClass: {type: String, attribute: "input-class"},
-      queryParam: {type: String, attribute: "query-param"}
+      queryParam: {type: String, attribute: "query-param"},
+      clearOnSearch: {type: Boolean, attribute: "clear-on-search"}
     };
   }
 
@@ -48,6 +49,7 @@ export default class UcdThemeSearchForm extends LitElement {
     this.inputClass = "";
     this.value = "";
     this.queryParam = "searchterm";
+    this.clearOnSearch = false;
   }
 
   /**
@@ -87,10 +89,11 @@ export default class UcdThemeSearchForm extends LitElement {
       },
       bubbles: true,
       composed: true });
-  
-    this.dispatchEvent(e);
-  }
 
+    this.dispatchEvent(e);
+
+    if( this.clearOnSearch ) this.value = '';
+  }
 }
 
 customElements.define('ucd-theme-search-form', UcdThemeSearchForm);

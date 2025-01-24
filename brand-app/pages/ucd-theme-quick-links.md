@@ -48,6 +48,8 @@ Component class for displaying a quick links nav
 | opened | <code>Boolean</code> | Menu is open |
 | animationDuration | <code>Number</code> | Length of animation when opening/closing menu |
 | useIcon | <code>Boolean</code> | Show a custom icon next to the title |
+| href | <code>String</code> | URL to navigate to when the button is clicked. Disables dropdown. |
+| disableDropdown | <code>Boolean</code> | Disables dropdown functionality. Fires btn-click event instead. |
 
 <a name="open"></a>
 
