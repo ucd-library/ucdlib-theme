@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --config webpack-watch.config.js --watch",
-    "dist": "webpack --config webpack-watch.config.js",
+    "dist": "webpack --config webpack-dist.config.js",
     "server": "node server.js",
-    "local-build": "../devops/local-build.sh"
+    "local-build": "./devops/local-build.sh"
   },
   "author": "",
   "license": "ISC",

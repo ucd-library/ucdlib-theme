@@ -5,6 +5,8 @@ bundle.js
 .env
 brand-app/js
 brand-app/css
+*.cork-build.json
+corkbuild.Dockerfile
 
 # Emacs files
 *~
