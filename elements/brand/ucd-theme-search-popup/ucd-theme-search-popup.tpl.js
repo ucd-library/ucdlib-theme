@@ -8,6 +8,9 @@ export function styles() {
     :host {
       display: block;
     }
+    .search-popup__open::after {
+      margin-right: var(--ucd-theme-search-popup--margin-right, -1rem)
+    }
   `;
 
   return [
@@ -16,10 +19,10 @@ export function styles() {
     elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
-<button 
-  class="search-popup__open ${this.opened ? 'search-popup__open--close' : ''}" 
+<button
+  class="search-popup__open ${this.opened ? 'search-popup__open--close' : ''}"
   @click=${this._onBtnClick}>
   <span class="search-popup__open-icon">${this.buttonText}</span>
 </button>

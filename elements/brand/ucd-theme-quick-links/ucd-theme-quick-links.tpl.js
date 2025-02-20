@@ -62,22 +62,23 @@ export function styles() {
         padding: 0px;
         border: 0px;
         border-radius: 50%;
-        background-color: #ffbf00;
+        background-color: var(--ucd-theme-quick-links-icon-bg-color, #ffbf00);
         background-size: 50%;
-        color: rgb(255, 255, 255);
         text-indent: inherit;
         margin-left: .75rem;
       }
 
       .quick-links__title.show-icon .custom-icon ::slotted(svg) {
-        fill: white;
+        fill: var(--ucd-theme-quick-links-icon-color, #fff);
         height: 65%;
         width: 65%;
         margin: 0 auto;
       }
-
       .quick-links__title.show-icon:hover .custom-icon, .quick-links__title.show-icon:focus .custom-icon {
-        background-color: #13639e;
+        background-color: var(--ucd-theme-quick-links-icon-bg-color-hover, #13639e);
+      }
+      .quick-links__title.show-icon:hover .custom-icon ::slotted(svg), .quick-links__title.show-icon:focus .custom-icon ::slotted(svg) {
+        fill: var(--ucd-theme-quick-links-icon-color-hover, #fff);
       }
 
       .quick-links__title.show-icon {

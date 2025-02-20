@@ -17,6 +17,8 @@ import { MutationObserverController, WaitController } from '../../utils/controll
  * @property {Boolean} opened - Menu is open
  * @property {Number} animationDuration - Length of animation when opening/closing menu
  * @property {Boolean} useIcon - Show a custom icon next to the title
+ * @property {String} href - URL to navigate to when the button is clicked. Disables dropdown.
+ * @property {Boolean} disableDropdown - Disables dropdown functionality. Fires btn-click event instead.
  */
 export default class UcdThemeQuickLinks extends LitElement {
 
@@ -27,6 +29,8 @@ export default class UcdThemeQuickLinks extends LitElement {
       opened: {type: Boolean},
       animationDuration: {type: Number, attribute: "animation-duration"},
       useIcon: {type: Boolean, attribute: "use-icon"},
+      href: {type: String},
+      disableDropdown: {type: Boolean, attribute: "disable-dropdown"},
       _links: {type: Array, state: true},
       _hasCustomIcons: {type: Boolean, state: true},
       _transitioning: {type: Boolean, state: true},
@@ -143,6 +147,13 @@ export default class UcdThemeQuickLinks extends LitElement {
    * @description Attached to menu open/close button
    */
   async _onBtnClick(){
+    if ( this.href ){
+      window.location.href = this.href;
+      return;
+    } else if ( this.disableDropdown ) {
+      this.dispatchEvent(new CustomEvent('btn-click'));
+      return;
+    }
     let didToggle;
     if ( this.opened ) {
       didToggle = await this.close();

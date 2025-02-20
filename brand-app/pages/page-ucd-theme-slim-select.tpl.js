@@ -10,7 +10,7 @@ export function styles() {
   return [elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
 
   ${this.pageTitle("Slim Select")}
@@ -45,7 +45,7 @@ return html`
       <div class="field-container">
         <label for="selectpicker">Select</label>
         <ucd-theme-slim-select>
-          <select multiple id="selectpicker">
+          <select id="selectpicker">
             <optgroup label="Fruits">
               <option>Apples</option>
               <option>Bananas</option>

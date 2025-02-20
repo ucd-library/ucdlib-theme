@@ -11,6 +11,9 @@ export function styles() {
     :host {
       display: block;
     }
+    .ss-main .ss-single-selected {
+      min-height: 2.5rem;
+    }
   `;
 
   return [
@@ -20,7 +23,7 @@ export function styles() {
     elementStyles];
 }
 
-export function render() { 
+export function render() {
 return html`
 
 `;}
