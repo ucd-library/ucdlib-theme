@@ -45,6 +45,14 @@ export function styles() {
       .mega-focus .primary-nav__top-link a:focus::after {
         background-color: rgb(255, 191, 0);
       }
+
+      .primary-nav li:focus > .primary-nav__top-link a::before, 
+      .primary-nav li:focus-within > .primary-nav__top-link a::before,
+      .primary-nav li:focus > .primary-nav__top-link a::after, 
+      .primary-nav li:focus-within > .primary-nav__top-link a::after {
+        background-color: rgb(255, 191, 0);
+      }
+
       .mega-focus > ul {
         background-color: rgb(255, 251, 237);
       }
