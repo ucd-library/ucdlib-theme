@@ -73,35 +73,51 @@ return html`
   <ul class="pager">
     ${this.xs_screen ? 
       html`
-        <div class="xs-screen${this.darkmode ? ' darkmode' : ''}">
+        <li class="xs-screen${this.darkmode ? ' darkmode' : ''}">
+          <ul class="pager">
           ${this._renderLink(
             this.currentPage-1, 
             {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
           )}
+          </ul>
 
+          <ul class="pager">
           ${this._renderLink(this.currentPage)}
-          <span>of ${this.maxPages}</span>  
+          </ul class="pager">
+
+          <span>of ${this.maxPages}</span> 
+
+          <ul class="pager">
             ${this._renderLink(
               this.currentPage+1, 
               {label: 'Next', class: 'pager__item--next', noHighlight: false}
             )} 
-        </div>
+          </ul>
 
-        <div class="default${this.darkmode ? ' darkmode' : ''}">
-          ${this._renderLink(
-            this.currentPage-1, 
-            {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
-          )}
+        </li>
+
+        <li class="default${this.darkmode ? ' darkmode' : ''}">
+          <ul class="pager">
+            ${this._renderLink(
+              this.currentPage-1, 
+              {label: 'Prev', class: 'pager__item--previous', noHighlight: false}
+            )}
+          </ul>
         
-          ${this._pages.map(page => this._renderLink(page))}
+          <ul class="pager">
+            ${this._pages.map(page => this._renderLink(page))}
+          </ul>
 
+          <ul class="pager">
           ${this._renderLink(
             this.currentPage+1, 
             {label: 'Next', class: 'pager__item--next', noHighlight: false}
           )} 
-        </div>
+          </ul>
+        </li>
       `
       :html`
+        
         ${this._renderLink(
           this.currentPage-1, 
           {label: 'Prev', class: 'pager__item--previous', noHighlight: false}

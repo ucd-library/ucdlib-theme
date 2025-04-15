@@ -40,7 +40,6 @@ export default class UcdThemeListAccordion extends LitElement {
     this._availableStyles = ['accordion', 'faq'];
     this.listStyle = this._availableStyles[0];
     this._expandedItems = new Set();
-    this.role = 'list';
   }
 
   static get styles() {
