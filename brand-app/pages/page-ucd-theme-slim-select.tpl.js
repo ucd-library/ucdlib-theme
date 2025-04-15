@@ -22,7 +22,7 @@ return html`
   </p>
 
   ${this.examplePanel(html`
-  <ucd-theme-slim-select>
+  <ucd-theme-slim-select listbox-aria-label='Foo'>
     <select multiple>
       <optgroup label="Fruits">
         <option>Apples</option>

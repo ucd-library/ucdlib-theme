@@ -83,7 +83,7 @@ return html`
   <div class="container figure--${this.figure}">
     <div class="site-branding">
       <div class="site-branding__figure">
-        <a href="${this.siteUrl}" class="">${this._renderFigure()}</a>
+        <a href="${this.siteUrl}" aria-label="site-branding-figure" class="">${this._renderFigure()}</a>
       </div>
       <div class="site-branding__body">
         <h1 class="site-branding__site-name" ?hidden=${!this.siteName}>
