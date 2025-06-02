@@ -16,7 +16,7 @@ export default class UcdThemeSlimSelect extends LitElement {
 
   static get properties() {
     return {
-      
+      listboxAriaLabel: {type: String, attribute: "listbox-aria-label"},
     };
   }
 
@@ -43,6 +43,7 @@ export default class UcdThemeSlimSelect extends LitElement {
     const children = Array.from(this.children);
     if (children.length == 0 || children[0].tagName != "SELECT") return;
     const select = children[0].cloneNode(true);
+
     if ( this.slimSelect ){
       this.slimSelect.destroy();
       this.renderRoot.querySelector('.ss-main').remove();
@@ -50,10 +51,19 @@ export default class UcdThemeSlimSelect extends LitElement {
     }
     this.renderRoot.appendChild(select);
 
+    const label = this.listboxAriaLabel || 'Dropdown List';
+
     this.slimSelect = new SlimSelect({
       select: select,
       onChange: (info) => this.dispatchEvent(new CustomEvent("change", {detail: info}))
     });
+
+    const slimSelectList = this.renderRoot.querySelector('.ss-list');
+    if (slimSelectList) {
+      slimSelectList.setAttribute('aria-label', label);
+    }
+
+    console.log(slimSelectList);
 
   }
 
