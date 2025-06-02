@@ -8,7 +8,7 @@ import { MutationObserverController } from '../../utils/controllers';
 /**
  * @class UcdThemeSlimSelect
  * @classdesc UI component class for displaying a fancy select. This is a wrapper element around the 'slim-select' package.
- * 
+ *
  * Patternlab URL:
  *  - http://dev.webstyleguide.ucdavis.edu/redesign/?p=atoms-select-menu
  */
@@ -28,7 +28,7 @@ export default class UcdThemeSlimSelect extends LitElement {
     super();
     this.render = render.bind(this);
     this.mutationObserver = new MutationObserverController(
-      this, 
+      this,
       {subtree: true, childList: true, attributes: true, characterData: true},
       "_onLightDomMutation"
     );
@@ -62,8 +62,6 @@ export default class UcdThemeSlimSelect extends LitElement {
     if (slimSelectList) {
       slimSelectList.setAttribute('aria-label', label);
     }
-
-    console.log(slimSelectList);
 
   }
 
