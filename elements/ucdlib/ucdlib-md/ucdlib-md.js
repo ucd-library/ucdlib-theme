@@ -64,13 +64,15 @@ export default class UcdlibMd extends LitElement {
    * @method updated
    * @description Lit method called when element is updated.
    */
-  updated() {
+  updated(changedProperties) {
     // config markdown renderer so elements are correctly styled
     this._setRendererOverrides();
   
-    // update markdown data with the latest, either when the content changes or data property is updated
-    this.data = DOMPurify.sanitize(marked.parse(this.data));
-    this.renderedElement.innerHTML = this.data;
+    // only process markdown if the data property actually changed
+    if (changedProperties.has('data')) {
+      const parsedData = DOMPurify.sanitize(marked.parse(this.data));
+      this.renderedElement.innerHTML = parsedData;
+    }
   }
 
   /**
