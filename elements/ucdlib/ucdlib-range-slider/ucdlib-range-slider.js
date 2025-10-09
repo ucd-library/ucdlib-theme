@@ -471,6 +471,8 @@ export default class UcdlibRangeSlider extends LitElement {
     this.shadowRoot.querySelector('#unknown').checked = true;
 
     this._onRangeNullChange();
+    this._render();
+    this._updateHistogramColors();
   }
 
   /**
