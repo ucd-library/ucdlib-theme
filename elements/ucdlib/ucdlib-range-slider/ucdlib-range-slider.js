@@ -38,7 +38,9 @@ export default class UcdlibRangeSlider extends LitElement {
       // colors for histogram
       lightColor: { type: String, attribute: 'light-color' },
       mediumColor: { type: String, attribute: 'medium-color' },
-      darkColor: { type: String, attribute: 'dark-color' }
+      darkColor: { type: String, attribute: 'dark-color' },
+      initialMin: { type: Number },
+      initialMax: { type: Number }
     };
   }
 
@@ -71,6 +73,8 @@ export default class UcdlibRangeSlider extends LitElement {
     this.lightColor = '#CCE0F3';
     this.mediumColor = '#73ABDD';
     this.darkColor = '#13639E';
+    this.initialMin = null;
+    this.initialMax = null;
 
     // consts to build histogram
     this.gapPx = 2;
@@ -163,6 +167,12 @@ export default class UcdlibRangeSlider extends LitElement {
     if( !this.merged ) {
       this.min = this.absMin;
       this.max = this.absMax;
+      if( Number.isFinite(this.initialMin) ) {
+        this.min = Math.max(this.absMin, Math.min(this.initialMin, this.absMax));
+      }
+      if( Number.isFinite(this.initialMax) ) {
+        this.max = Math.max(this.min, Math.min(this.initialMax, this.absMax));
+      }
     }
 
     if( this.data?.length < 5 ) return this.hideHistogram = true;
@@ -236,6 +246,9 @@ export default class UcdlibRangeSlider extends LitElement {
     this.numBins = (this.mergedData.length || this.data.length);
 
     this._updateHistogramColors();
+
+    this.initialMin = null;
+    this.initialMax = null;
   }
 
   /**
@@ -459,6 +472,22 @@ export default class UcdlibRangeSlider extends LitElement {
         },
       })
     );
+  }
+
+  /**
+   * @method refresh
+   * @description public method to refresh histogram bins and layout after data/size changes
+   * @param {Boolean} forceRecalc force recalculation of merged bins
+   */
+  refresh(forceRecalc = false) {
+    // Reset render guard to allow full recalculation
+    this.hasRendered = false;
+
+    // Trigger resize logic to recalculate dimensions and bins
+    this._onResize(null, forceRecalc);
+
+    // Request update and wait for render
+    this.requestUpdate();
   }
 
   /**
