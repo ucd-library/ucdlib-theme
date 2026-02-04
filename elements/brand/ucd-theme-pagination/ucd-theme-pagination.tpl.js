@@ -76,13 +76,13 @@ export function styles() {
     }
     .pager__item--previous button::before {
       margin-right: 0.5rem;
-      content: "";
+      content: '\\f30a';
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
     }
     .pager__item--next button::after {
       margin-left: 0.5rem;
-      content: "";
+      content: '\\f30b';
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
     }
