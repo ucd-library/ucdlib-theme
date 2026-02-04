@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-//import { Page } from 'puppeteer';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {render, styles} from "./ucd-theme-pagination.tpl.js";
 
 import { BreakPointsController } from '../../utils/controllers';
@@ -160,8 +160,8 @@ export default class UcdThemePagination extends LitElement {
     if( !this.basePath && !this.useHash ) { 
       return html `<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-        html`<a style="pointer-events: none; cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`:
-        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}">${args.label || page}</a>`
+        html`<button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" page="${page}">${args.label || page}</button>`:
+        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}" aria-label="${ifDefined(args.label === '...' ? 'More pages' : undefined)}">${args.label || page}</a>`
          }  
         </li>`;            
     }
@@ -169,8 +169,8 @@ export default class UcdThemePagination extends LitElement {
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page + (this.queryParams ? '?' + this.queryParams : '');
     return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-          html` <a style="pointer-events: none; cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};" href="${href}">${args.label || page}</a>`: 
-          html` <a href="${href}">${args.label || page}</a>`
+          html` <button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};" href="${href}">${args.label || page}</button>`: 
+          html` <a href="${href}" aria-label="${ifDefined(args.label === '...' ? 'More pages' : undefined)}">${args.label || page}</a>`
         }   
         </li>`;
   }

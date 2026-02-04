@@ -62,6 +62,30 @@ export function styles() {
     .pager__item--next.pager__item--current.darkmode:hover a {
       color: #cccccc !important;
     }
+    .pager__item button {
+      all: unset;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2rem;
+      padding: 0.25rem 0.5rem;
+      color: rgb(76, 76, 76);
+      text-decoration: none;
+      transition: 0.2s ease-in-out;
+    }
+    .pager__item--previous button::before {
+      margin-right: 0.5rem;
+      content: "";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+    }
+    .pager__item--next button::after {
+      margin-left: 0.5rem;
+      content: "";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+    }
   `;
 
   return [normalizeCss, resetCss, paginationCss, elementStyles];
