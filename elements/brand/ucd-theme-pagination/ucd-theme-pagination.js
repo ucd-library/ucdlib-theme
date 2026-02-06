@@ -161,7 +161,7 @@ export default class UcdThemePagination extends LitElement {
       return html `<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
         html`<button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" page="${page}">${args.label || page}</button>`:
-        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}" aria-label="${ifDefined(args.label === '...' ? 'More pages' : undefined)}">${args.label || page}</a>`
+        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}" aria-label="${ifDefined(args.label === '...' ? `Page: ${page}` : undefined)}">${args.label || page}</a>`
          }  
         </li>`;            
     }
@@ -170,7 +170,7 @@ export default class UcdThemePagination extends LitElement {
     return html`<li class="pager__item ${args.class || ''}">
         ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
           html` <button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};" href="${href}">${args.label || page}</button>`: 
-          html` <a href="${href}" aria-label="${ifDefined(args.label === '...' ? 'More pages' : undefined)}">${args.label || page}</a>`
+          html` <a href="${href}" aria-label="${ifDefined(args.label === '...' ? `Page: ${page}` : undefined)}">${args.label || page}</a>`
         }   
         </li>`;
   }
