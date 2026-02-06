@@ -15,6 +15,7 @@ import bookLogo from "./book.js";
  * @property {String} siteName - Name of website to display
  * @property {String} slogan - Optional text to display below site name
  * @property {String} siteUrl - Url to use for links around site name and figure
+ * @property {String} navAriaLabel - Aria label for the navigation element
  *
  * @examples
  *  <ucdlib-branding-bar>
@@ -34,6 +35,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
       siteName: {type: String, attribute: "site-name"},
       slogan: {type: String},
       siteUrl: {type: String, attribute: "site-url"},
+      navAriaLabel: {type: String, attribute: "nav-aria-label"},
       navItems: {type: Array}
     };
   }
@@ -56,6 +58,7 @@ export default class UcdlibBrandingBar extends Mixin(LitElement)
     this.siteName = "UC Davis Library";
     this.slogan = "";
     this.siteUrl = "/";
+    this.navAriaLabel = "Secondary navigation";
     this.navItems = [];
   }
 

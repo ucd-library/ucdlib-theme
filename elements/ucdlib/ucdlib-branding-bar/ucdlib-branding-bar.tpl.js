@@ -93,7 +93,7 @@ return html`
       </div>
     </div>
     ${this.navItems.length ? html`
-      <nav class="menu">
+      <nav class="menu" aria-label=${this.navAriaLabel}>
         ${this.navItems.map(link => html`
           <a
             href=${ifDefined(link.href ? link.href : null)}

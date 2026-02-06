@@ -38,6 +38,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
       navTitle: {type: String, attribute: "nav-title"},
       titleHref: {type: String, attribute: "title-href"},
       titleClickEvent: {type: Boolean, attribute: 'title-click-event'},
+      navAriaLabel: {type: String, attribute: "nav-aria-label"},
       navItems: {type: Array},
       animationDuration: {type: Number, attribute: "animation-duration"}
     };
@@ -56,6 +57,7 @@ export default class UcdThemeSubnav extends Mixin(LitElement)
     this.navTitle = "";
     this.titleHref = "";
     this.titleClickEvent = false;
+    this.navAriaLabel = "Sub navigation";
     this.animationDuration = 300;
   }
 

@@ -48,9 +48,8 @@ export function render() {
     ul.sub-nav__menu ul {
       transition: height ${this.animationDuration + "ms"};
     }
-
   </style>
-  <nav class="sub-nav">
+  <nav class="sub-nav" aria-label=${this.navAriaLabel}>
     ${this.navTitle ? html`
       <h2 class="sub-nav__title${this.titleHref || this.titleClickEvent ? "-linked" : ""}">
         ${this.titleHref || this.titleClickEvent ? html`<a href=${ifDefined(this.titleHref ? this.titleHref : undefined)} @click=${() => this._dispatchTitleClick()}>${this.navTitle}</a>` : this.navTitle}
@@ -60,5 +59,4 @@ export function render() {
       ${this.navItems.map((item, i) => this._renderNavItem(item, [i]))}
     </ul>
   </nav>
-
 `;}
