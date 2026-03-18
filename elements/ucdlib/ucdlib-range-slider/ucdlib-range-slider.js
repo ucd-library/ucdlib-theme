@@ -138,14 +138,15 @@ export default class UcdlibRangeSlider extends LitElement {
     this.width = this.offsetWidth || 1;
     this.height = this.offsetHeight;
     this.left = this.offsetLeft;
+
+    this._updateHistogram(reMerge);
+
     let lowNumberBtn = this.shadowRoot.querySelector('#lowNumberBtn');
     if (lowNumberBtn) {
       this.height = 50;
       this.btnHeight = 25;
       this._render();
     }
-
-    this._updateHistogram(reMerge);
   }
 
   /**
@@ -175,6 +176,10 @@ export default class UcdlibRangeSlider extends LitElement {
       }
     }
 
+    let range = this.absMax - this.absMin + 1;
+    this.numBins = range;
+    this.binWidth = this.width / range;
+
     if( this.data?.length < 5 ) return this.hideHistogram = true;
 
     // get bound of svg
@@ -198,28 +203,30 @@ export default class UcdlibRangeSlider extends LitElement {
 
       let mergedPerBin = 1;
 
-      while( binWidth < (this.minBinWidth + this.gapPx) || mergedBins > this.maxBins ) {
-        mergedBins = Math.ceil(mergedData.length / 2);
-        binWidth *= 2;
-        mergedData = [];
-        mergedPerBin *= 2;
+      if( this.data.length > this.maxBins ) {
+        while( binWidth < (this.minBinWidth + this.gapPx) || mergedBins > this.maxBins ) {
+          mergedBins = Math.ceil(mergedData.length / 2);
+          binWidth *= 2;
+          mergedData = [];
+          mergedPerBin *= 2;
 
-        for( let i = 0; i < mergedBins; i++ ) {
-          let start = i * mergedPerBin;
-          let end = start + mergedPerBin - 1;
+          for( let i = 0; i < mergedBins; i++ ) {
+            let start = i * mergedPerBin;
+            let end = start + mergedPerBin - 1;
 
-          if( end >= this.data.length ) {
-            mergedData.push(this.data[start]);
-          } else {
-            let mergedValue = this.data[start].value + this.data[end].value;
-            let mergedStat = this.data[start].stat + '-' + this.data[end].stat;
-            mergedData.push({ stat: mergedStat, value: mergedValue });
+            if( end >= this.data.length ) {
+              mergedData.push(this.data[start]);
+            } else {
+              let mergedValue = this.data[start].value + this.data[end].value;
+              let mergedStat = this.data[start].stat + '-' + this.data[end].stat;
+              mergedData.push({ stat: mergedStat, value: mergedValue });
+            }
           }
-        }
 
-        // recalc after potential merging above,
-        // to fix floating point precision issues when multiplying binWidth multiple times
-        binWidth = (svgWidth / (mergedData || []).length) || 1;
+          // recalc after potential merging above,
+          // to fix floating point precision issues when multiplying binWidth multiple times
+          binWidth = (svgWidth / (mergedData || []).length) || 1;
+        }
       }
 
       this.mergedData = mergedData;
