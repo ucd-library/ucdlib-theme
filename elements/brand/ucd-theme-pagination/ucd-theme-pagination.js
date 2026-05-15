@@ -157,20 +157,24 @@ export default class UcdThemePagination extends LitElement {
       args.class += ' darkmode';
     }
 
+    const isFirstOrLastPage = (this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next");
+    const ariaLabel = args.label === '...' ? `Page: ${page}` : undefined;
+    const textLabel = args.label || page;
+
     if( !this.basePath && !this.useHash ) { 
       return html `<li class="pager__item ${args.class || ''}">
-        ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-        html`<button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" page="${page}">${args.label || page}</button>`:
-        html`<a style="cursor:pointer;" tabindex="1" @click="${this._onPageClicked}" page="${page}" aria-label="${ifDefined(args.label === '...' ? `Page: ${page}` : undefined)}">${args.label || page}</a>`
+        ${isFirstOrLastPage ? 
+        html`<button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'}" page="${page}">${textLabel}</button>`:
+        html`<a style="cursor:pointer;" tabindex="0" @click="${this._onPageClicked}" page="${page}" aria-label="${ifDefined(ariaLabel)}">${textLabel}</a>`
          }  
         </li>`;            
     }
 
     let href = (this.useHash ? '#' : '') + (this.basePath || '/') + page + (this.queryParams ? '?' + this.queryParams : '');
     return html`<li class="pager__item ${args.class || ''}">
-        ${((this.currentPage == 1 && args.label == "Prev") || (this.currentPage == this.maxPages && args.label == "Next") ) ? 
-          html` <button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};" href="${href}">${args.label || page}</button>`: 
-          html` <a href="${href}" aria-label="${ifDefined(args.label === '...' ? `Page: ${page}` : undefined)}">${args.label || page}</a>`
+        ${isFirstOrLastPage ? 
+          html` <button disabled style="cursor: default; color: ${this.darkmode ? '#cccccc' : '#999999'}; background: ${this.darkmode ? 'transparent' : 'white'};">${textLabel}</button>`: 
+          html` <a href="${href}" aria-label="${ifDefined(ariaLabel)}">${textLabel}</a>`
         }   
         </li>`;
   }

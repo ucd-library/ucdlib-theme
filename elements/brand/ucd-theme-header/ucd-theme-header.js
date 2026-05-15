@@ -21,6 +21,8 @@ import {
  * @property {Boolean} silenceWarnings - Console warnings will be silences
  * @property {Boolean} opened - Whether header is open in the mobile view
  * @property {Boolean} preventFixed - Navbar will not be fixed to top of screen in desktop view
+ * @property {Boolean} isDemo - Whether this header is being used in a demo page. If true, overrides some styles to make the mobile menu more easily testable in a desktop browser.
+ * @property {String} brandingFigureAriaLabel - Aria label for the figure link
  * 
  * @example
  *  <ucd-theme-header site-name="A UC Davis Website">
@@ -53,6 +55,7 @@ export default class UcdThemeHeader extends LitElement {
       silenceWarnings: {type: Boolean, attribute: 'silence-warnings'},
       preventFixed: {type: Boolean, attribute: "prevent-fixed"},
       isDemo: {type: Boolean, attribute: "is-demo"},
+      brandingFigureAriaLabel: {type: String, attribute: "branding-figure-aria-label"},
       _transitioning: {type: Boolean, state: true},
       _hasPrimaryNav: {type: Boolean, state: true},
       _hasSlottedBranding: {type: Boolean, state: true},
@@ -84,6 +87,7 @@ export default class UcdThemeHeader extends LitElement {
     this.opened = false;
     this.isDemo = false;
     this.silenceWarnings = false;
+    this.brandingFigureAriaLabel = "Homepage";
 
     this._transitioning = false;
     this._hasPrimaryNav = false;

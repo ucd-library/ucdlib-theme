@@ -149,7 +149,7 @@ ${this._hasQuickLinks ? html`
       ` : html`
         <div class="site-branding">
           <div class="site-branding__figure" ?hidden=${!this.figureSrc}>
-            <a href="${this.siteUrl}" class="" aria-label="UC Davis Library website link"><img src=${this.figureSrc} class="site-logo" alt="Site Logo" /></a>
+            <a href="${this.siteUrl}" class="" aria-label=${this.brandingFigureAriaLabel}><img src=${this.figureSrc} class="site-logo" alt="Site Logo" /></a>
           </div>
           <div class="site-branding__body">
           <h1 class="site-branding__site-name" ?hidden=${!this.siteName}>
