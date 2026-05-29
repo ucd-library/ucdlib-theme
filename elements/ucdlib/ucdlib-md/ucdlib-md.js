@@ -93,14 +93,15 @@ export default class UcdlibMd extends LitElement {
   _setRendererOverrides() {
     if (!this.renderer) {
       this.renderer = {
-        list(body, ordered, start) {
-          let renderedContent = '';
-          if (ordered) {
-            renderedContent = `<ul class="list--multilevel">${body}</ul>`;
-          } else {
-            renderedContent = `<ul class="list--bordered">${body}</ul>`;
+        list(token) {
+          let body = '';
+          for (const item of token.items) {
+            body += this.listitem(item);
           }
-          return renderedContent;
+          if (token.ordered) {
+            return `<ul class="list--multilevel">${body}</ul>`;
+          }
+          return `<ul class="list--bordered">${body}</ul>`;
         }
       };
     }
