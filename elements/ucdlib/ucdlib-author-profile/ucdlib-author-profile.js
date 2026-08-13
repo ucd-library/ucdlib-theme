@@ -19,6 +19,7 @@ export default class UcdlibAuthorProfile extends LitElement {
       nameLast: {type: String, attribute: 'name-last'},
       nameFirst: {type: String, attribute: 'name-first'},
       link: {type: String},
+      libraries: {type: Array},
       contactWebsite: {type: String, attribute: 'contact-website'},
       contactEmail: {type: String, attribute: 'contact-email'},
       contactPhone: {type: String, attribute: 'contact-phone'},
@@ -69,8 +70,11 @@ export default class UcdlibAuthorProfile extends LitElement {
       'phone': html `
               <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 512 512">
               <path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"/>
-              </svg>
-        `
+              </svg>`,
+      'location': html `
+              <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path d="M168 0C75.1 0 0 75.1 0 168c0 87.25 135.9 293.8 152.4 314.5c6.5 8.062 17.8 8.062 24.3 0C216.1 461.8 352 255.3 352 168C352 75.1 276.9 0 184 0zM184 256c-48.52 0-88-39.48-88-88s39.48-88 88-88s88 39.48 88 88S232.5 256 184 256z"/>
+              </svg>`
     };
     this.render=render.bind(this);
 
@@ -146,6 +150,7 @@ export default class UcdlibAuthorProfile extends LitElement {
    */ 
   _onComplete(results){
     this.results = results;
+    console.log(this.results);
     if(this.results.data != undefined) {
       this.ERROR = true;
     }
@@ -161,6 +166,8 @@ export default class UcdlibAuthorProfile extends LitElement {
       this.nameFirst = this.results.nameFirst;
 
       this.link = this.results.link;
+
+      this.libraries = this.results.libraries;
 
       this.contactWebsite = this.results.contactWebsite.length !== 0 ? this.results.contactWebsite[0].value :null;
 
