@@ -181,9 +181,8 @@ ${this.eController ? html`
             <h4 class="name"><a class="name" href="${this.link}">${this.nameFirst} ${this.nameLast}</a></h4>
             <p class="title">${this.positionTitle} <span class="pipe">&#124;</span> ${this.department}</p>
             <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span>`: html``}</p>
-            <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="">&#124;</span>`}`: html``}</p>
-            <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
-            ${this.libraries ? html`<p class="location">${this.svgIcon.location} ${this.libraries.map((library, index) => html`<span>${library.name} ${index < this.libraries.length - 1 ? html`, ` : html``} </span>`)}</p>`: html``}          
+            <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">|</span>`:html`<span class="noApp-pipe">|</span>`}`: html``}</p>            <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
+            ${this.libraries && this.libraries.length > 0 ? html`<p class="location">${this.svgIcon.location} ${this.libraries.map((library, index) => html`<span>${library.name} ${index < this.libraries.length - 1 ? html`, ` : html``} </span>`)}</p>`: html``}          
           </div>
         </div>
       `
@@ -195,7 +194,7 @@ ${this.eController ? html`
           <p class="contact-list">${this.contactPhone ? html`${this.svgIcon.phone} <a class="info" href="tel:${this.contactPhone}">${this.contactPhone}</a>  <span class="pipe">&#124;</span> `: html``}</p>
           <p class="contact-list">${this.contactEmail ? html`${this.svgIcon.email} <a class="info" href="mailto:${this.contactEmail}">${this.contactEmail}</a> ${this.contactAppointmentUrl ? html`<span class="pipe">&#124;</span>`:html`<span class="noApp-pipe">&#124;</span>`}`: html``}</p>
           <p class="contact-list">${this.contactAppointmentUrl ? html`${this.svgIcon.calendar} <a class="info" href="${this.contactAppointmentUrl ? this.contactAppointmentUrl:"#"}">Book an Appointment</a>`: html``}</p>
-          ${this.libraries ? html`<p class="location">${this.svgIcon.location} ${this.libraries.map((library, index) => html`<span>${library.name} ${index < this.libraries.length - 1 ? html`, ` : html``} </span>`)}</p>`: html``}
+          ${this.libraries && this.libraries.length > 0 ? html`<p class="location">${this.svgIcon.location} ${this.libraries.map((library, index) => html`<span>${library.name} ${index < this.libraries.length - 1 ? html`, ` : html``} </span>`)}</p>`: html``}
         </div>
       </div>
       `}

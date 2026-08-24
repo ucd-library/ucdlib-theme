@@ -73,7 +73,7 @@ export default class UcdlibAuthorProfile extends LitElement {
               </svg>`,
       'location': html `
               <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                <path d="M168 0C75.1 0 0 75.1 0 168c0 87.25 135.9 293.8 152.4 314.5c6.5 8.062 17.8 8.062 24.3 0C216.1 461.8 352 255.3 352 168C352 75.1 276.9 0 184 0zM184 256c-48.52 0-88-39.48-88-88s39.48-88 88-88s88 39.48 88 88S232.5 256 184 256z"/>
+                <path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/>
               </svg>`
     };
     this.render=render.bind(this);
@@ -150,7 +150,6 @@ export default class UcdlibAuthorProfile extends LitElement {
    */ 
   _onComplete(results){
     this.results = results;
-    console.log(this.results);
     if(this.results.data != undefined) {
       this.ERROR = true;
     }
